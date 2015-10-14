@@ -1,0 +1,31 @@
+
+=========================
+        PRAVIDLÁ
+=========================
+
+Návrhy:
+
+    -ku každej časti projektu bude určený človek, ktorý ju vypracuje + človek,
+     ktorý jeho prácu skontroluje a spripomienkuje
+    -následne sa pripomienky skonzultujú a človek, ktorý programoval, ich zapracuje do kódu
+    -myslím, že ku každej iterácii projektu by mohli byť určení dvaja ľudia, ktorí programujú
+     a dvaja, ktorí pripomienkujú
+    -po rozdelení úloh ľudia určení na programovanie informujú o predpokladanom čase dokončenia svojej
+     práce, aby sa pripomienkujúci vedeli zariadiť
+    -informujú, keď prácu reálne dokončia (programujúci aj pripomienkujúci)
+
+    ako pripomienkovať kód?
+
+    -ak ozaj netušíte, použite google (code review)
+    -pokúste sa chybu popísať čo najpresnejšie, hlavne kde sa v kóde nachádza
+    -ak bude čas, skúsim sa pozrieť po nejakom nástroji, ktorý by nám v tomto pomohol,
+     písať si do texťáku čisla riadkov kde je chyba mi predsa príde trošku oldschool :D
+
+
+    git
+
+    -každý, kto pôjde vyvíjať si pred vývojom vytvorí novú branch a v nej vyvíja
+    -do masteru mergeuje až hotový kód a je zodpovedný za funkčnosť po merge
+    -do commit message prosím píšte niečo výstižné, viem, že je to niekedy problém, ale skúste to
+    -ja používam ideu, predpokladám, že aspoň niekto používa doporučované netbeany alebo niečo ďalšie,
+     tak si prosím do .gitignore pridajte súbory generované vašim ide
