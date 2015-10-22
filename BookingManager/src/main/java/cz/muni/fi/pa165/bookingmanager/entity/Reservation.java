@@ -82,15 +82,15 @@ public class Reservation {
 
         Reservation that = (Reservation) o;
 
-        if (!startOfReservation.equals(that.startOfReservation)) return false;
-        return endOfReservation.equals(that.endOfReservation);
+        if (!getStartOfReservation().equals(that.getStartOfReservation())) return false;
+        return getEndOfReservation().equals(that.getEndOfReservation());
 
     }
 
     @Override
     public int hashCode() {
-        int result = startOfReservation.hashCode();
-        result = 31 * result + endOfReservation.hashCode();
+        int result = getStartOfReservation().hashCode();
+        result = 31 * result + getEndOfReservation().hashCode();
         return result;
     }
 }
