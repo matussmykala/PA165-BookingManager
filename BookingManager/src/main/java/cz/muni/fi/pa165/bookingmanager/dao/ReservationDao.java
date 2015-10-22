@@ -5,6 +5,10 @@
  */
 package cz.muni.fi.pa165.bookingmanager.dao;
 
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
+
+import java.util.List;
+
 /**
  *
  * @author Martin Cuchran <cuchy92@gmail.com>
