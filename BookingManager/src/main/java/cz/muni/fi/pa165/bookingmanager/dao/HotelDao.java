@@ -10,5 +10,47 @@ package cz.muni.fi.pa165.bookingmanager.dao;
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 public interface HotelDao {
+    /**
+     * Create entry for hotel
+     * 
+     * @param hotel
+     */
+    public void create(Hotel hotel);
     
+    /**
+     * Find hotel by given id
+     * 
+     * @param id
+     * @return
+     */
+    public Hotel findById(Long id);
+    
+    /**
+     * Find hotel by given name
+     * 
+     * @param name
+     * @return
+     */
+    public Hotel findByName(String name);
+    
+    /**
+     * Return list of all hotels
+     * 
+     * @return
+     */
+    public List<Hotel> findAll();
+    
+    /**
+     * Update hotel entry
+     * 
+     * @param hotel
+     */
+    public void update(Hotel hotel);
+    
+    /**
+     * Delete hotel entry
+     * 
+     * @param hotel
+     */
+    public void delete(Hotel hotel);
 }
