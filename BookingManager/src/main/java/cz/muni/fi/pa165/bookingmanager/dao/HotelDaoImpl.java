@@ -12,22 +12,25 @@ import javax.persistence.PersistenceUnit;
  */
 public class HotelDaoImpl implements HotelDao {
     
-    @PersistenceUnit
+     @PersistenceUnit
     private EntityManager em;
 
     @Override
     public void create(Hotel hotel) {
+        this.validateHotel(hotel);
         em.persist(hotel);
     }
     
     @Override
     public Hotel findById(Long id) {
+        if(id==null) throw new IllegalArgumentException("Id is null");
         return em.find(Hotel.class, id);
     }
     
     @Override
     public Hotel findByName(String name) {
-        return em.find(Hotel.class, name);
+        if(name==null||name.equals("")) throw new IllegalArgumentException("Name is not valid");
+        return em.createQuery("Select h from Hotel h where h.name=:name",Hotel.class).setParameter("name", name).getSingleResult();
     }
 
     @Override
@@ -37,14 +40,30 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public void update(Hotel hotel) {
+        this.validateHotel(hotel);
         em.merge(hotel);
     }
 
     @Override
     public void delete(Hotel hotel) {
+        this.validateHotel(hotel);
         em.remove(hotel);
     }
     
+    /**
+        Method for validating attributes of hotel
+        
+        @param hotel
+        @exception IllegalArgumentException if some attribute is not valid
+    **/
+    private void validateHotel(Hotel hotel){
+        if(hotel==null) throw new IllegalArgumentException("Hotel is null");
+        if(hotel.getId()!=null) throw new IllegalArgumentException("Hotel already exist");
+        if(hotel.getName()==null||hotel.getName().equals("")) throw new IllegalArgumentException("Name is not valid");
+        
+    }
+    
+   
    
     
 }
