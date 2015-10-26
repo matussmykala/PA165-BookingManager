@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
@@ -10,7 +5,8 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import java.util.List;
 
 /**
- *
+ * Interface with CRUD operations for customer
+ * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 public interface CustomerDao {
@@ -36,7 +32,7 @@ public interface CustomerDao {
      * @param name
      * @return
      */
-    public Customer findByName(String name);
+    public List<Customer> findByName(String name);
     
     /**
      * Return list of all customers
