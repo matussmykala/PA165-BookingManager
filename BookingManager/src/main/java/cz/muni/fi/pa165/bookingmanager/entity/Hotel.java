@@ -5,15 +5,9 @@
  */
 package cz.muni.fi.pa165.bookingmanager.entity;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.List;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -24,18 +18,18 @@ import javax.persistence.OneToMany;
 @Entity
 public class Hotel {
     
-   @Id
+    @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable=false,unique=true)
+    @NotNull
     private String name;
-    
-    @Column(nullable=false)
+
+    @NotNull
     private String address;
-    
-    @OneToMany(mappedBy="room")
-    private Set<Room> rooms = new HashSet<Room>();
+
+    @OneToMany(mappedBy = "hotel")
+    private List<Room> rooms;
 
     public Long getId() {
         return id;
@@ -61,48 +55,32 @@ public class Hotel {
         this.address = address;
     }
 
-    public Set<Room> getRooms() {
+    public List<Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Set<Room> rooms) {
+    public void setRooms(List<Room> rooms) {
         this.rooms = rooms;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.id);
-        hash = 53 * hash + Objects.hashCode(this.name);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hotel)) return false;
+
+        Hotel hotel = (Hotel) o;
+
+        if (getName() != null ? !getName().equals(hotel.getName()) : hotel.getName() != null) return false;
+        if (getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null) return false;
+        return !(getRooms() != null ? !getRooms().equals(hotel.getRooms()) : hotel.getRooms() != null);
+
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Hotel other = (Hotel) obj;
-        if (!Objects.equals(this.name, other.name)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        int result = getName() != null ? getName().hashCode() : 0;
+        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
+        result = 31 * result + (getRooms() != null ? getRooms().hashCode() : 0);
+        return result;
     }
-    
-    
-   
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
 }
