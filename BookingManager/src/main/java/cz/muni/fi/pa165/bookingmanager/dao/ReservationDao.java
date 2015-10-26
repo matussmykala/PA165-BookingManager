@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
@@ -10,7 +5,10 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import java.util.List;
 
 /**
- *
+ * Created 26.10.2015
+ * 
+ * Interface with CRUD operations for Reservation
+ * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 public interface ReservationDao {
