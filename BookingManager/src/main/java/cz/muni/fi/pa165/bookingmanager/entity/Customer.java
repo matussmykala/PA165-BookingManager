@@ -54,6 +54,13 @@ public class Customer {
 
     private boolean isAdmin;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -118,9 +125,9 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (!name.equals(customer.name)) return false;
-        if (!surname.equals(customer.surname)) return false;
-        return email.equals(customer.email);
+        if (!name.equals(customer.getName())) return false;
+        if (!surname.equals(customer.getSurname())) return false;
+        return email.equals(customer.getEmail());
 
     }
 
