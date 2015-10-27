@@ -8,7 +8,10 @@ import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,6 +26,8 @@ import static org.junit.Assert.*;
  * @author Vladimir Caniga
  */
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@Transactional
 public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Inject
@@ -84,6 +89,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testFindById() throws Exception {
+        hotel2.addRoom(room1);
         hotelDao.create(hotel2);
         room1.setHotel(hotel2);
         roomDao.create(room1);
@@ -98,6 +104,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testFindByName() throws Exception {
+        hotel1.addRoom(room2);
         hotelDao.create(hotel1);
         room2.setHotel(hotel1);
         roomDao.create(room2);
@@ -126,6 +133,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Test
     public void testUpdate() throws Exception {
+        hotel3.addRoom(room3);
         hotelDao.create(hotel3);
         room3.setHotel(hotel3);
         roomDao.create(room3);
