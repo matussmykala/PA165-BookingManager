@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import java.util.Collections;
 import javax.persistence.*;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -87,7 +88,7 @@ public class Hotel {
      * @return list of hotel rooms
      */
     public List<Room> getRooms() {
-        return rooms;
+        return Collections.unmodifiableList(rooms);
     }
 
     /**
@@ -95,8 +96,8 @@ public class Hotel {
      * 
      * @param rooms
      */
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
+    public void setRooms(Room room) {
+        this.rooms.add(room);
     }
     
     /**
