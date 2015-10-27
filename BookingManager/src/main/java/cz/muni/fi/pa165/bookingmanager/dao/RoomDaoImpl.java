@@ -10,6 +10,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
+ * Class implements basic CRUD operations for entity Room.
+ *
  * Created on 25.10.2015.
  *
  * @author Vladimir Caniga
