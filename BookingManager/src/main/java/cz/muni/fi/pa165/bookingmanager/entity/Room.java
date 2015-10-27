@@ -5,11 +5,14 @@
  */
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Check;
 
@@ -28,12 +31,14 @@ public class Room {
     private String name;
 
     @NotNull
-    @Check(constraints = "numberOfBeds > 0")
+    @Min(1)
     private int numberOfBeds;
 
     @NotNull
-    @Check(constraints = "price >= 0")
-    private double price;
+    @Min(0)
+    private BigDecimal price;
+    
+    private Currency currency;
 
     @ManyToOne
     private Hotel hotel;
@@ -65,14 +70,6 @@ public class Room {
         this.numberOfBeds = numberOfBeds;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -88,6 +85,24 @@ public class Room {
     public Set<Reservation> getReservations(){
         return Collections.unmodifiableSet(reservations);
     }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+    
+    
 
     @Override
     public int hashCode() {

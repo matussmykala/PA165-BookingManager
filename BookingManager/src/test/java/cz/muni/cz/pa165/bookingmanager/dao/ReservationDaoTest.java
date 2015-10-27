@@ -38,6 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
 public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
+    /*
         
     @Inject
     public ReservationDao reservationDao;
@@ -63,6 +64,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Create tested objects
      */
+    /*
     @Before
     public void createTestData(){
         r1 = new Reservation();
@@ -116,6 +118,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Clear reservations in DB
      */
+    /*
     @After
     public void clearTestData(){
         reservationDao.delete(r1);
@@ -124,6 +127,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test reservation creation
      */
+    /*
     @Test
     public void createTest() throws Exception{        
         assertNotNull(r1.getId());
@@ -132,6 +136,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if reservations contains reservations after creation
      */
+    /*
     @Test
     public void findAllTest() throws Exception{
         reservationDao.create(r2);
@@ -143,6 +148,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if findById method returns correct reservation
      */
+    /*
     @Test
     public void findByIdTest() throws Exception{
         Reservation found = reservationDao.findById(r1.getId());
@@ -155,7 +161,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     
     /**
      * Test if remove method removes reservation
-     */
+     *//*
     @Test
     public void deleteTest() throws Exception{
         reservationDao.create(r2);
@@ -167,6 +173,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if update of reservation attribute is working
      */
+    /*
     @Test
     public void updateTest() throws Exception{
         Date date;
@@ -178,5 +185,5 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         reservationDao.update(r1);       
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),date.getTime());
     }
-   
+   */
 }

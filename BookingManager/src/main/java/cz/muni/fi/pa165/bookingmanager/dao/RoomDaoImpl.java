@@ -17,7 +17,6 @@ import java.util.List;
  * @author Vladimir Caniga
  */
 @Repository
-@Transactional
 public class RoomDaoImpl implements RoomDao {
 
     @PersistenceContext
