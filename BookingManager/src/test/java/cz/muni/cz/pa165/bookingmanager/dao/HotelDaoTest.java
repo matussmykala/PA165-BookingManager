@@ -9,7 +9,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -23,7 +26,9 @@ import static org.junit.Assert.*;
  *
  * @author Vladimir Caniga
  */
+@Transactional
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
@@ -89,6 +94,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         hotelDao.create(hotel2);
         room2.setHotel(hotel2);
         roomDao.create(room2);
+        hotel2.setRooms(room2);
         Hotel hotel = hotelDao.findById(hotel2.getId());
 
         assertNotNull(hotel);
@@ -104,11 +110,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         room1.setHotel(hotel1);
         roomDao.create(room1);
         Hotel hotel = hotelDao.findByName("Kempinski");
-
-        List<Hotel> hotels = hotelDao.findAll();
-        System.err.println(hotels.size());
-        List<Room> rooms = roomDao.findAll();
-        System.err.println(rooms.size());
+        hotel.setRooms(room1);
 
         assertNotNull(hotel);
         assertEquals("Kempinski", hotel.getName());
@@ -136,6 +138,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         hotelDao.create(hotel3);
         room3.setHotel(hotel3);
         roomDao.create(room3);
+        hotel3.setRooms(room3);
         hotel3.setName("NewName");
         hotelDao.update(hotel3);
         Hotel hotel = hotelDao.findById(hotel3.getId());

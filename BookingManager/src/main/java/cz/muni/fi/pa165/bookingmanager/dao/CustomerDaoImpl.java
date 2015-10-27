@@ -1,11 +1,11 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
 /**
  * Created 26.10.2015
@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Repository
-@Transactional
 public class CustomerDaoImpl implements CustomerDao{
 
     @PersistenceContext

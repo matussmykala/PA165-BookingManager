@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,7 +17,6 @@ import java.util.List;
  * @author Vladimir Caniga
  */
 @Repository
-@Transactional
 public class RoomDaoImpl implements RoomDao {
 
     @PersistenceContext

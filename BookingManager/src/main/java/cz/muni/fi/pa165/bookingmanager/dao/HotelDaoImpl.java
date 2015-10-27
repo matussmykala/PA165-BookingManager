@@ -7,7 +7,6 @@ package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -22,7 +21,6 @@ import java.util.List;
  */
 
 @Repository
-@Transactional
 public class HotelDaoImpl implements HotelDao {
 
     
