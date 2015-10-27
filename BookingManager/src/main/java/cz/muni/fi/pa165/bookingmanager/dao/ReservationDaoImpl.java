@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -50,7 +52,8 @@ public class ReservationDaoImpl implements ReservationDao{
      */
     @Override
     public List<Reservation> findAll() {
-        return em.createQuery("SELECT r FROM Reservation r", Reservation.class).getResultList();
+        return Collections.unmodifiableList(
+                em.createQuery("SELECT r FROM Reservation r", Reservation.class).getResultList());
     }
 
     /**

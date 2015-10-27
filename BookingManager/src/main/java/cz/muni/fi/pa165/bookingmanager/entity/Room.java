@@ -5,10 +5,15 @@
  */
 package cz.muni.fi.pa165.bookingmanager.entity;
 
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Currency;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.Check;
 
 /**
  *
@@ -21,20 +26,41 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * room name
+     */
     @NotNull
     private String name;
 
+    /**
+     * number of beds in the room
+     */
     @NotNull
-    @Check(constraints = "numberOfBeds > 0")
+    @Min(1)
     private int numberOfBeds;
 
+    /**
+     * price of this room (value)
+     */
     @NotNull
-    @Check(constraints = "price >= 0")
-    private double price;
+    @Min(0)
+    private BigDecimal price;
 
+    /**
+     * currency of the price
+     */
+    @NotNull
+    private Currency currency;
+
+    /**
+     * The associated hotel to this room.
+     */
     @ManyToOne
     private Hotel hotel;
 
+    /**
+     * The associated reservations to this room.
+     */
     @OneToMany(mappedBy="room")
     private Set<Reservation> reservations = new HashSet<Reservation>();
 
@@ -62,14 +88,6 @@ public class Room {
         this.numberOfBeds = numberOfBeds;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -86,8 +104,20 @@ public class Room {
         return Collections.unmodifiableSet(reservations);
     }
 
-    public void setReservations(Set<Reservation> reservations) {
-        this.reservations = reservations;
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
@@ -96,7 +126,6 @@ public class Room {
         hash = 37 * hash + Objects.hashCode(this.name);
         hash = 37 * hash + Objects.hashCode(this.hotel);
         return hash;
-
     }
 
     @Override
@@ -116,6 +145,4 @@ public class Room {
         }
         return true;
     }
-
-
 }

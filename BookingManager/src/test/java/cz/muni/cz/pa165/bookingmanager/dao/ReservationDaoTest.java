@@ -71,12 +71,12 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         room = new Room();
         room.setName("Room1");
         room.setNumberOfBeds(3);
-        room.setPrice(1500.00);
+        //room.setPrice(1500.00);
         
         hotel = new Hotel();
         hotel.setAddress("Botanicka 68a, Brno");
         hotel.setName("FIMU");
-        hotel.setRooms(room);
+        //hotel.setRooms(room);
         
         customer = new Customer();
         customer.setEmail("cuchy92@gmail.com");

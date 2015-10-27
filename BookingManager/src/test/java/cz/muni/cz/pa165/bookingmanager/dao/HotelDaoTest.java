@@ -14,6 +14,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -59,26 +61,32 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         hotel3.setName("Jasna");
         hotel3.setAddress("Demanovska Dolina");
 
+        Currency eur = Currency.getInstance("EUR");
+
         room1 = new Room();
         room1.setName("001");
         room1.setNumberOfBeds(2);
-        room1.setPrice(100);
+        room1.setPrice(new BigDecimal("100.0"));
+        room1.setCurrency(eur);
 
         room2 = new Room();
         room2.setName("002");
         room2.setNumberOfBeds(3);
-        room2.setPrice(150);
+        room2.setPrice(new BigDecimal("150.0"));
+        room2.setCurrency(eur);
 
         room3 = new Room();
         room3.setName("010");
         room3.setNumberOfBeds(2);
-        room3.setPrice(75);
+        room3.setPrice(new BigDecimal("75.0"));
+        room3.setCurrency(eur);
         room3.setHotel(hotel2);
 
         room4 = new Room();
         room4.setName("123");
         room4.setNumberOfBeds(5);
-        room4.setPrice(340);
+        room4.setPrice(new BigDecimal("340"));
+        room4.setCurrency(eur);
     }
 
     @Test
