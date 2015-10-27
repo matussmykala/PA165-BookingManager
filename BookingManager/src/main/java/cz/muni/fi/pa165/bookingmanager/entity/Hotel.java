@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bookingmanager.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -17,8 +18,10 @@ public class Hotel {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String address;
 
     @OneToMany(mappedBy = "hotel")
