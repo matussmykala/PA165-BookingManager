@@ -16,6 +16,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,7 +58,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Create tested objects
      */
     @Before
-    public void createReservations(){
+    public void createTestData(){
         r1 = new Reservation();
         r2 = new Reservation();
         
