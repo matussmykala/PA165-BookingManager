@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
@@ -22,6 +23,7 @@ import static org.junit.Assert.*;
  *
  * @author Vladimir Caniga
  */
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
@@ -29,7 +31,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     private RoomDao roomDao;
 
     @Inject
-    HotelDao hotelDao;
+    private HotelDao hotelDao;
 
     private Hotel hotel1;
     private Hotel hotel2;
@@ -85,29 +87,34 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     @Test
     public void testFindById() throws Exception {
         hotelDao.create(hotel2);
-        room1.setHotel(hotel2);
-        roomDao.create(room1);
+        room2.setHotel(hotel2);
+        roomDao.create(room2);
         Hotel hotel = hotelDao.findById(hotel2.getId());
 
         assertNotNull(hotel);
         assertEquals("Devin", hotel.getName());
         assertEquals("Bratislava", hotel.getAddress());
         assertEquals(1, hotel.getRooms().size());
-        assertEquals(room1, hotel.getRooms().get(0));
+        assertEquals(room2, hotel.getRooms().get(0));
     }
 
     @Test
     public void testFindByName() throws Exception {
         hotelDao.create(hotel1);
-        room2.setHotel(hotel1);
-        roomDao.create(room2);
+        room1.setHotel(hotel1);
+        roomDao.create(room1);
         Hotel hotel = hotelDao.findByName("Kempinski");
+
+        List<Hotel> hotels = hotelDao.findAll();
+        System.err.println(hotels.size());
+        List<Room> rooms = roomDao.findAll();
+        System.err.println(rooms.size());
 
         assertNotNull(hotel);
         assertEquals("Kempinski", hotel.getName());
         assertEquals("Strbske Pleso", hotel.getAddress());
         assertEquals(1, hotel.getRooms().size());
-        assertEquals(room2, hotel.getRooms().get(0));
+        assertEquals(room1, hotel.getRooms().get(0));
     }
 
     @Test

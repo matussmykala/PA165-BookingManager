@@ -1,10 +1,10 @@
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.persistence.*;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 
 /**
@@ -102,9 +102,9 @@ public class Hotel {
     }
     
     /**
-     * Check if 2 hotels are equals by name, address and rooms
-     * 
-     * @param hotel
+     * Check if 2 hotels are equals by name and address
+     *
+     * @param o
      * @return true or false
      */
     @Override
@@ -114,22 +114,20 @@ public class Hotel {
 
         Hotel hotel = (Hotel) o;
 
-        if (getName() != null ? !getName().equals(hotel.getName()) : hotel.getName() != null) return false;
-        if (getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null) return false;
-        return !(getRooms() != null ? !getRooms().equals(hotel.getRooms()) : hotel.getRooms() != null);
+        if (!getName().equals(hotel.getName())) return false;
+        return getAddress().equals(hotel.getAddress());
 
     }
-    
+
     /**
-     * Generates specific hashcode by hotel name, address and rooms
-     * 
+     * Generates specific hashcode by hotel name and address
+     *
      * @return hashcode of hotel
      */
     @Override
     public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getRooms() != null ? getRooms().hashCode() : 0);
+        int result = getName().hashCode();
+        result = 31 * result + getAddress().hashCode();
         return result;
     }
 }
