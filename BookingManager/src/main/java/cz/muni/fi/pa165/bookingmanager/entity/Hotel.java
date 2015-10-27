@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import javax.persistence.*;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Hotel {
     private String address;
 
     @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<>();;
 
     /**
      * Get hotel id
