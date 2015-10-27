@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Repository
-@Transactional
 public class CustomerDaoImpl implements CustomerDao{
 
     @PersistenceContext
@@ -51,7 +50,8 @@ public class CustomerDaoImpl implements CustomerDao{
      */
     @Override
     public List<Customer> findByName(String name) {
-        return em.createQuery("SELECT c FROM Customer c WHERE c.name like :name ",Customer.class).setParameter("name", "%"+name+"%").getResultList();
+        return em.createQuery("SELECT c FROM Customer c WHERE c.name like :name ",Customer.class)
+                .setParameter("name", "%"+name+"%").getResultList();
     }
     
     /**

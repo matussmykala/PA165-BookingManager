@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 @Repository
-@Transactional
 public class ReservationDaoImpl implements ReservationDao{
     
     @PersistenceContext
@@ -71,6 +70,6 @@ public class ReservationDaoImpl implements ReservationDao{
      */
     @Override
     public void delete(Reservation reservation) {
-        em.remove(em.contains(reservation) ? reservation : em.merge(reservation));
+        em.remove(reservation);
     }   
 }
