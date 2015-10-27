@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,7 +53,7 @@ public class RoomDaoImpl implements RoomDao {
     @Override
     public List<Room> findAll() {
         TypedQuery<Room> tq = em.createQuery("SELECT r FROM Room r", Room.class);
-        return tq.getResultList();
+        return Collections.unmodifiableList(tq.getResultList());
     }
 
     /**
