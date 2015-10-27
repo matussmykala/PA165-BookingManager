@@ -28,7 +28,7 @@ public class Hotel {
     private String address;
 
     @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms = new ArrayList<>();;
+    private List<Room> rooms = new ArrayList<>();
 
     /**
      * Get hotel id

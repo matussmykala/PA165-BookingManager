@@ -5,7 +5,13 @@
  */
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Check;
 
 /**
  *
@@ -18,14 +24,22 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String name;
 
+    @NotNull
+    @Check(constraints = "numberOfBeds > 0")
     private int numberOfBeds;
 
+    @NotNull
+    @Check(constraints = "price >= 0")
     private double price;
 
     @ManyToOne
     private Hotel hotel;
+    
+    @OneToMany(mappedBy="room")
+    private Set<Reservation> reservations = new HashSet<Reservation>();
 
     public Long getId() {
         return id;
@@ -66,28 +80,40 @@ public class Room {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Room)) return false;
-
-        Room room = (Room) o;
-
-        if (getNumberOfBeds() != room.getNumberOfBeds()) return false;
-        if (Double.compare(room.getPrice(), getPrice()) != 0) return false;
-        return !(getName() != null ? !getName().equals(room.getName()) : room.getName() != null);
-
+    
+    public void setReservation(Reservation r){
+        reservations.add(r);
+    }
+    
+    public Set<Reservation> getReservations(){
+        return Collections.unmodifiableSet(reservations);
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + getNumberOfBeds();
-        temp = Double.doubleToLongBits(getPrice());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.hotel);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.hotel, other.hotel)) {
+            return false;
+        }
+        return true;
+    }
+
+   
 }
