@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.bookingmanager.entity;
 import java.util.Collections;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
 
@@ -99,36 +100,33 @@ public class Hotel {
     public void setRooms(Room room) {
         this.rooms.add(room);
     }
-    
-    /**
-     * Check if 2 hotels are equals by name, address and rooms
-     * 
-     * @param hotel
-     * @return true or false
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Hotel)) return false;
 
-        Hotel hotel = (Hotel) o;
-
-        if (getName() != null ? !getName().equals(hotel.getName()) : hotel.getName() != null) return false;
-        if (getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null) return false;
-        return !(getRooms() != null ? !getRooms().equals(hotel.getRooms()) : hotel.getRooms() != null);
-
-    }
-    
-    /**
-     * Generates specific hashcode by hotel name, address and rooms
-     * 
-     * @return hashcode of hotel
-     */
     @Override
     public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getRooms() != null ? getRooms().hashCode() : 0);
-        return result;
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + Objects.hashCode(this.address);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hotel other = (Hotel) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }
