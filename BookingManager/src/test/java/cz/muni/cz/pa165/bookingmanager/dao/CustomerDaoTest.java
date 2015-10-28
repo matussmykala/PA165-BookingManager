@@ -101,4 +101,34 @@ public class CustomerDaoTest extends AbstractJUnit4SpringContextTests {
         assertTrue(found.size() == 3);
         assertTrue(found.contains(customer3));
     }
+
+    @Test
+    public void updateTest(){
+        customer1.setName("newName");
+        customer1.setUsername("newUsername");
+        customer1.setPassword("newPassword");
+        customer1.setSurname("newSurname");
+        customerDao.update(customer1);
+
+        Customer found = customerDao.findById(customer1.getId());
+        assertEquals("newName", found.getName());
+        assertEquals("newUsername", found.getUsername());
+        assertEquals("newPassword", found.getPassword());
+        assertEquals("newSurname", found.getSurname());
+    }
+
+    @Test
+    public void deleteTest(){
+        List<Customer> found = customerDao.findAll();
+        int size = found.size();
+
+        customerDao.delete(customer1);
+        found = customerDao.findAll();
+        assertTrue(found.size() + 1 == size);
+
+        size = found.size();
+        customerDao.delete(customer2);
+        found = customerDao.findAll();
+        assertTrue(found.size() + 1 == size);
+    }
 }
