@@ -47,7 +47,7 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public List<Hotel> findAll() {
-        return Collections.unmodifiableList((em.createQuery("Select h from Hotel h", Hotel.class)).getResultList());
+        return em.createQuery("Select h from Hotel h", Hotel.class).getResultList();
     }
 
     @Override

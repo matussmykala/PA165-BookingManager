@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -37,7 +38,7 @@ public class Hotel {
      * list of all rooms that are associated with this hotel
      */
     @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms = new ArrayList<>();;
+    private List<Room> rooms = new ArrayList<>();
 
 
     public Long getId() {
@@ -75,6 +76,9 @@ public class Hotel {
     public void addRoom(Room room){
         this.rooms.add(room);
     }
+<<<<<<< HEAD
+
+=======
     
     /**
      * Check if 2 hotels are equal according to name, address and rooms
@@ -100,11 +104,33 @@ public class Hotel {
      * 
      * @return hashcode of hotel
      */
+>>>>>>> origin/master
     @Override
     public int hashCode() {
-        int result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getRooms() != null ? getRooms().hashCode() : 0);
-        return result;
+        int hash = 3;
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + Objects.hashCode(this.address);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Hotel other = (Hotel) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }

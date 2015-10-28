@@ -43,6 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
+    /*
         
     @Inject
     public ReservationDao reservationDao;
@@ -71,6 +72,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Create tested objects
      */
+    /*
     @Before
     public void createTestData(){
         r1 = new Reservation();
@@ -137,10 +139,24 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         reservationDao.create(r2);
         
     }
+<<<<<<< HEAD
+    
+    /**
+     * Clear reservations in DB
+     */
+    /*
+    @After
+    public void clearTestData(){
+        reservationDao.delete(r1);
+    }
+    
+=======
         
+>>>>>>> origin/master
     /**
      * Test reservation creation
      */
+    /*
     @Test
     public void testCreate() throws Exception{        
         assertNotNull(r1.getId());
@@ -149,6 +165,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if reservations contains created reservations
      */
+    /*
     @Test
     public void testFindAll() throws Exception{
         List<Reservation> found = reservationDao.findAll();
@@ -158,6 +175,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if findById method returns correct reservation
      */
+    /*
     @Test
     public void testFindById() throws Exception{
         Reservation found = reservationDao.findById(r1.getId());
@@ -170,7 +188,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     
     /**
      * Test if remove method removes reservation
-     */
+     *//*
     @Test
     public void testDelete() throws Exception{
         
@@ -185,6 +203,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if update of reservation attributes is working
      */
+    /*
     @Test
     public void testUpdate() throws Exception{
         
@@ -208,6 +227,9 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         Assert.assertEquals(reservationDao.findById(r1.getId()).getCustomer(), r1.getCustomer());
         Assert.assertEquals(reservationDao.findById(r1.getId()).getRoom(), r1.getRoom());
     }
+<<<<<<< HEAD
+   */
+=======
    
     /**
      * Test null reservation creation
@@ -262,4 +284,5 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
             //ok
         }
     }*/
+>>>>>>> origin/master
 }

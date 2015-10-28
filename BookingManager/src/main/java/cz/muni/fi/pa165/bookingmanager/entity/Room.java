@@ -14,6 +14,10 @@ import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+<<<<<<< HEAD
+import org.hibernate.annotations.Check;
+=======
+>>>>>>> origin/master
 
 /**
  *
@@ -26,6 +30,11 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
+    @NotNull
+    private String name;
+
+=======
     /**
      * room name
      */
@@ -35,10 +44,19 @@ public class Room {
     /**
      * number of beds in the room
      */
+>>>>>>> origin/master
     @NotNull
     @Min(1)
     private int numberOfBeds;
 
+<<<<<<< HEAD
+    @NotNull
+    @Min(0)
+    private BigDecimal price;
+    
+    private Currency currency;
+
+=======
     /**
      * price of this room (value)
      */
@@ -55,8 +73,12 @@ public class Room {
     /**
      * The associated hotel to this room.
      */
+>>>>>>> origin/master
     @ManyToOne
     private Hotel hotel;
+    
+    @OneToMany(mappedBy="room")
+    private Set<Reservation> reservations = new HashSet<Reservation>();
 
     /**
      * The associated reservations to this room.
@@ -95,7 +117,29 @@ public class Room {
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
+    
+    public void setReservation(Reservation r){
+        reservations.add(r);
+    }
+    
+    public Set<Reservation> getReservations(){
+        return Collections.unmodifiableSet(reservations);
+    }
 
+<<<<<<< HEAD
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+=======
     public void setReservation(Reservation r){
         reservations.add(r);
     }
@@ -116,9 +160,12 @@ public class Room {
         return currency;
     }
 
+>>>>>>> origin/master
     public void setCurrency(Currency currency) {
         this.currency = currency;
     }
+    
+    
 
     @Override
     public int hashCode() {
@@ -126,6 +173,27 @@ public class Room {
         hash = 37 * hash + Objects.hashCode(this.name);
         hash = 37 * hash + Objects.hashCode(this.hotel);
         return hash;
+<<<<<<< HEAD
+=======
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.hotel, other.hotel)) {
+            return false;
+        }
+        return true;
+>>>>>>> origin/master
     }
 
     @Override
@@ -145,4 +213,6 @@ public class Room {
         }
         return true;
     }
+
+   
 }
