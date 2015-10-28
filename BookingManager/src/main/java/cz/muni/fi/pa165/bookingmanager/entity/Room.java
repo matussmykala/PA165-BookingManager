@@ -5,7 +5,15 @@
  */
 package cz.muni.fi.pa165.bookingmanager.entity;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Currency;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,14 +26,43 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * room name
+     */
+    @NotNull
     private String name;
 
+    /**
+     * number of beds in the room
+     */
+    @NotNull
+    @Min(1)
     private int numberOfBeds;
 
-    private double price;
+    /**
+     * price of this room (value)
+     */
+    @NotNull
+    @Min(0)
+    private BigDecimal price;
 
+    /**
+     * currency of the price
+     */
+    @NotNull
+    private Currency currency;
+
+    /**
+     * The associated hotel to this room.
+     */
     @ManyToOne
     private Hotel hotel;
+
+    /**
+     * The associated reservations to this room.
+     */
+    @OneToMany(mappedBy="room")
+    private Set<Reservation> reservations = new HashSet<Reservation>();
 
     public Long getId() {
         return id;
@@ -51,14 +88,6 @@ public class Room {
         this.numberOfBeds = numberOfBeds;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -67,27 +96,53 @@ public class Room {
         this.hotel = hotel;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Room)) return false;
+    public void setReservation(Reservation r){
+        reservations.add(r);
+    }
 
-        Room room = (Room) o;
+    public Set<Reservation> getReservations(){
+        return Collections.unmodifiableSet(reservations);
+    }
 
-        if (getNumberOfBeds() != room.getNumberOfBeds()) return false;
-        if (Double.compare(room.getPrice(), getPrice()) != 0) return false;
-        return !(getName() != null ? !getName().equals(room.getName()) : room.getName() != null);
+    public BigDecimal getPrice() {
+        return price;
+    }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = getName() != null ? getName().hashCode() : 0;
-        result = 31 * result + getNumberOfBeds();
-        temp = Double.doubleToLongBits(getPrice());
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        int hash = 7;
+        hash = 37 * hash + Objects.hashCode(this.name);
+        hash = 37 * hash + Objects.hashCode(this.hotel);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Room other = (Room) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.hotel, other.hotel)) {
+            return false;
+        }
+        return true;
     }
 }

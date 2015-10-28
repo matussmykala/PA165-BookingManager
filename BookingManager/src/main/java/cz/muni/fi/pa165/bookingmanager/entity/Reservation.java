@@ -91,7 +91,6 @@ public class Reservation {
 
         if (!getStartOfReservation().equals(that.getStartOfReservation())) return false;
         return getEndOfReservation().equals(that.getEndOfReservation());
-
     }
 
     @Override
