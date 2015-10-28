@@ -15,19 +15,18 @@ import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
-import javax.inject.Inject;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-
-
 
 /**
  * Created 26.10.2015
@@ -42,16 +41,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         
-    @Inject
+    @Autowired
     public ReservationDao reservationDao;
     
-    @Inject
+    @Autowired
     private RoomDao roomDao;
     
-    @Inject 
+    @Autowired
     private HotelDao hotelDao;
     
-    @Inject 
+    @Autowired
     private CustomerDao customerDao;
     
     private Reservation r1;
