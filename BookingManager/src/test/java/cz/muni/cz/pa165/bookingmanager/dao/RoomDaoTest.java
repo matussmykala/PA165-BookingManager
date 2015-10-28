@@ -5,7 +5,6 @@
  */
 package cz.muni.cz.pa165.bookingmanager.dao;
 
-import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
 import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;

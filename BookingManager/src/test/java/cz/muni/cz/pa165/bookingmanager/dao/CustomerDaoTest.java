@@ -1,6 +1,5 @@
 package cz.muni.cz.pa165.bookingmanager.dao;
 
-import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import org.junit.Before;
@@ -97,6 +96,7 @@ public class CustomerDaoTest extends AbstractJUnit4SpringContextTests {
         assertTrue(found.contains(customer2));
 
         customerDao.create(customer3);
+        found = customerDao.findAll();
         assertTrue(found.size() == 3);
         assertTrue(found.contains(customer3));
     }
