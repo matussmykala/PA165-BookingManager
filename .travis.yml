@@ -3,7 +3,7 @@ language: java
 install: cd BookingManager; mvn clean install;
 
 jdk:
-  - openjdk7
+  - oraclejdk8
 
 branches:
   only:
