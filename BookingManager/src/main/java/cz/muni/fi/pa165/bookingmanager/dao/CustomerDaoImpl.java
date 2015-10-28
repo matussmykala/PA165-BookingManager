@@ -52,7 +52,7 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public List<Customer> findByName(String name) {
         return Collections.unmodifiableList(em.createQuery("SELECT c FROM Customer c WHERE c.name = :name ",Customer.class)
-                .setParameter("name", "%"+name+"%").getResultList());
+                .setParameter("name", name).getResultList());
     }
     
     /**
