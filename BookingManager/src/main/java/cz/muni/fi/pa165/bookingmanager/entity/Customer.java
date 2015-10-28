@@ -113,6 +113,14 @@ public class Customer {
         this.reservations.add(reservation);
     }
 
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+    }
+
+    public void removeReservation(Reservation reservation) {
+        this.reservations.remove(reservation);
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }
