@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.bookingmanager.entity;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -52,7 +50,7 @@ public class Customer {
      * List of all reservation that are associated with this customer.
      */
     @OneToMany(mappedBy = "customer")
-    private List<Reservation> reservations = new ArrayList<Reservation>();
+    private List<Reservation> reservations;
 
     private boolean isAdmin;
 
@@ -103,14 +101,13 @@ public class Customer {
     public void setPassword(String password) {
         this.password = password;
     }
-    
- 
+
     public List<Reservation> getReservations() {
-        return Collections.unmodifiableList(reservations);
+        return reservations;
     }
 
-    public void setReservations(Reservation reservation) {
-        this.reservations.add(reservation);
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public boolean isAdmin() {
