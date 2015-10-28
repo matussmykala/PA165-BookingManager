@@ -1,6 +1,5 @@
 package cz.muni.cz.pa165.bookingmanager.dao;
 
-import com.sun.xml.internal.ws.policy.spi.AssertionCreationException;
 import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -144,15 +142,15 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test reservation creation
      */
     @Test
-    public void createTest() throws Exception{        
+    public void testCreate() throws Exception{        
         assertNotNull(r1.getId());
     }
-    
+       
     /**
      * Test if reservations contains created reservations
      */
     @Test
-    public void findAllTest() throws Exception{
+    public void testFindAll() throws Exception{
         List<Reservation> found = reservationDao.findAll();
         Assert.assertEquals(found.size(), 2);
     }
@@ -161,7 +159,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if findById method returns correct reservation
      */
     @Test
-    public void findByIdTest() throws Exception{
+    public void testFindById() throws Exception{
         Reservation found = reservationDao.findById(r1.getId());
         Assert.assertEquals(found.getCustomer(),customer);
         Assert.assertEquals(found.getEndOfReservation().getTime(),date2.getTime());
@@ -174,7 +172,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if remove method removes reservation
      */
     @Test
-    public void deleteTest() throws Exception{
+    public void testDelete() throws Exception{
         
         //Test if Data exist
         Assert.assertNotNull(reservationDao.findById(r2.getId()));
@@ -188,7 +186,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if update of reservation attributes is working
      */
     @Test
-    public void updateTest() throws Exception{
+    public void testUpdate() throws Exception{
         
         //Test data before change
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),r1.getStartOfReservation().getTime());
@@ -212,33 +210,56 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     }
    
     /**
-     * Test if start date of reservation is less than end date of reservation
+     * Test null reservation creation
      */
     @Test(expected = IllegalArgumentException.class)
-    public void reservationDurationTest() throws Exception{
-        r1.setStartOfReservation(date2);
-        r1.setEndOfReservation(date1);
-        reservationDao.create(r1);
+    public void testCreateWithWrongAttribute() throws Exception{        
+        reservationDao.create(null);    
     }
     
     /**
-     * Test if room argument is correct
+     * Test find by null id
      */
-    @Test
-    public void reservationRoomArgumentTest() throws Exception{            
-
-        r1.setRoom(null);
-        reservationDao.create(r1);
-
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindByIdWithWrongAtributes() {
+        reservationDao.findById(null);
     }
     
     /**
-     * Test if room argument is correct
+     * Test update by null id
      */
-    @Test
-    public void reservationCustomerArgumentTest() throws Exception{
-        r1.setCustomer(null);
-        reservationDao.create(r1);
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateWithWrongAtributes() {
+        reservationDao.update(null);
     }
     
+    /**
+     * Test delete by null id
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteWithWrongAtributes() {
+        reservationDao.delete(null);
+    }
+    
+    //
+    // TODO
+    //
+    
+    /*@Test
+    public void testCreateWithDateWrongAtributes() {
+        
+        //try to create reservation with EndOfReservation date value null
+        Reservation r3 = new Reservation();
+        r3.setCustomer(customer);
+        r3.setRoom(room);
+        r3.setStartOfReservation(date1); 
+        r3.setEndOfReservation(null); 
+        
+        try {
+            reservationDao.create(r3);
+            fail();
+        } catch (ConstraintViolationException cve) {
+            //ok
+        }
+    }*/
 }

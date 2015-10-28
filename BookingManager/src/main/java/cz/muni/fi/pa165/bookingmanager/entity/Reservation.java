@@ -22,26 +22,26 @@ public class Reservation {
      * The starting date of a hotel room reservation.
      */
     @NotNull
+    //@Temporal(TemporalType.TIMESTAMP)
     private Date startOfReservation;
 
     /**
      * The ending date of a hotel room reservation.
      */
     @NotNull
+    //@Temporal(TemporalType.TIMESTAMP)
     private Date endOfReservation;
 
     /**
      * The associated customer to this reservation.
      */
     @ManyToOne
-    @NotNull
     private Customer customer;
 
     /**
      * The associated room to this reservation.
      */
     @ManyToOne
-    @NotNull
     private Room room;
 
     public Long getId() {
@@ -50,6 +50,7 @@ public class Reservation {
 
     public void setId(Long id) {
         this.id = id;
+        
     }
 
     public Date getStartOfReservation() {
@@ -57,15 +58,7 @@ public class Reservation {
     }
 
     public void setStartOfReservation(Date startOfReservation){
-        if(endOfReservation == null){
-            this.startOfReservation=startOfReservation;
-        }else{
-            if(startOfReservation.compareTo(this.endOfReservation)<0){
-                this.startOfReservation = startOfReservation;
-            }else{
-                throw new IllegalArgumentException();
-            }
-        }
+        this.startOfReservation=startOfReservation;
     }
 
     public Date getEndOfReservation() {
@@ -73,15 +66,7 @@ public class Reservation {
     }
 
     public void setEndOfReservation(Date endOfReservation) {
-        if(startOfReservation == null){
-            this.endOfReservation=endOfReservation;
-        }else{
-            if(this.startOfReservation.compareTo(endOfReservation)<0){
-                this.endOfReservation = endOfReservation;
-            }else{
-                throw new IllegalArgumentException();
-            }
-        }
+        this.endOfReservation=endOfReservation;
     }
 
     public Customer getCustomer() {
@@ -108,6 +93,8 @@ public class Reservation {
         Reservation that = (Reservation) o;
 
         if (!getStartOfReservation().equals(that.getStartOfReservation())) return false;
+        if (!getCustomer().equals(that.getCustomer())) return false;
+        if (!getRoom().equals(that.getRoom())) return false;
         return getEndOfReservation().equals(that.getEndOfReservation());
     }
 
