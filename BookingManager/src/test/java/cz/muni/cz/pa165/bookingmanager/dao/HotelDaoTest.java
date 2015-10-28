@@ -7,13 +7,13 @@ import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
@@ -32,11 +32,11 @@ import static org.junit.Assert.*;
 @Transactional
 public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
 
-    @Inject
+    @Autowired
     private RoomDao roomDao;
 
-    @Inject
-    HotelDao hotelDao;
+    @Autowired
+    private HotelDao hotelDao;
 
     private Hotel hotel1;
     private Hotel hotel2;

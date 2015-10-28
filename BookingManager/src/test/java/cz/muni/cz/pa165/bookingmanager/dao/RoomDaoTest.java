@@ -19,13 +19,12 @@ import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
-import javax.inject.Inject;
 import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -44,16 +43,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
 
-    @Inject
+    @Autowired
     private ReservationDao reservationDao;
 
-    @Inject
+    @Autowired
     private RoomDao roomDao;
 
-    @Inject
+    @Autowired
     private CustomerDao customerDao;
 
-    @Inject
+    @Autowired
     private HotelDao hotelDao;
 
     private Room room1;
