@@ -22,12 +22,14 @@ public class Reservation {
      * The starting date of a hotel room reservation.
      */
     @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startOfReservation;
 
     /**
      * The ending date of a hotel room reservation.
      */
     @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date endOfReservation;
 
     /**
@@ -48,14 +50,18 @@ public class Reservation {
 
     public void setId(Long id) {
         this.id = id;
+        
     }
 
     public Date getStartOfReservation() {
         return startOfReservation;
     }
 
-    public void setStartOfReservation(Date startOfReservation) {
-        this.startOfReservation = startOfReservation;
+    public void setStartOfReservation(Date startOfReservation){
+        if ((this.endOfReservation != null) && (startOfReservation != null) && !this.endOfReservation.after(startOfReservation)) {
+            throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
+        this.startOfReservation=startOfReservation;
     }
 
     public Date getEndOfReservation() {
@@ -63,7 +69,10 @@ public class Reservation {
     }
 
     public void setEndOfReservation(Date endOfReservation) {
-        this.endOfReservation = endOfReservation;
+        if ((endOfReservation != null) && (this.startOfReservation != null) && !endOfReservation.after(this.startOfReservation)) {
+            throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
+        this.endOfReservation=endOfReservation;
     }
 
     public Customer getCustomer() {
@@ -90,6 +99,8 @@ public class Reservation {
         Reservation that = (Reservation) o;
 
         if (!getStartOfReservation().equals(that.getStartOfReservation())) return false;
+        if (!getCustomer().equals(that.getCustomer())) return false;
+        if (!getRoom().equals(that.getRoom())) return false;
         return getEndOfReservation().equals(that.getEndOfReservation());
     }
 
