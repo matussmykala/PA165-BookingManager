@@ -6,14 +6,13 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import java.util.Collections;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created on 24.10.2015.
@@ -58,7 +57,7 @@ public class HotelDaoImpl implements HotelDao {
 
     @Override
     public void delete(Hotel hotel) {
-        em.remove(em.contains(hotel) ? hotel : em.merge(hotel));
+        em.remove(hotel);
     }
 
 }

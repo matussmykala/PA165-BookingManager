@@ -1,12 +1,12 @@
 package cz.muni.cz.pa165.bookingmanager.dao;
 
+import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -27,7 +27,6 @@ import static org.junit.Assert.*;
  *
  * @author Vladimir Caniga
  */
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
@@ -37,7 +36,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     private RoomDao roomDao;
 
     @Inject
-    private HotelDao hotelDao;
+    HotelDao hotelDao;
 
     private Hotel hotel1;
     private Hotel hotel2;
@@ -100,35 +99,30 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     public void testFindById() throws Exception {
         hotel2.addRoom(room1);
         hotelDao.create(hotel2);
-        room2.setHotel(hotel2);
-        roomDao.create(room2);
+        room1.setHotel(hotel2);
+        roomDao.create(room1);
         Hotel hotel = hotelDao.findById(hotel2.getId());
 
         assertNotNull(hotel);
         assertEquals("Devin", hotel.getName());
         assertEquals("Bratislava", hotel.getAddress());
         assertEquals(1, hotel.getRooms().size());
-        assertEquals(room2, hotel.getRooms().get(0));
+        assertEquals(room1, hotel.getRooms().get(0));
     }
 
     @Test
     public void testFindByName() throws Exception {
         hotel1.addRoom(room2);
         hotelDao.create(hotel1);
-        room1.setHotel(hotel1);
-        roomDao.create(room1);
+        room2.setHotel(hotel1);
+        roomDao.create(room2);
         Hotel hotel = hotelDao.findByName("Kempinski");
-
-        List<Hotel> hotels = hotelDao.findAll();
-        System.err.println(hotels.size());
-        List<Room> rooms = roomDao.findAll();
-        System.err.println(rooms.size());
 
         assertNotNull(hotel);
         assertEquals("Kempinski", hotel.getName());
         assertEquals("Strbske Pleso", hotel.getAddress());
         assertEquals(1, hotel.getRooms().size());
-        assertEquals(room1, hotel.getRooms().get(0));
+        assertEquals(room2, hotel.getRooms().get(0));
     }
 
     @Test
