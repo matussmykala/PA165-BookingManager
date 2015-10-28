@@ -22,14 +22,14 @@ public class Reservation {
      * The starting date of a hotel room reservation.
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date startOfReservation;
 
     /**
      * The ending date of a hotel room reservation.
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date endOfReservation;
 
     /**
@@ -58,6 +58,9 @@ public class Reservation {
     }
 
     public void setStartOfReservation(Date startOfReservation){
+        if ((this.endOfReservation != null) && (startOfReservation != null) && !this.endOfReservation.after(startOfReservation)) {
+            throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
         this.startOfReservation=startOfReservation;
     }
 
@@ -66,6 +69,9 @@ public class Reservation {
     }
 
     public void setEndOfReservation(Date endOfReservation) {
+        if ((endOfReservation != null) && (this.startOfReservation != null) && !endOfReservation.after(this.startOfReservation)) {
+            throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
         this.endOfReservation=endOfReservation;
     }
 
