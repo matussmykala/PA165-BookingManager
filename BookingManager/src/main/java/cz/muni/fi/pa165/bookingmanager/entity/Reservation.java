@@ -34,12 +34,14 @@ public class Reservation {
      * The associated customer to this reservation.
      */
     @ManyToOne
+    @NotNull
     private Customer customer;
 
     /**
      * The associated room to this reservation.
      */
     @ManyToOne
+    @NotNull
     private Room room;
 
     public Long getId() {
@@ -54,8 +56,16 @@ public class Reservation {
         return startOfReservation;
     }
 
-    public void setStartOfReservation(Date startOfReservation) {
-        this.startOfReservation = startOfReservation;
+    public void setStartOfReservation(Date startOfReservation){
+        if(endOfReservation == null){
+            this.startOfReservation=startOfReservation;
+        }else{
+            if(startOfReservation.compareTo(this.endOfReservation)<0){
+                this.startOfReservation = startOfReservation;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     public Date getEndOfReservation() {
@@ -63,7 +73,15 @@ public class Reservation {
     }
 
     public void setEndOfReservation(Date endOfReservation) {
-        this.endOfReservation = endOfReservation;
+        if(startOfReservation == null){
+            this.endOfReservation=endOfReservation;
+        }else{
+            if(this.startOfReservation.compareTo(endOfReservation)<0){
+                this.endOfReservation = endOfReservation;
+            }else{
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     public Customer getCustomer() {

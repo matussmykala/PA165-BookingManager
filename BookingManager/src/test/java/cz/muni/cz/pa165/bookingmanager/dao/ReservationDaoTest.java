@@ -1,5 +1,6 @@
 package cz.muni.cz.pa165.bookingmanager.dao;
 
+import com.sun.xml.internal.ws.policy.spi.AssertionCreationException;
 import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
@@ -9,15 +10,19 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -62,6 +67,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     private Customer customer2;
     private Date date1;
     private Date date2;
+    private Currency euro;
             
     
     /**
@@ -72,20 +78,24 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         r1 = new Reservation();
         r2 = new Reservation();
         
+        euro = Currency.getInstance("EUR");
+        
         room = new Room();
         room.setName("Room1");
         room.setNumberOfBeds(3);
-        room.setPrice(1500.00);
+        room.setCurrency(euro);
+        room.setPrice(new BigDecimal("15.0"));
         
         room2 = new Room();
         room2.setName("Room2");
         room2.setNumberOfBeds(3);
-        room2.setPrice(1500.00);
+        room2.setCurrency(euro);
+        room2.setPrice(new BigDecimal("20.0"));
         
         hotel = new Hotel();
         hotel.setAddress("Botanicka 68a, Brno");
         hotel.setName("FIMU");
-        hotel.setRooms(room);
+        hotel.addRoom(room);
         
         customer = new Customer();
         customer.setEmail("cuchy92@gmail.com");
@@ -188,7 +198,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         //Change data
         Date date;
         Calendar cal = Calendar.getInstance();
-	cal.set(2015, 12, 26);
+	cal.set(2015, 9, 26);
 	date = cal.getTime();
         r1.setStartOfReservation(date);
         r1.setCustomer(customer2);
@@ -214,18 +224,21 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if room argument is correct
      */
-    @Test(expected = IllegalArgumentException.class)
-    public void reservationRoomArgumentTest() throws Exception{
+    @Test
+    public void reservationRoomArgumentTest() throws Exception{            
+
         r1.setRoom(null);
         reservationDao.create(r1);
+
     }
     
     /**
      * Test if room argument is correct
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void reservationCustomerArgumentTest() throws Exception{
         r1.setCustomer(null);
         reservationDao.create(r1);
     }
+    
 }
