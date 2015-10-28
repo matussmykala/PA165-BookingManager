@@ -22,14 +22,14 @@ public class Reservation {
      * The starting date of a hotel room reservation.
      */
     @NotNull
-    //@Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startOfReservation;
 
     /**
      * The ending date of a hotel room reservation.
      */
     @NotNull
-    //@Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endOfReservation;
 
     /**
