@@ -15,12 +15,10 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
-import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -169,7 +167,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
 }
     
     /**
-     * Test if remove method removes reservation
+     * Test if delete method removes reservation
      */
     @Test
     public void testDelete() throws Exception{
@@ -240,26 +238,4 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void testDeleteWithWrongAtributes() {
         reservationDao.delete(null);
     }
-    
-    //
-    // TODO
-    //
-    
-    /*@Test
-    public void testCreateWithDateWrongAtributes() {
-        
-        //try to create reservation with EndOfReservation date value null
-        Reservation r3 = new Reservation();
-        r3.setCustomer(customer);
-        r3.setRoom(room);
-        r3.setStartOfReservation(date1); 
-        r3.setEndOfReservation(null); 
-        
-        try {
-            reservationDao.create(r3);
-            fail();
-        } catch (ConstraintViolationException cve) {
-            //ok
-        }
-    }*/
 }
