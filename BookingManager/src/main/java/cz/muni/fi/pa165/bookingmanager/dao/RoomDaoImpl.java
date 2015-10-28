@@ -72,6 +72,6 @@ public class RoomDaoImpl implements RoomDao {
      */
     @Override
     public void delete(Room room) {
-        em.remove(em.contains(room) ? room : em.merge(room));
+        em.remove(room);
     }
 }

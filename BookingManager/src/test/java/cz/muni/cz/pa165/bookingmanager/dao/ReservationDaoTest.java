@@ -9,7 +9,10 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+
+import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -67,16 +70,19 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void createTestData(){
         r1 = new Reservation();
         r2 = new Reservation();
-        
+
+        Currency czk = Currency.getInstance("CZK");
+
         room = new Room();
         room.setName("Room1");
         room.setNumberOfBeds(3);
-        room.setPrice(1500.00);
+        room.setPrice(new BigDecimal("1500.00"));
+        room.setCurrency(czk);
         
         hotel = new Hotel();
         hotel.setAddress("Botanicka 68a, Brno");
         hotel.setName("FIMU");
-        hotel.setRooms(room);
+        hotel.addRoom(room);
         
         customer = new Customer();
         customer.setEmail("cuchy92@gmail.com");
@@ -85,16 +91,14 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         customer.setPassword("12345");
         customer.setSurname("Cuchran");
         customer.setUsername("cuchy92");
-        
-        
 
         Calendar cal1 = Calendar.getInstance();
-	cal1.set(2015, 10, 26);
-	date1 = cal1.getTime();
+	    cal1.set(2015, 10, 26);
+	    date1 = cal1.getTime();
         
         Calendar cal2 = Calendar.getInstance();
         cal2.set(2015, 11, 29);
-	date2 = cal2.getTime();
+	    date2 = cal2.getTime();
         
         r1.setCustomer(customer);
         r1.setRoom(room);
@@ -110,7 +114,6 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         hotelDao.create(hotel);
         customerDao.create(customer);       
         reservationDao.create(r1);
-        
     }
     
     /**
@@ -150,8 +153,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         Assert.assertEquals(found.getEndOfReservation().getTime(),date2.getTime());
         Assert.assertEquals(found.getStartOfReservation().getTime(),date1.getTime());
         Assert.assertEquals(found.getRoom(),room);
-        
-}
+    }
     
     /**
      * Test if remove method removes reservation
@@ -171,12 +173,11 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void updateTest() throws Exception{
         Date date;
         Calendar cal = Calendar.getInstance();
-	cal.set(2015, 12, 26);
-	date = cal.getTime();
+	    cal.set(2015, 12, 26);
+	    date = cal.getTime();
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),r1.getStartOfReservation().getTime());
         r1.setStartOfReservation(date);
         reservationDao.update(r1);       
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),date.getTime());
     }
-   
 }

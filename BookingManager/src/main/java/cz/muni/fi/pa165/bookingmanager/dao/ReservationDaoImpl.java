@@ -1,11 +1,15 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
-import org.springframework.stereotype.Repository;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
 
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import javax.persistence.TypedQuery;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created on 26.10.2015
@@ -48,7 +52,8 @@ public class ReservationDaoImpl implements ReservationDao{
      */
     @Override
     public List<Reservation> findAll() {
-        return em.createQuery("SELECT r FROM Reservation r", Reservation.class).getResultList();
+        return Collections.unmodifiableList(
+                em.createQuery("SELECT r FROM Reservation r", Reservation.class).getResultList());
     }
 
     /**
@@ -68,6 +73,6 @@ public class ReservationDaoImpl implements ReservationDao{
      */
     @Override
     public void delete(Reservation reservation) {
-        em.remove(em.contains(reservation) ? reservation : em.merge(reservation));
+        em.remove(reservation);
     }   
 }

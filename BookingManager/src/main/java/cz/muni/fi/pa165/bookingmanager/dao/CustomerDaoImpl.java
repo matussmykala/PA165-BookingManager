@@ -1,11 +1,13 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
-import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created 26.10.2015
@@ -14,18 +16,17 @@ import java.util.List;
  * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
-
 @Repository
 public class CustomerDaoImpl implements CustomerDao{
 
     @PersistenceContext
     EntityManager em;
-    
+
     /**
      * Create entry for customer
-     * 
+     *
      * @param customer
-     */    
+     */
     @Override
     public void create(Customer customer) {
         em.persist(customer);
@@ -50,7 +51,8 @@ public class CustomerDaoImpl implements CustomerDao{
      */
     @Override
     public List<Customer> findByName(String name) {
-        return em.createQuery("SELECT c FROM Customer c WHERE c.name like :name ",Customer.class).setParameter("name", "%"+name+"%").getResultList();
+        return Collections.unmodifiableList(em.createQuery("SELECT c FROM Customer c WHERE c.name = :name ",Customer.class)
+                .setParameter("name", name).getResultList());
     }
     
     /**
@@ -60,7 +62,7 @@ public class CustomerDaoImpl implements CustomerDao{
      */
     @Override
     public List<Customer> findAll() {
-        return em.createQuery("SELECT c FROM Customer c ",Customer.class).getResultList();
+        return Collections.unmodifiableList(em.createQuery("SELECT c FROM Customer c ",Customer.class).getResultList());
     }
     
     /**
@@ -82,6 +84,5 @@ public class CustomerDaoImpl implements CustomerDao{
     public void delete(Customer customer) {
         em.remove(customer);
     }
-    
-    
+
 }
