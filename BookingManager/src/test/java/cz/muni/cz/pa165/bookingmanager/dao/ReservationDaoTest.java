@@ -18,6 +18,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -36,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 @Transactional
 public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         
@@ -54,8 +56,10 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     private Reservation r1;
     private Reservation r2;
     private Room room;
+    private Room room2;
     private Hotel hotel;
     private Customer customer;
+    private Customer customer2;
     private Date date1;
     private Date date2;
             
@@ -73,6 +77,11 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         room.setNumberOfBeds(3);
         room.setPrice(1500.00);
         
+        room2 = new Room();
+        room2.setName("Room2");
+        room2.setNumberOfBeds(3);
+        room2.setPrice(1500.00);
+        
         hotel = new Hotel();
         hotel.setAddress("Botanicka 68a, Brno");
         hotel.setName("FIMU");
@@ -86,6 +95,13 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         customer.setSurname("Cuchran");
         customer.setUsername("cuchy92");
         
+        customer2 = new Customer();
+        customer2.setEmail("cuchran@ics.muni.cz");
+        customer2.setIsAdmin(false);
+        customer2.setName("Peter");
+        customer2.setPassword("123456");
+        customer2.setSurname("Cuchran");
+        customer2.setUsername("cuchy");
         
 
         Calendar cal1 = Calendar.getInstance();
@@ -110,17 +126,10 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         hotelDao.create(hotel);
         customerDao.create(customer);       
         reservationDao.create(r1);
+        reservationDao.create(r2);
         
     }
-    
-    /**
-     * Clear reservations in DB
-     */
-    @After
-    public void clearTestData(){
-        reservationDao.delete(r1);
-    }
-    
+        
     /**
      * Test reservation creation
      */
@@ -130,14 +139,12 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     }
     
     /**
-     * Test if reservations contains reservations after creation
+     * Test if reservations contains created reservations
      */
     @Test
     public void findAllTest() throws Exception{
-        reservationDao.create(r2);
         List<Reservation> found = reservationDao.findAll();
         Assert.assertEquals(found.size(), 2);
-        reservationDao.delete(r2);
     }
     
     /**
@@ -158,25 +165,67 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      */
     @Test
     public void deleteTest() throws Exception{
-        reservationDao.create(r2);
+        
+        //Test if Data exist
         Assert.assertNotNull(reservationDao.findById(r2.getId()));
+        //Delete some data
         reservationDao.delete(r2);
+        //Test if data not exist after delete
         Assert.assertNull(reservationDao.findById(r2.getId()));
     }
     
     /**
-     * Test if update of reservation attribute is working
+     * Test if update of reservation attributes is working
      */
     @Test
     public void updateTest() throws Exception{
+        
+        //Test data before change
+        Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),r1.getStartOfReservation().getTime());
+        Assert.assertEquals(reservationDao.findById(r1.getId()).getCustomer(), r1.getCustomer());
+        Assert.assertEquals(reservationDao.findById(r1.getId()).getRoom(), r1.getRoom());
+        
+        //Change data
         Date date;
         Calendar cal = Calendar.getInstance();
 	cal.set(2015, 12, 26);
 	date = cal.getTime();
-        Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),r1.getStartOfReservation().getTime());
         r1.setStartOfReservation(date);
+        r1.setCustomer(customer2);
+        r1.setRoom(room2);
         reservationDao.update(r1);       
+        
+        //Test if data after change are correct
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),date.getTime());
+        Assert.assertEquals(reservationDao.findById(r1.getId()).getCustomer(), r1.getCustomer());
+        Assert.assertEquals(reservationDao.findById(r1.getId()).getRoom(), r1.getRoom());
     }
    
+    /**
+     * Test if start date of reservation is less than end date of reservation
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void reservationDurationTest() throws Exception{
+        r1.setStartOfReservation(date2);
+        r1.setEndOfReservation(date1);
+        reservationDao.create(r1);
+    }
+    
+    /**
+     * Test if room argument is correct
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void reservationRoomArgumentTest() throws Exception{
+        r1.setRoom(null);
+        reservationDao.create(r1);
+    }
+    
+    /**
+     * Test if room argument is correct
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void reservationCustomerArgumentTest() throws Exception{
+        r1.setCustomer(null);
+        reservationDao.create(r1);
+    }
 }
