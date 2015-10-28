@@ -19,11 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Iveta Jurcikova
  */
-
 @Repository
-@Transactional
 public class HotelDaoImpl implements HotelDao {
-
     
     @PersistenceContext
     private EntityManager em;
@@ -41,7 +38,8 @@ public class HotelDaoImpl implements HotelDao {
     @Override
     public Hotel findByName(String name) {
         try {
-            return em.createQuery("Select h from Hotel h where h.name=:name", Hotel.class).setParameter("name", name).getSingleResult();
+            return em.createQuery("Select h from Hotel h where h.name = :name", Hotel.class)
+                    .setParameter("name", name).getSingleResult();
         } catch (NoResultException nrf) {
             return null;
         }

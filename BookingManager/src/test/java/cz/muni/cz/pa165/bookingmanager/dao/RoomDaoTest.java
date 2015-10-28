@@ -19,13 +19,20 @@ import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+<<<<<<< HEAD
 import javax.inject.Inject;
+=======
+>>>>>>> origin/master
 import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
+<<<<<<< HEAD
 import org.springframework.test.annotation.DirtiesContext;
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> origin/master
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
@@ -42,6 +49,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+<<<<<<< HEAD
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
 
@@ -55,6 +63,20 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
     private CustomerDao customerDao;
 
     @Inject
+=======
+public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
+
+    @Autowired
+    private ReservationDao reservationDao;
+
+    @Autowired
+    private RoomDao roomDao;
+
+    @Autowired
+    private CustomerDao customerDao;
+
+    @Autowired
+>>>>>>> origin/master
     private HotelDao hotelDao;
 
     private Room room1;
@@ -121,13 +143,20 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         room2.setName("120");
         room2.setNumberOfBeds(1);
         room2.setPrice(new BigDecimal("150.00"));
+<<<<<<< HEAD
         room1.setCurrency(CZK);
+=======
+        room2.setCurrency(CZK);
+>>>>>>> origin/master
         room2.setHotel(hotel);
         room2.setReservation(reservation1);
 
         roomDao.create(room1);
         roomDao.create(room2);
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -148,7 +177,10 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         Assert.assertEquals(3, found.getNumberOfBeds());
         Assert.assertEquals(new BigDecimal("80.00"), found.getPrice());
         Assert.assertEquals(hotel, found.getHotel());
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -176,7 +208,10 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         Assert.assertEquals(2, found.getNumberOfBeds());
         Assert.assertEquals(new BigDecimal("100.00"), found.getPrice());
         Assert.assertEquals(hotel, found.getHotel());
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -247,7 +282,10 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         } catch (ConstraintViolationException cx) {
             //ok
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -307,7 +345,10 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         } catch (ConstraintViolationException cx) {
             //ok
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -321,7 +362,10 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         } catch (IllegalArgumentException ex) {
             //ok
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -335,6 +379,7 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         } catch (IllegalArgumentException ex) {
             //ok
         }
+<<<<<<< HEAD
 
     }
 
@@ -345,3 +390,7 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
     
    
 
+=======
+    }
+}
+>>>>>>> origin/master

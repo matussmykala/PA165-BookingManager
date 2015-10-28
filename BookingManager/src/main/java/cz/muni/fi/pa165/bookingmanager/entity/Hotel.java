@@ -7,101 +7,104 @@ import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
 
-
 /**
- * Defines basic method and attributes of hotel
+ * Defines basic methods and attributes of hotel
  * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
-
 @Entity
 public class Hotel {
-    
+
+    /**
+     * unique identification number
+     */
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * name of hotel
+     */
     @NotNull
     private String name;
 
+    /**
+     * address of hotel
+     */
     @NotNull
     private String address;
 
+    /**
+     * list of all rooms that are associated with this hotel
+     */
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms = new ArrayList<>();
 
-    /**
-     * Get hotel id
-     * 
-     * @return id
-     */
+
     public Long getId() {
         return id;
     }
 
-    /**
-     * Set hotel id by id param
-     * 
-     * @param id
-     */
     public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * Get hotel name
-     * 
-     * @return name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Set hotel name by name param
-     * 
-     * @param name
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * Get hotel address
-     * 
-     * @return address
-     */
     public String getAddress() {
         return address;
     }
 
-    /**
-     * Set hotel address by param address
-     * 
-     * @param address
-     */
     public void setAddress(String address) {
         this.address = address;
     }
 
-    /**
-     * Get hotel rooms
-     * 
-     * @return list of hotel rooms
-     */
     public List<Room> getRooms() {
         return Collections.unmodifiableList(rooms);
     }
 
-    /**
-     * Set hotel rooms by param rooms
-     * 
-     * @param rooms
-     */
-    public void setRooms(Room room) {
-        this.rooms.add(room);
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
+    public void addRoom(Room room){
+        this.rooms.add(room);
+    }
+<<<<<<< HEAD
+
+=======
+    
+    /**
+     * Check if 2 hotels are equal according to name, address and rooms
+     * 
+     * @param o object to be checked
+     * @return  true    if objects are equals
+     *          false   otherwise
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hotel)) return false;
+
+        Hotel hotel = (Hotel) o;
+
+        if (getName() != null ? !getName().equals(hotel.getName()) : hotel.getName() != null) return false;
+        if (getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null) return false;
+        return !(getRooms() != null ? !getRooms().equals(hotel.getRooms()) : hotel.getRooms() != null);
+    }
+    
+    /**
+     * Generates specific hashcode by hotel name, address and rooms
+     * 
+     * @return hashcode of hotel
+     */
+>>>>>>> origin/master
     @Override
     public int hashCode() {
         int hash = 3;
