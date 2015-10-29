@@ -140,7 +140,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test reservation creation
      */
     @Test
-    public void testCreate() throws Exception{        
+    public void testCreate(){        
         assertNotNull(r1.getId());
     }
        
@@ -148,7 +148,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if reservations contains created reservations
      */
     @Test
-    public void testFindAll() throws Exception{
+    public void testFindAll(){
         List<Reservation> found = reservationDao.findAll();
         Assert.assertEquals(found.size(), 2);
     }
@@ -157,7 +157,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if findById method returns correct reservation
      */
     @Test
-    public void testFindById() throws Exception{
+    public void testFindById(){
         Reservation found = reservationDao.findById(r1.getId());
         Assert.assertEquals(found.getCustomer(),customer);
         Assert.assertEquals(found.getEndOfReservation().getTime(),date2.getTime());
@@ -170,7 +170,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if delete method removes reservation
      */
     @Test
-    public void testDelete() throws Exception{
+    public void testDelete(){
         
         //Test if Data exist
         Assert.assertNotNull(reservationDao.findById(r2.getId()));
@@ -184,7 +184,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test if update of reservation attributes is working
      */
     @Test
-    public void testUpdate() throws Exception{
+    public void testUpdate(){
         
         //Test data before change
         Assert.assertEquals(reservationDao.findById(r1.getId()).getStartOfReservation().getTime(),r1.getStartOfReservation().getTime());
@@ -211,7 +211,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
      * Test null reservation creation
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateWithWrongAttribute() throws Exception{        
+    public void testCreateWithWrongAttribute() {        
         reservationDao.create(null);    
     }
     
@@ -237,5 +237,5 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteWithWrongAtributes() {
         reservationDao.delete(null);
-    }
+    } 
 }
