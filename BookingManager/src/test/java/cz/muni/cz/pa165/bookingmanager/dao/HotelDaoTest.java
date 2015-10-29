@@ -6,7 +6,9 @@ import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -14,6 +16,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
@@ -47,8 +50,14 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     private Room room3;
     private Room room4;
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
+    /**
+     * Prepares test data before every test method
+     */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         hotel1 = new Hotel();
         hotel1.setName("Kempinski");
         hotel1.setAddress("Strbske Pleso");
@@ -89,14 +98,20 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         room4.setCurrency(eur);
     }
 
+    /**
+     * Simple test for persisting new entity.
+     */
     @Test
-    public void testCreate() throws Exception {
+    public void testCreate() {
         hotelDao.create(hotel1);
         assertNotNull(hotel1.getId());
     }
 
+    /**
+     * Tests entity lookup using its Id.
+     */
     @Test
-    public void testFindById() throws Exception {
+    public void testFindById() {
         hotel2.addRoom(room1);
         hotelDao.create(hotel2);
         room1.setHotel(hotel2);
@@ -110,8 +125,11 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         assertEquals(room1, hotel.getRooms().get(0));
     }
 
+    /**
+     * Tests entity lookup using its name.
+     */
     @Test
-    public void testFindByName() throws Exception {
+    public void testFindByName() {
         hotel1.addRoom(room2);
         hotelDao.create(hotel1);
         room2.setHotel(hotel1);
@@ -125,8 +143,11 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         assertEquals(room2, hotel.getRooms().get(0));
     }
 
+    /**
+     * Tests correct retrieval of all persisted Hotel entities.
+     */
     @Test
-    public void testFindAll() throws Exception {
+    public void testFindAll() {
         hotelDao.create(hotel1);
         hotelDao.create(hotel2);
         hotelDao.create(hotel3);
@@ -139,8 +160,11 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         assertTrue(hotels.contains(hotel3));
     }
 
+    /**
+     * Tests correct entity state update when changing its attributes.
+     */
     @Test
-    public void testUpdate() throws Exception {
+    public void testUpdate() {
         hotel3.addRoom(room3);
         hotelDao.create(hotel3);
         room3.setHotel(hotel3);
@@ -156,8 +180,11 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         assertEquals(room3, hotel.getRooms().get(0));
     }
 
+    /**
+     * Tests deletion of entities.
+     */
     @Test
-    public void testDelete() throws Exception {
+    public void testDelete() {
         hotelDao.create(hotel1);
         Hotel hotel = hotelDao.findById(hotel1.getId());
         assertNotNull(hotel);
@@ -165,5 +192,39 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         hotelDao.delete(hotel);
         hotel = hotelDao.findById(hotel1.getId());
         assertNull(hotel);
+    }
+
+    @Test
+    public void testCreateInvalidName() {
+        hotel1.setName(null);
+        expectedException.expect(ConstraintViolationException.class);
+        hotelDao.create(hotel1);
+    }
+
+    @Test
+    public void testCreateInvalidAddress() {
+        hotel1.setAddress(null);
+        expectedException.expect(ConstraintViolationException.class);
+        hotelDao.create(hotel1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateInvalidArgument() {
+        hotelDao.create(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindByIdInvalidArgument() {
+        hotelDao.findById(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUpdateInvalidArgument() {
+        hotelDao.update(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testDeleteInvalidArgument() {
+        hotelDao.delete(null);
     }
 }
