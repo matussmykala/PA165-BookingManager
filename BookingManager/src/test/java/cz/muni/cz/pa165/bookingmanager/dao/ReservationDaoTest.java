@@ -15,10 +15,14 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertNotNull;
+import org.junit.Rule;
+import org.junit.internal.runners.statements.ExpectException;
+import org.junit.rules.ExpectedException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -65,7 +69,6 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     private Date date2;
     private Currency euro;
             
-    
     /**
      * Create tested objects
      */
@@ -238,4 +241,22 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void testDeleteWithWrongAtributes() {
         reservationDao.delete(null);
     } 
+    
+    /**
+     * Test create reservation with StartOfReservation attribute greater than EndOfReservation attribute
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testWrongStartOfReservationAttribute(){
+        r1.setStartOfReservation(date2);
+        reservationDao.create(r1);
+    }
+    
+    /**
+     * Test create reservation with EndOfReservation attribute greater than StartOfReservation attribute
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testWrongEndOfReservationAttribute(){
+        r1.setEndOfReservation(date1);
+        reservationDao.create(r1);
+    }
 }
