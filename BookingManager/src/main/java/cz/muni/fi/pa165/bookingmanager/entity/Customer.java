@@ -38,6 +38,8 @@ public class Customer {
 
     /**
      * Username of this customer that he uses to log in to the reservation system.
+     * It can be null as a customer can be listed in the reservation system,
+     * but the customer has no access to the system.
      */
     private String username;
 
@@ -52,6 +54,9 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Reservation> reservations;
 
+    /**
+     * If set to true, then this user has administrator rights in the system.
+     */
     private boolean isAdmin;
 
     public Long getId() {
@@ -125,17 +130,15 @@ public class Customer {
 
         Customer customer = (Customer) o;
 
-        if (!name.equals(customer.getName())) return false;
-        if (!surname.equals(customer.getSurname())) return false;
-        return email.equals(customer.getEmail());
+        if (!getEmail().equals(customer.getEmail())) return false;
+        return !(getUsername() != null ? !getUsername().equals(customer.getUsername()) : customer.getUsername() != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + email.hashCode();
+        int result = getEmail().hashCode();
+        result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
         return result;
     }
 }
