@@ -99,15 +99,19 @@ public class Reservation {
         Reservation that = (Reservation) o;
 
         if (!getStartOfReservation().equals(that.getStartOfReservation())) return false;
-        if (!getCustomer().equals(that.getCustomer())) return false;
-        if (!getRoom().equals(that.getRoom())) return false;
-        return getEndOfReservation().equals(that.getEndOfReservation());
+        if (!getEndOfReservation().equals(that.getEndOfReservation())) return false;
+        if (getCustomer() != null ? !getCustomer().equals(that.getCustomer()) : that.getCustomer() != null)
+            return false;
+        return !(getRoom() != null ? !getRoom().equals(that.getRoom()) : that.getRoom() != null);
+
     }
 
     @Override
     public int hashCode() {
         int result = getStartOfReservation().hashCode();
         result = 31 * result + getEndOfReservation().hashCode();
+        result = 31 * result + (getCustomer() != null ? getCustomer().hashCode() : 0);
+        result = 31 * result + (getRoom() != null ? getRoom().hashCode() : 0);
         return result;
     }
 }
