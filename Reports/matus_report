@@ -1,0 +1,20 @@
+evaluated project: https://github.com/jcechak/pokemon-league-manager
+
+badge
+
+a) Checklist evaluation:
+
+Total points: 10
+
+b) General comments
+    dao -ok
+    impl - ok, transactional - ako aj inde
+    entity - chybaju javadoc k atributom
+    test -
+        metoda tearDown-  transakciu ukoncovat pred testovanim rollbacku (vobec nepouzivat rollbacky rucne, ale anotacia)
+        test create - catch (Exception ignored) - cistejsie pouzitie anotacie expected exception
+
+c) suhlas s ivet
+
+d) suhlas
+
