@@ -13,6 +13,8 @@
 
     <modules>
         <module>dao-layer</module>
+        <module>api-layer</module>
+        <module>service-layer</module>
     </modules>
 
     <dependencies>
