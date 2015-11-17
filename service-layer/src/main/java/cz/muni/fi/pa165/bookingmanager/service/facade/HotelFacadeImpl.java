@@ -6,12 +6,14 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
-import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
-import java.util.Date;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
+import cz.muni.fi.pa165.bookingmanager.service.HotelService;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -21,38 +23,34 @@ public class HotelFacadeImpl implements HotelFacade{
 
     final static Logger log = LoggerFactory.getLogger(HotelFacadeImpl.class);
     
+    @Autowired
+    private HotelService hotelService;
+    
+    @Autowired
+    private BeanMappingService beanMappingService;
+    
     @Override
-    public Long createHotel(HotelCreateDTO hotel) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Long createHotel(HotelCreateDTO hotelCreateDTO) {
+        Hotel hotel = new Hotel();
+        hotel.setName(hotelCreateDTO.getName());
+        hotel.setAddress(hotelCreateDTO.getAdress());
+        hotelService.createHotel(hotel);
+        return hotel.getId();
     }
 
     @Override
     public void deleteHotel(Long HotelId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        hotelService.deleteHotel(hotelService.findById(HotelId));
     }
 
     @Override
     public HotelDTO getHotelById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return beanMappingService.mapTo(hotelService.findById(id), HotelDTO.class);
     }
 
     @Override
     public List<HotelDTO> getAllHotels() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return beanMappingService.mapTo(hotelService.findAll(), HotelDTO.class);
     }
 
-    @Override
-    public void addRoom(Long HotelId, Long RoomId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void deleteRoom(Long HotelId, Long RoomId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-
-    
-    
-}
+ }

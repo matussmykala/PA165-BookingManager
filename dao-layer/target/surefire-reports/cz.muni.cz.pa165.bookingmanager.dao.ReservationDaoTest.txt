@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: cz.muni.cz.pa165.bookingmanager.dao.ReservationDaoTest
 -------------------------------------------------------------------------------
-Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.134 sec
+Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.093 sec

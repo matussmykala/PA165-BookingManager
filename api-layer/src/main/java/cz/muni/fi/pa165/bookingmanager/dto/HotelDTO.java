@@ -5,10 +5,8 @@
  */
 package cz.muni.fi.pa165.bookingmanager.dto;
 
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -26,8 +24,6 @@ public class HotelDTO {
     private String name;
     
     private String adress;
-    
-    private List<RoomDTO> rooms = new ArrayList<>();
     
     private String description;
     
@@ -71,18 +67,6 @@ public class HotelDTO {
 
     public void setAdress(String adress) {
         this.adress = adress;
-    }
-
-    public List<RoomDTO> getRooms() {
-        return Collections.unmodifiableList(rooms);
-    }
-
-    public void setRooms(List<RoomDTO> rooms) {
-        this.rooms = rooms;
-    }
-    
-    public void addRoom(RoomDTO room){
-        this.rooms.add(room);
     }
 
     public String getDescription() {
