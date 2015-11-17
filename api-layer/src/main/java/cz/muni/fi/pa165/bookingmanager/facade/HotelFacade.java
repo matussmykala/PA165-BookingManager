@@ -47,30 +47,6 @@ public interface HotelFacade {
      */
     public List<HotelDTO> getAllHotels();
     
-    /**
-     * Add room to hotel
-     * 
-     * @param HotelId - id of hotel into which room will be added
-     * @param RoomId - id of added room
-     */
-    public void addRoom(Long HotelId, Long RoomId);
-    
-    /**
-     * Remove room from hotel
-     * 
-     * @param HotelId - id of hotel from which room will be removed
-     * @param RoomId - id of removed room
-     */
-    public void deleteRoom(Long HotelId, Long RoomId);
-    
-     /**
-     * Get all rooms in hotel 
-     * Method will be implemented after implementation of RoomFacade
-     * 
-     * @param HotelId - id of hotel whose rooms user wants to know
-     * @return List<RoomDTO> - list of rooms in hotel
-     */
-    public List<RoomDTO> getAllRoomsInHotel(Long HotelId);
-    
+     
     
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="12" failures="0" name="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" time="0.296" errors="0" skipped="0">
+<testsuite tests="12" failures="0" name="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" time="0.257" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-8-oracle/jre/lib/amd64"/>
@@ -59,16 +59,16 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreate" time="0.014"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindAll" time="0.056"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindById" time="0.025"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testDelete" time="0.028"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testUpdate" time="0.027"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindByName" time="0.036"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreate" time="0.012"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindAll" time="0.042"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindById" time="0.015"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testDelete" time="0.02"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testUpdate" time="0.02"/>
   <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreateInvalidName" time="0.011"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreateInvalidAddress" time="0.009"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreateInvalidArgument" time="0.004"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindByIdInvalidArgument" time="0.004"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testUpdateInvalidArgument" time="0.004"/>
-  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testDeleteInvalidArgument" time="0.003"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreateInvalidAddress" time="0.006"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindByName" time="0.039"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testCreateInvalidArgument" time="0.007"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testFindByIdInvalidArgument" time="0.006"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testUpdateInvalidArgument" time="0.007"/>
+  <testcase classname="cz.muni.cz.pa165.bookingmanager.dao.HotelDaoTest" name="testDeleteInvalidArgument" time="0.01"/>
 </testsuite>
