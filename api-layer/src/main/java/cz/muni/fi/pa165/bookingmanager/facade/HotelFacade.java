@@ -5,6 +5,9 @@
  */
 package cz.muni.fi.pa165.bookingmanager.facade;
 
+import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import java.util.Date;
 import java.util.List;
 
@@ -68,9 +71,8 @@ public interface HotelFacade {
      * @param HotelId - id of hotel whose rooms user wants to know
      * @return List<RoomDTO> - list of rooms in hotel
      */
-    /*
     public List<RoomDTO> getAllRoomsInHotel(Long HotelId);
-    */
+    
     
      /**
      * Get all free rooms in hotel 
@@ -81,7 +83,6 @@ public interface HotelFacade {
      * @param endOfPeriod - until which date room has to be free
      * @return List<RoomDTO> - list of free rooms in hotel during determined days
      */
-    /*
     public List<RoomDTO> getAllFreeRoomsInHotel(Long HotelId, Date startOfPeriod, Date endOfPeriod);
-    */
+   
 }
