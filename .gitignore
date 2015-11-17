@@ -10,3 +10,4 @@
 hs_err_pid*
 /BookingManager/target/
 /api-layer/target/
+/service-layer/target/
