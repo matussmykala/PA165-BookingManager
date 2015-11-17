@@ -1,6 +1,6 @@
 language: java
 
-install: cd BookingManager; mvn clean install;
+install: mvn clean install;
 
 jdk:
   - oraclejdk8
