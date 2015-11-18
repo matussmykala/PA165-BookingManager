@@ -26,6 +26,13 @@ public interface HotelFacade {
     public Long createHotel(HotelCreateDTO hotel);
     
     /**
+     * Update Hotel
+     * 
+     * @param hotelDTO - hotel which will be updated
+     */
+    public void updateHotel(HotelDTO hotelDTO);
+    
+    /**
      * Remove hotel
      * 
      * @param HotelId - id of hotel which will be removed
