@@ -17,40 +17,19 @@ public class HotelDTO {
     
     private Long id;
     
-    private byte[] image;
-    
-    private String imageMimeType;
-    
     private String name;
     
     private String adress;
     
     private String description;
     
-    private Date addedDate;
-
+    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImageMimeType() {
-        return imageMimeType;
-    }
-
-    public void setImageMimeType(String imageMimeType) {
-        this.imageMimeType = imageMimeType;
     }
 
     public String getName() {
@@ -77,13 +56,7 @@ public class HotelDTO {
         this.description = description;
     }
 
-    public Date getAddedDate() {
-        return addedDate;
-    }
-
-    public void setAddedDate(Date addedDate) {
-        this.addedDate = addedDate;
-    }
+   
     
     /**
      * HashCode use parameters name and address

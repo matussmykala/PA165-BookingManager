@@ -7,7 +7,6 @@ package cz.muni.fi.pa165.bookingmanager.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
-import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import java.util.List;
 
 /**
@@ -15,6 +14,7 @@ import java.util.List;
  * 
  * @author ivet
  */
+
 public interface HotelFacade {
     
     /**
@@ -35,10 +35,10 @@ public interface HotelFacade {
     /**
      * Get hotel by its id
      * 
-     * @param id - id of hotel which may be found
+     * @param HotelId - id of hotel which may be found
      * @return HotelDTO - required hotel
      */
-    public HotelDTO getHotelById(Long id);
+    public HotelDTO getHotelById(Long HotelId);
     
     /**
      * Get all hotels
