@@ -28,10 +28,6 @@ public class HotelCreateDTO {
     @Size(min=1,max=60)
     private String adress;
     
-    private byte[] image;
-    
-    private String imageMimeType;
-    
     private String description;
 
     public Long getId() {
@@ -56,22 +52,6 @@ public class HotelCreateDTO {
 
     public void setAdress(String adress) {
         this.adress = adress;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImageMimeType() {
-        return imageMimeType;
-    }
-
-    public void setImageMimeType(String imageMimeType) {
-        this.imageMimeType = imageMimeType;
     }
 
     public String getDescription() {

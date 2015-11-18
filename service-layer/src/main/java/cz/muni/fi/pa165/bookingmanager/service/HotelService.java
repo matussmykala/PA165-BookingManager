@@ -7,9 +7,8 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
-import cz.muni.fi.pa165.bookingmanager.entity.Room;
-import java.util.Date;
 import java.util.List;
+import org.springframework.dao.DataAccessException;
 
 /**
  *
@@ -22,15 +21,22 @@ public interface HotelService {
      * Create hotel
      * 
      * @param hotel
-     * @return just created hotel 
+     * @throws DataAccessException when error on DAO layer appears
      */
-    public Hotel createHotel(Hotel hotel);
+    public void createHotel(Hotel hotel) throws DataAccessException;
     
+    /**
+     * Update hotel
+     * 
+     * @param hotel which will be updated 
+     */
+    public void updateHotel(Hotel hotel) throws DataAccessException;
+        
     /**
      * Remove hotel
      * @param hotel - hotel which will be removed
      */
-    public void deleteHotel(Hotel hotel);
+    public void deleteHotel(Hotel hotel) throws DataAccessException;
     
     /**
      * Find hotel by id
@@ -38,7 +44,7 @@ public interface HotelService {
      * @param id - id of hotel which has to be found
      * @return found hotel
      */
-    public Hotel findById(Long id);
+    public Hotel findById(Long id) throws DataAccessException;
     
     /**
      * Find hotel by name
@@ -46,14 +52,14 @@ public interface HotelService {
      * @param name - name of hotel
      * @return found hotel
      */
-    public Hotel findByName(String name);
+    public Hotel findByName(String name) throws DataAccessException;
     
     /**
      * Show all hotels is system
      * 
      * @return all hotels in system
      */
-    public List<Hotel> findAll();
+    public List<Hotel> findAll() throws DataAccessException;
     
     /**
      * Add room into hotel
