@@ -10,7 +10,6 @@ import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
-import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +42,22 @@ public class HotelFacadeImpl implements HotelFacade{
         if(hotelCreateDTO.getId()!=null){
             throw new IllegalArgumentException("hotelCreateDTO already exists");
         }
-        Hotel hotel = new Hotel();
-        hotel.setName(hotelCreateDTO.getName());
-        hotel.setAddress(hotelCreateDTO.getAdress());
-        hotelService.createHotel(hotel);
-        return hotel.getId();
+        Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO,Hotel.class);
+        hotelService.createHotel(mappedHotel);
+        return mappedHotel.getId();
+    }
+    
+    @Override
+    public void updateHotel(HotelDTO hotelDTO){
+         if(hotelDTO==null){
+            throw new IllegalArgumentException("HotelId is null");
+        }
+        if(hotelService.findById(hotelDTO.getId())==null){
+            throw new IllegalArgumentException("Hotel does not exist");
+        } 
+        Hotel mappedHotel = beanMappingService.mapTo(hotelDTO, Hotel.class);
+        hotelService.updateHotel(mappedHotel);
+        
     }
 
     @Override
