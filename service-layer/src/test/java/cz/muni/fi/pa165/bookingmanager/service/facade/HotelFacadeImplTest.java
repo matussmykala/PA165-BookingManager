@@ -7,6 +7,8 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 
 
+import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
+import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -36,18 +38,32 @@ import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 @ContextConfiguration(classes=ServiceConfiguration.class)
 public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests{
     
-    public HotelFacadeImplTest() {
-    }
+    @Mock
+    private HotelService hotelService;
     
-    @BeforeClass
-    public static void setUpClass() {
+    
+    @InjectMocks
+    private HotelFacadeImpl hotelFacade;
+    
+    
+    
+    @BeforeMethod
+    public void setUpClass() {
+         MockitoAnnotations.initMocks(this);
     }
+  
   
     /**
      * Test of createHotel method, of class HotelFacadeImpl.
      */
-    @org.junit.Test
+    @Test
     public void testCreateHotel() {
+        /**
+        HotelCreateDTO hotelDTO = new HotelCreateDTO();
+        hotelDTO.setName("Park Hotel");
+        hotelDTO.setAddress("Praha");
+        hotelFacade.createHotel(hotelDTO);
+        **/
      
     }
 

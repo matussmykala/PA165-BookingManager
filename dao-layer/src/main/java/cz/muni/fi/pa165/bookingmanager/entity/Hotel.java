@@ -91,8 +91,8 @@ public class Hotel {
         Hotel hotel = (Hotel) o;
 
         if (getName() != null ? !getName().equals(hotel.getName()) : hotel.getName() != null) return false;
-        if (getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null) return false;
-        return !(getRooms() != null ? !getRooms().equals(hotel.getRooms()) : hotel.getRooms() != null);
+        return !(getAddress() != null ? !getAddress().equals(hotel.getAddress()) : hotel.getAddress() != null);
+        
     }
     
     /**
@@ -104,7 +104,7 @@ public class Hotel {
     public int hashCode() {
         int result = getName() != null ? getName().hashCode() : 0;
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getRooms() != null ? getRooms().hashCode() : 0);
+        
         return result;
     }
 }

@@ -39,9 +39,7 @@ public class HotelFacadeImpl implements HotelFacade{
         if(hotelCreateDTO==null) {
             throw new IllegalArgumentException("hotelCreateDTO is null");
         }
-        if(hotelCreateDTO.getId()!=null){
-            throw new IllegalArgumentException("hotelCreateDTO already exists");
-        }
+        
         Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO,Hotel.class);
         hotelService.createHotel(mappedHotel);
         return mappedHotel.getId();

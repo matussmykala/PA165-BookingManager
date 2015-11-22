@@ -19,7 +19,7 @@ public class HotelDTO {
     
     private String name;
     
-    private String adress;
+    private String address;
     
     private String description;
     
@@ -40,12 +40,12 @@ public class HotelDTO {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDescription() {
@@ -66,7 +66,7 @@ public class HotelDTO {
     public int hashCode() {
         int hash = 7;
         hash = 37 * hash + Objects.hashCode(this.name);
-        hash = 37 * hash + Objects.hashCode(this.adress);
+        hash = 37 * hash + Objects.hashCode(this.address);
         return hash;
     }
 
@@ -87,7 +87,7 @@ public class HotelDTO {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.adress, other.adress)) {
+        if (!Objects.equals(this.address, other.address)) {
             return false;
         }
         return true;

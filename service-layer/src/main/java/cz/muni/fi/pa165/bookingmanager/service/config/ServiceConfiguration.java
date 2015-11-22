@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
+import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.service.facade.HotelFacadeImpl;
@@ -25,7 +26,7 @@ import cz.muni.fi.pa165.bookingmanager.service.facade.HotelFacadeImpl;
  */
 @Configuration
 @Import(PersistenceSampleApplicationContext.class)
-@ComponentScan(basePackageClasses={HotelFacadeImpl.class})
+@ComponentScan(basePackages = {"cz.muni.fi.pa165.bookingmanager.service"})
 public class ServiceConfiguration {
 	
 
@@ -45,6 +46,9 @@ public class ServiceConfiguration {
 	    @Override
 	    protected void configure() {
 	        mapping(HotelDTO.class,Hotel.class);
+                mapping(Hotel.class, HotelDTO.class);
+                mapping(HotelCreateDTO.class,Hotel.class);
+                mapping(Hotel.class, HotelCreateDTO.class);
 	    }
 	}
 	
