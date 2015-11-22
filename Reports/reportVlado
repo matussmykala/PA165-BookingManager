@@ -1,0 +1,20 @@
+evaluated project: https://github.com/jcechak/pokemon-league-manager
+
+Pokemon
+
+entity Pokemon
++ complete and well written documentation by JavaDoc
++ database constraints like @DecimalMin(value = "0") and @Column(unique = true)
+
+DAO PokemonDao and PokemonDaoImpl
++ simple and generally good implementation
+- PokemonDaoImpl class JavaDoc should have been placed above PokemonDao interface (it even states that the following class is an interface)
+- DAO classes should probably not be @Transactional (transactions should be handled by other layers)
+- Missing some methods like findAll() that would return all Pokemons from DB (not a part of CRUD, so no penalties)
+
+test PokemonDaoTest
++ tests that check attributes constraints
+- testCreate() Consider using @Rule ExpectedException instead of catching all exceptions using catch(Exception ignored) {}
+- consider annotating test classes/test methods with Spring's @Transactional annotation that automatically creates a transaction at the beginning of a test method and rolls it back at its end, thus removing the need to manually delete all entities from DB after each test.
+
+Total points: 10

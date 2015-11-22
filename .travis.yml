@@ -1,0 +1,10 @@
+language: java
+
+install: mvn clean install;
+
+jdk:
+  - oraclejdk8
+
+branches:
+  only:
+    - master

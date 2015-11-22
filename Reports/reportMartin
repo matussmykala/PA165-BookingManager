@@ -1,0 +1,12 @@
+StadiumDaoTest.java
+chyba dokumentacia metod
+
+Stadium.java
+Trainer vs leader rozdiel ?
+
+StadiumDao
+Chyba dokumentacia triedy ako celku
+
+StadiumDaoImpl
+Chyba dokumentacia triedy ako celku
+@Transactional ? Patri do servisnej vrstvy

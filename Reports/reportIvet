@@ -1,0 +1,18 @@
+evaluated project:
+https://github.com/jcechak/pokemon-league-manager
+
+a) Checklist evaluation:
+All parts of checklist have been met.
+
+Total points: 10
+
+b) General comments
+Project is well – written. It contains intelligible comments and mostly it is easy for reading. It is seem to be well managed and because of this fact all members of group contributed similarly. 
+However, there are three mistakes:
+	1. Exceptions from Data Layer are not propagated (e.g. TrainerDaoImpl)
+	2. In TrainerDaoNGTest there were working with Container Managed EntityManager but in setUpClass() and tearDownClass() they closed entity manager (which is not necessary)
+	3. We are missing some attribute which shows difference between leader and trainer (e.g. “Booleans isLeader”), because according to use case diagram GymLeader can awardBandge but normal trainer not.
+
+c) Strong points of the project: great Wiky! Everything is described totally clear.
+d) Weaknesses of the project: testing should be improved. There is unused method setEntityManager in TrainerDaoNGTest. Be more careful about testing of critical parts of projects. 
+
