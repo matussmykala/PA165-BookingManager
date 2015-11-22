@@ -6,30 +6,18 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 
-
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
+import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
-
-import org.hibernate.service.spi.ServiceException;
+import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-
-import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
 /**
  *
@@ -40,10 +28,10 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     
     @Mock
     private HotelService hotelService;
-    
-    
+
+    @Autowired
     @InjectMocks
-    private HotelFacadeImpl hotelFacade;
+    private HotelFacade hotelFacade;
     
     
     
@@ -58,13 +46,10 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @Test
     public void testCreateHotel() {
-        /**
         HotelCreateDTO hotelDTO = new HotelCreateDTO();
         hotelDTO.setName("Park Hotel");
         hotelDTO.setAddress("Praha");
         hotelFacade.createHotel(hotelDTO);
-        **/
-     
     }
 
     /**
