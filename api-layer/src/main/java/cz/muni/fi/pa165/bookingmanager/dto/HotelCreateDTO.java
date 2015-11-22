@@ -16,27 +16,16 @@ import javax.validation.constraints.Size;
  * @author ivet
  */
 public class HotelCreateDTO {
-    
-    @NotNull
-    private Long id;
-    
+       
     @NotNull
     @Size(min=1, max=30)
     private String name;
     
     @NotNull
     @Size(min=1,max=60)
-    private String adress;
+    private String address;
     
     private String description;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -46,12 +35,12 @@ public class HotelCreateDTO {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public String getDescription() {
@@ -70,7 +59,7 @@ public class HotelCreateDTO {
     public int hashCode() {
         int hash = 7;
         hash = 83 * hash + Objects.hashCode(this.name);
-        hash = 83 * hash + Objects.hashCode(this.adress);
+        hash = 83 * hash + Objects.hashCode(this.address);
         return hash;
     }
 
@@ -91,7 +80,7 @@ public class HotelCreateDTO {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.adress, other.adress)) {
+        if (!Objects.equals(this.address, other.address)) {
             return false;
         }
         return true;
