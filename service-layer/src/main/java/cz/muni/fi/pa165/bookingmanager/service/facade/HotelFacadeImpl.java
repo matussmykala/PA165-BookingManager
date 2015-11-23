@@ -6,10 +6,10 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
-import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,24 +27,24 @@ import org.springframework.transaction.annotation.Transactional;
 public class HotelFacadeImpl implements HotelFacade{
 
     final static Logger log = LoggerFactory.getLogger(HotelFacadeImpl.class);
-    
+
     @Autowired
     private HotelService hotelService;
-    
+
     @Autowired
     private BeanMappingService beanMappingService;
-    
+
     @Override
     public Long createHotel(HotelCreateDTO hotelCreateDTO) {
         if(hotelCreateDTO==null) {
             throw new IllegalArgumentException("hotelCreateDTO is null");
         }
-        
+
         Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO,Hotel.class);
         hotelService.createHotel(mappedHotel);
         return mappedHotel.getId();
     }
-    
+
     @Override
     public void updateHotel(HotelDTO hotelDTO){
          if(hotelDTO==null){
@@ -52,10 +52,10 @@ public class HotelFacadeImpl implements HotelFacade{
         }
         if(hotelService.findById(hotelDTO.getId())==null){
             throw new IllegalArgumentException("Hotel does not exist");
-        } 
+        }
         Hotel mappedHotel = beanMappingService.mapTo(hotelDTO, Hotel.class);
         hotelService.updateHotel(mappedHotel);
-        
+
     }
 
     @Override
@@ -76,7 +76,7 @@ public class HotelFacadeImpl implements HotelFacade{
         }
         if(hotelService.findById(HotelId)==null){
             throw new IllegalArgumentException("Hotel does not exist");
-        } 
+        }
        return beanMappingService.mapTo(hotelService.findById(HotelId), HotelDTO.class);
     }
 
