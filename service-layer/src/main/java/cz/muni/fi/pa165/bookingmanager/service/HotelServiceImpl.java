@@ -25,10 +25,11 @@ public class HotelServiceImpl implements HotelService{
     private HotelDao hotelDao;
     
     @Override
-    public void createHotel(Hotel hotel) throws DataAccessException{
+    public Hotel createHotel(Hotel hotel) throws DataAccessException{
         try{
             hotelDao.create(hotel);
         }catch(DataAccessException dae){};
+        return hotel;
     }
     
     @Override
