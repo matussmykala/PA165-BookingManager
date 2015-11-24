@@ -52,28 +52,21 @@ public interface RoomService {
      */
     public List<Room> findAll() throws DataAccessException;
     
+       
     /**
-     * Show all rooms with specific price
+     * Change price of room
      * 
+     * @param room - room where price is changed
      * @param price - price of room
      * @param currency - price currency
-     * @return all rooms with specific price
      */
-    public List<Room> findAllRoomsByPrice(BigDecimal price, Currency currency) throws DataAccessException;
+    public void changeRoomPrice(Room room, BigDecimal price, Currency currency) throws DataAccessException;
     
     /**
-     * Show all rooms with specific number of beds
+     * Change number of beds in room
      * 
-     * @param numberOfBeds - number of beds in room
-     * @return all rooms with specific price
+     * @param room - room where price is changed
+     * @param numberOfBeds - new number of beds in room
      */
-    public List<Room> findAllRoomsByNumberOfBeds(int numberOfBeds) throws DataAccessException;
-    
-    /**
-     * Show all rooms from specific hotel
-     * 
-     * @param hotel - hotel
-     * @return all rooms with specific price
-     */
-    public List<Room> findAllRoomsByHotel(Hotel hotel) throws DataAccessException;
+    public void changeNumberOfBeds(Room room, int numberOfBeds) throws DataAccessException;
 }

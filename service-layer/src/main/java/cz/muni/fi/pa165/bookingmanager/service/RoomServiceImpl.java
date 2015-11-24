@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
 import java.util.List;
+import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class RoomServiceImpl implements RoomService{
     final static Logger log = LoggerFactory.getLogger(RoomServiceImpl.class);
     
-    @Autowired
+    @Inject
     private RoomDao roomDao;
     
     @Override
@@ -67,17 +67,19 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public List<Room> findAllRoomsByPrice(BigDecimal price, Currency currency) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void changeRoomPrice(Room room, BigDecimal price, Currency currency) throws DataAccessException {
+        room.setPrice(price);
+        room.setCurrency(currency);
+        try{
+            roomDao.update(room);
+        }catch(DataAccessException ex){};        
     }
-
+    
     @Override
-    public List<Room> findAllRoomsByNumberOfBeds(int numberOfBeds) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<Room> findAllRoomsByHotel(Hotel hotel) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    public void changeNumberOfBeds(Room room, int numberOfBeds) throws DataAccessException {
+        room.setNumberOfBeds(numberOfBeds);        
+        try{
+            roomDao.update(room);
+        }catch(DataAccessException ex){};        
+    }    
 }
