@@ -26,8 +26,8 @@ public class ReservationFacadeImpl implements ReservationFacade
     private ReservationService reservationService;
     @Autowired
     private CustomerService customerService;
-    @Autowired
-    private RoomService roomService;
+    //@Autowired
+    //private RoomService roomService;
     @Autowired
     private BeanMappingService beanMappingService;
 
@@ -48,10 +48,11 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public List<ReservationDTO> getReservationsByCustomer(Long customerId)
     {
-        Customer customer = customerService.getCustomerById(customerId);
-        List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
+        //Customer customer = customerService.getCustomerById(customerId);
+        //List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
 
-        return beanMappingService.mapTo(reservations, ReservationDTO.class);
+        //return beanMappingService.mapTo(reservations, ReservationDTO.class);
+        return null;
     }
 
     @Override
@@ -64,18 +65,18 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public void createReservation(Long customerId, Long roomId, Date from, Date to)
     {
-        Customer customer = customerService.getCustomerById(customerId);
-        Room room = roomService.getRoomById(roomId);
-        reservationService.createReservation(customer, room, from, to);
+        //Customer customer = customerService.getCustomerById(customerId);
+        //Room room = roomService.getRoomById(roomId);
+        //reservationService.createReservation(customer, room, from, to);
     }
 
     @Override
     public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
     {
-        Customer customer = customerService.getCustomerById(customerId);
-        Room room = roomService.getRoomById(roomId);
-        Reservation reservation = reservationService.getReservationById(id);
-        reservationService.updateReservation(reservation, customer, room, from, to);
+        //Customer customer = customerService.getCustomerById(customerId);
+        //Room room = roomService.getRoomById(roomId);
+        //Reservation reservation = reservationService.getReservationById(id);
+        //reservationService.updateReservation(reservation, customer, room, from, to);
     }
 
     @Override

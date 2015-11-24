@@ -2,18 +2,35 @@ package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Date;
 
 /**
+ * Data Transfer Object for Reservation entity.
  * @author matus
  */
 public class ReservationDTO
 {
+
+    /**
+     * Id.
+     */
     private Long id;
 
+    /**
+     * Date and time when the reservation begins.
+     */
     private Date startOfReservation;
 
+    /**
+     * Date and time, when the reservation ends.
+     */
     private Date endOfReservation;
 
+    /**
+     * Customer who books the room.
+     */
     private CustomerDTO customer;
 
+    /**
+     * Booked room.
+     */
     private RoomDTO room;
 
     public Long getId()

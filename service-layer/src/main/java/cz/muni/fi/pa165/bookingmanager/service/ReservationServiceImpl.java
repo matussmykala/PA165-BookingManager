@@ -11,10 +11,12 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author matus
  */
+@Service
 public class ReservationServiceImpl implements ReservationService
 {
     @Autowired
@@ -41,11 +43,7 @@ public class ReservationServiceImpl implements ReservationService
     @Override
     public List<Reservation> getReservationsByCustomer(Customer customer)
     {
-        List<Reservation> reservations = new ArrayList<>();
-        for(Reservation reservation : reservationDao.findReservationsOfCustomer(customer)){
-            reservations.add(reservation);
-        }
-        return reservations;
+        return reservationDao.findReservationsOfCustomer(customer);
     }
 
     @Override
@@ -80,7 +78,19 @@ public class ReservationServiceImpl implements ReservationService
     @Override
     public void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
     {
+        if (reservation.getCustomer() != null && reservation.getCustomer() != customer) {
+            reservation.getCustomer().getReservations().remove(reservation);
+        }
+        if (!customer.getReservations().contains(reservation)){
+            customer.getReservations().add(reservation);
+        }
         reservation.setCustomer(customer);
+        if (reservation.getRoom() != null && reservation.getRoom() != room){
+            reservation.getRoom().getReservations().remove(reservation);
+        }
+        if (!room.getReservations().contains(reservation)){
+            room.getReservations().add(reservation);
+        }
         reservation.setRoom(room);
         reservation.setStartOfReservation(from);
         reservation.setEndOfReservation(to);
