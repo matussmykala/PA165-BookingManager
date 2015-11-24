@@ -7,11 +7,15 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,22 +29,23 @@ import org.testng.annotations.Test;
  */
 @ContextConfiguration(classes=ServiceConfiguration.class)
 public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests{
-    
+
     @Mock
     private HotelService hotelService;
 
     @Autowired
     @InjectMocks
     private HotelFacade hotelFacade;
-    
-    
-    
+
+    @Autowired
+    BeanMappingService beanMappingService;
+
     @BeforeMethod
     public void setUpClass() {
          MockitoAnnotations.initMocks(this);
     }
-  
-  
+
+
     /**
      * Test of createHotel method, of class HotelFacadeImpl.
      */
@@ -50,6 +55,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
         hotelDTO.setName("Park Hotel");
         hotelDTO.setAddress("Praha");
         hotelFacade.createHotel(hotelDTO);
+        Mockito.verify(hotelService).createHotel(beanMappingService.mapTo(hotelDTO,Hotel.class));
     }
 
     /**
@@ -57,7 +63,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @org.junit.Test
     public void testUpdateHotel() {
-    
+
     }
 
     /**
@@ -65,7 +71,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @org.junit.Test
     public void testDeleteHotel() {
-      
+
     }
 
     /**
@@ -73,7 +79,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @org.junit.Test
     public void testGetHotelById() {
-  
+
     }
 
     /**
@@ -81,7 +87,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
      */
     @org.junit.Test
     public void testGetAllHotels() {
-      
+
     }
-    
+
 }

@@ -1,9 +1,5 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
@@ -11,6 +7,8 @@ import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
+import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
@@ -25,35 +23,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertNull;
 
 /**
  * @author matus
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class ReservationServiceTest extends AbstractTestNGSpringContextTests
+@Transactional
+public class ReservationFacadeTest extends AbstractTestNGSpringContextTests
 {
     @Mock
-    private ReservationDao reservationDao;
+    private ReservationService reservationService;
+    //@Mock
+    //private RoomService roomService;
     @Mock
-    private RoomDao roomDao;
-    @Mock
-    private CustomerDao customerDao;
+    private CustomerService customerService;
 
     @Autowired
     @InjectMocks
-    private ReservationService reservationService;
+    private ReservationFacade reservationFacade;
 
     private Reservation reservation1;
     private Reservation reservation2;
@@ -72,6 +66,7 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void createReservationTest(){
+        /*
         Mockito.doAnswer(new Answer()
         {
             @Override
@@ -80,47 +75,15 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
                 reservation1.setId((long) 1);
                 return null;
             }
-        }).when(reservationDao).create(any(Reservation.class));
+        }).when(reservationService).create(any(Reservation.class));
 
         Mockito.doNothing().when(roomDao).create(any(Room.class));
         Mockito.doNothing().when(customerDao).create(any(Customer.class));
-
+        */
         assertNull(reservation1.getId());
-        reservationService.createReservation(reservation1);
+        Date from = new Date();
+        Date to = new Date();
+        reservationFacade.createReservation((long) 0, (long) 0, from, to);
         assertNotNull(reservation1.getId());
-    }
-
-    @Test
-    public void getAllReservationsTest(){
-        List<Reservation> list = new ArrayList<>();
-        when(reservationDao.findAll()).thenReturn(list);
-        Assert.assertEquals(0, reservationService.getAllReservations().size());
-        list.add(reservation1);
-        Assert.assertEquals(1, reservationService.getAllReservations().size());
-    }
-
-    @Test
-    public void getReservationsByCustomerTest(){
-
-    }
-
-    @Test
-    public void getReservationByIdTest(){
-
-    }
-
-    @Test
-    public void createReservation2Test(){
-
-    }
-
-    @Test
-    public void updateReservationTest(){
-
-    }
-
-    @Test
-    public void cancelReservationTest(){
-
     }
 }
