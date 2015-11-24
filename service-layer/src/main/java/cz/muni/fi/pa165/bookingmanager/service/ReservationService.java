@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bookingmanager.service;
 import java.util.Date;
 import java.util.List;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
@@ -77,4 +78,19 @@ public interface ReservationService
      * @param reservation    reservation
      */
     void cancelReservation(Reservation reservation);
+
+    /**
+     * Returns all reservations of customer which starts tomorrow and later.
+     *
+     * @param customer    customer
+     * @return  list of future reservations of the customer
+     */
+    public List<Reservation> getFutureReservationsOfCustomer(Customer customer);
+
+    /**
+     * Returns all reservations which starts next month.
+     *
+     * @return list of reservation which starts next month
+     */
+    public List<Reservation> getNextMonthReservations();
 }

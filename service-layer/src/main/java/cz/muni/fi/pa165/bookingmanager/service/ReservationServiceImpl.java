@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.service;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -101,5 +102,32 @@ public class ReservationServiceImpl implements ReservationService
     public void cancelReservation(Reservation reservation)
     {
         reservationDao.delete(reservation);
+    }
+
+    @Override
+    public List<Reservation> getFutureReservationsOfCustomer(Customer customer)
+    {
+        List<Reservation> reservations = reservationDao.findReservationsOfCustomer(customer);
+        List<Reservation> retList = new ArrayList<>();
+        Date now = new Date();
+        for (Reservation r : reservations){
+            if (r.getStartOfReservation().after(now)){
+                retList.add(r);
+            }
+        }
+        return retList;
+    }
+
+    @Override
+    public List<Reservation> getNextMonthReservations()
+    {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        return reservationDao.findReservationsOfTime(nextMonthFirstDay, nextMonthLastDay);
     }
 }

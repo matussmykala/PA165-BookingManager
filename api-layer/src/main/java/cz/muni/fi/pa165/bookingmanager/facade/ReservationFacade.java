@@ -11,22 +11,12 @@ import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
  */
 public interface ReservationFacade
 {
-
     /**
      * Returns all the reservations.
      *
      * @return list of all reservations
      */
     public List<ReservationDTO> getAllReservations();
-
-    /**
-     * Returns reservations taken in time interval <from, to>.
-     *
-     * @param from  beginning date
-     * @param to    end date
-     * @return      list of reservation taken in time interval
-     */
-    public List<ReservationDTO> getReservationsOfTime(Date from, Date to);
 
     /**
      * Returns reservations taken by the customer.
@@ -71,4 +61,19 @@ public interface ReservationFacade
      * @param id    reservation id
      */
     public void cancelReservation(Long id);
+
+    /**
+     * Returns all reservations of customer with customerId which starts tomorrow and later.
+     *
+     * @param customerId    customer id
+     * @return  list of future reservations of the customer
+     */
+    public List<ReservationDTO> getFutureReservationsOfCustomer(Long customerId);
+
+    /**
+     * Returns all reservations which starts next month.
+     *
+     * @return list of reservation which starts next month
+     */
+    public List<ReservationDTO> getNextMonthReservations();
 }

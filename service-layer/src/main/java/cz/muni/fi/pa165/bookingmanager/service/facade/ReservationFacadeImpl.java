@@ -1,4 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
+import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +29,8 @@ public class ReservationFacadeImpl implements ReservationFacade
     private ReservationService reservationService;
     @Autowired
     private CustomerService customerService;
-    //@Autowired
-    //private RoomService roomService;
+    @Autowired
+    private RoomService roomService;
     @Autowired
     private BeanMappingService beanMappingService;
 
@@ -39,18 +42,10 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public List<ReservationDTO> getReservationsOfTime(Date from, Date to)
-    {
-        List<Reservation> reservations = reservationService.getReservationsOfTime(from, to);
-        return beanMappingService.mapTo(reservations, ReservationDTO.class);
-    }
-
-    @Override
     public List<ReservationDTO> getReservationsByCustomer(Long customerId)
     {
         //Customer customer = customerService.getCustomerById(customerId);
         //List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
-
         //return beanMappingService.mapTo(reservations, ReservationDTO.class);
         return null;
     }
@@ -84,5 +79,25 @@ public class ReservationFacadeImpl implements ReservationFacade
     {
         Reservation reservation = reservationService.getReservationById(id);
         reservationService.cancelReservation(reservation);
+    }
+
+    @Override
+    public List<ReservationDTO> getFutureReservationsOfCustomer(Long customerId)
+    {
+        /*
+        Customer customer = customerService.getCustomerById(customerId);
+        return beanMappingService.mapTo(
+                reservationService.getFutureReservationsOfCustomer(customer), ReservationDTO.class
+        );
+        */
+        return null;
+    }
+
+    @Override
+    public List<ReservationDTO> getNextMonthReservations()
+    {
+        return beanMappingService.mapTo(
+                reservationService.getNextMonthReservations(), ReservationDTO.class
+        );
     }
 }
