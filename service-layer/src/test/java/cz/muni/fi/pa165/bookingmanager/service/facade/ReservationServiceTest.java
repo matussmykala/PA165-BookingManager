@@ -126,11 +126,48 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void updateReservationTest(){
+        doNothing().when(reservationDao).update(any(Reservation.class));
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservationService.updateReservation(reservation1, new Customer(), new Room(), nextMonthFirstDay, nextMonthLastDay);
+        verify(reservationDao).update(any(Reservation.class));
     }
 
     @Test
     public void cancelReservationTest(){
+        doNothing().when(reservationDao).delete(any(Reservation.class));
+        reservationService.cancelReservation(reservation1);
+        verify(reservationDao).delete(any(Reservation.class));
+    }
 
+    @Test
+    public void getReservationsOfTimeTest(){
+        doNothing().when(reservationDao).findReservationsOfTime(any(Date.class), any(Date.class));
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservationService.getReservationsOfTime(nextMonthFirstDay, nextMonthLastDay);
+        verify(reservationDao).findReservationsOfTime(any(Date.class), any(Date.class));
+    }
+
+    @Test
+    public void getNextMonthReservationsTest(){
+        //TODO
+    }
+
+    @Test
+    public void getFutureReservationsOfCustomerTest(){
+        //TODO
     }
 }
