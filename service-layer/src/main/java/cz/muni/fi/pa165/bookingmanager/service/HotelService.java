@@ -22,8 +22,9 @@ public interface HotelService {
      * 
      * @param hotel
      * @throws DataAccessException when error on DAO layer appears
+     * @return createdHOtel
      */
-    public void createHotel(Hotel hotel) throws DataAccessException;
+    public Hotel createHotel(Hotel hotel) throws DataAccessException;
     
     /**
      * Update hotel

@@ -17,11 +17,33 @@ public class HotelDTO {
     
     private Long id;
     
+    /**
+     * Name of hotel
+     */
     private String name;
     
+    /**
+     * Address of hotel
+     */
     private String address;
     
+    /**
+     * Short description about hotel
+     */
     private String description;
+    
+    /**
+     * Picture of hotel
+     */
+    
+    private byte[] image;
+
+    private String imageMimeType;
+    
+    /**
+     * Date of creating or last updating hotel
+     */
+    private Date lastUpdateDay;
     
     
     public Long getId() {
@@ -56,8 +78,31 @@ public class HotelDTO {
         this.description = description;
     }
 
-   
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageMimeType() {
+        return imageMimeType;
+    }
+
+    public void setImageMimeType(String imageMimeType) {
+        this.imageMimeType = imageMimeType;
+    }
+
+    public Date getLastUpdateDay() {
+        return lastUpdateDay;
+    }
+
+    public void setLastUpdateDay(Date lastUpdateDay) {
+        this.lastUpdateDay = lastUpdateDay;
+    }
     
+        
     /**
      * HashCode use parameters name and address
      * @return hash

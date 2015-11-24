@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bookingmanager.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import javax.persistence.*;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -37,7 +38,21 @@ public class Hotel {
      * list of all rooms that are associated with this hotel
      */
     @OneToMany(mappedBy = "hotel")
-    private List<Room> rooms = new ArrayList<>();;
+    private List<Room> rooms = new ArrayList<>();
+    
+    /**
+     * Picture of hotel
+     */
+    @Lob
+    private byte[] image;
+
+    private String imageMimeType;
+    
+    /**
+     * Date of creating or last updating hotel
+     */
+    @Temporal(TemporalType.DATE)
+    private Date lastUpdateDay;
 
 
     public Long getId() {
@@ -75,6 +90,32 @@ public class Hotel {
     public void addRoom(Room room){
         this.rooms.add(room);
     }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageMimeType() {
+        return imageMimeType;
+    }
+
+    public void setImageMimeType(String imageMimeType) {
+        this.imageMimeType = imageMimeType;
+    }
+
+    public Date getLastUpdateDay() {
+        return lastUpdateDay;
+    }
+
+    public void setLastUpdateDay(Date lastUpdateDay) {
+        this.lastUpdateDay = lastUpdateDay;
+    }
+    
+    
     
     /**
      * Check if 2 hotels are equal according to name, address and rooms

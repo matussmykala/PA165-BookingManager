@@ -5,6 +5,7 @@
  */
 package cz.muni.fi.pa165.bookingmanager.facade;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ChangeImageDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import java.util.List;
@@ -53,6 +54,12 @@ public interface HotelFacade {
      * @return List<HotelDTO> - list of all hotels which are in system
      */
     public List<HotelDTO> getAllHotels();
+    
+     /**
+      * Change image of hotel
+      * @param image - that will be added to hotel description
+      */
+     public void changeImage(ChangeImageDTO image);
     
      
     
