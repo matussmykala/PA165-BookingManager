@@ -32,7 +32,10 @@ import org.testng.annotations.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertNotEquals;
@@ -72,46 +75,53 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void createReservationTest(){
-        Mockito.doAnswer(new Answer()
-        {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable
-            {
-                reservation1.setId((long) 1);
-                return null;
-            }
-        }).when(reservationDao).create(any(Reservation.class));
+        doNothing().when(roomDao).create(any(Room.class));
+        doNothing().when(customerDao).create(any(Customer.class));
+        doNothing().when(reservationDao).create(any(Reservation.class));
 
-        Mockito.doNothing().when(roomDao).create(any(Room.class));
-        Mockito.doNothing().when(customerDao).create(any(Customer.class));
-
-        assertNull(reservation1.getId());
         reservationService.createReservation(reservation1);
-        assertNotNull(reservation1.getId());
+        verify(reservationDao).create(reservation1);
     }
 
     @Test
     public void getAllReservationsTest(){
         List<Reservation> list = new ArrayList<>();
         when(reservationDao.findAll()).thenReturn(list);
-        Assert.assertEquals(0, reservationService.getAllReservations().size());
-        list.add(reservation1);
-        Assert.assertEquals(1, reservationService.getAllReservations().size());
+        reservationService.getAllReservations();
+        verify(reservationDao).findAll();
     }
 
     @Test
     public void getReservationsByCustomerTest(){
-
+        List<Reservation> list = new ArrayList<>();
+        when(reservationDao.findReservationsOfCustomer(any(Customer.class))).thenReturn(list);
+        Customer customer = new Customer();
+        reservationService.getReservationsByCustomer(customer);
+        verify(reservationDao).findReservationsOfCustomer(customer);
     }
 
     @Test
     public void getReservationByIdTest(){
-
+        when(reservationDao.findById(any(Long.class))).thenReturn(reservation1);
+        reservationService.getReservationById((long) 0);
+        verify(reservationDao).findById(anyLong());
     }
 
     @Test
     public void createReservation2Test(){
+        doNothing().when(roomDao).create(any(Room.class));
+        doNothing().when(customerDao).create(any(Customer.class));
+        doNothing().when(reservationDao).create(any(Reservation.class));
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservationService.createReservation(new Customer(), new Room(), nextMonthFirstDay, nextMonthLastDay);
+        verify(reservationDao).create(any(Reservation.class));
     }
 
     @Test
