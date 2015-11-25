@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,11 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Autowired
     private BeanMappingService beanMappingService;
 
+    public void setReservationService(ReservationService reservationService)
+    {
+        this.reservationService = reservationService;
+    }
+
     @Override
     public List<ReservationDTO> getAllReservations()
     {
@@ -62,7 +69,13 @@ public class ReservationFacadeImpl implements ReservationFacade
     {
         //Customer customer = customerService.getCustomerById(customerId);
         //Room room = roomService.getRoomById(roomId);
-        //reservationService.createReservation(customer, room, from, to);
+        Customer customer = new Customer();
+        Room room = new Room();
+        room.setNumberOfBeds(1);
+        room.setCurrency(Currency.getInstance("EUR"));
+        room.setPrice(new BigDecimal("1.0"));
+        room.setName("roomname");
+        reservationService.createReservation(customer, room, from, to);
     }
 
     @Override

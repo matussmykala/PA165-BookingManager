@@ -21,22 +21,22 @@ import org.springframework.context.annotation.Import;
 
 
 /**
- * 
+ *
  * @author ivet
  */
 @Configuration
 @Import(PersistenceSampleApplicationContext.class)
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.bookingmanager.service"})
 public class ServiceConfiguration {
-	
+
 
 	@Bean
 	public Mapper dozer(){
-		DozerBeanMapper dozer = new DozerBeanMapper();		
+		DozerBeanMapper dozer = new DozerBeanMapper();
 		dozer.addMapping(new DozerCustomConfig());
 		return dozer;
 	}
-	
+
 	/**
 	 * Custom config for Dozer if needed
 	 * @author nguyen
@@ -51,5 +51,5 @@ public class ServiceConfiguration {
 			mapping(Customer.class, CustomerDTO.class);
 		}
 	}
-	
+
 }
