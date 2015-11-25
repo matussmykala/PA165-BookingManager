@@ -13,6 +13,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
@@ -53,6 +54,8 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
     private RoomService roomService;
     @Mock
     private CustomerService customerService;
+    @Autowired
+    private BeanMappingService beanMappingService;
 
     //ugly peace of code, but wasn't able to do better way
     //----------------------------------------------------
@@ -74,6 +77,7 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
         //----------------------------------------------------
         //reservationFacade = new ReservationFacadeImpl();
         reservationFacade.setReservationService(reservationService);
+        reservationFacade.setBeanMappingService(beanMappingService);
         //----------------------------------------------------
 
         reservation1 = new Reservation();
