@@ -8,3 +8,4 @@ jdk:
 branches:
   only:
     - master
+    - matus_smykala
