@@ -64,19 +64,6 @@ public class ReservationServiceImpl implements ReservationService
     }
 
     @Override
-    public void createReservation(Customer customer, Room room, Date from, Date to)
-    {
-        Reservation reservation = new Reservation();
-        reservation.setCustomer(customer);
-        reservation.setRoom(room);
-        reservation.setStartOfReservation(from);
-        reservation.setEndOfReservation(to);
-        customerDao.create(customer);
-        roomDao.create(room);
-        reservationDao.create(reservation);
-    }
-
-    @Override
     public void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
     {
         if (reservation.getCustomer() != null && reservation.getCustomer() != customer) {
