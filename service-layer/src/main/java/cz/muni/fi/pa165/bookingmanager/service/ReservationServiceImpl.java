@@ -90,7 +90,7 @@ public class ReservationServiceImpl implements ReservationService
             reservation.getRoom().getReservations().remove(reservation);
         }
         if (!room.getReservations().contains(reservation)){
-            room.getReservations().add(reservation);
+            room.setReservation(reservation);
         }
         reservation.setRoom(room);
         reservation.setStartOfReservation(from);

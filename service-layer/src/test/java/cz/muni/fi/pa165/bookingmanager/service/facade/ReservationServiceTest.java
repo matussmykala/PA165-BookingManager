@@ -64,10 +64,22 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
     @BeforeMethod
     public void createReservations(){
         reservation1 = new Reservation();
-        reservation1 = new Reservation();
+        reservation2 = new Reservation();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservation1.setStartOfReservation(nextMonthFirstDay);
+        reservation2.setStartOfReservation(nextMonthFirstDay);
+        reservation1.setEndOfReservation(nextMonthLastDay);
+        reservation2.setEndOfReservation(nextMonthLastDay);
     }
 
-    @BeforeClass
+    @BeforeMethod
     public void setup() throws ServiceException
     {
         MockitoAnnotations.initMocks(this);
@@ -148,7 +160,11 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void getReservationsOfTimeTest(){
-        doNothing().when(reservationDao).findReservationsOfTime(any(Date.class), any(Date.class));
+        List<Reservation> list = new ArrayList<>();
+        list.add(reservation1);
+        list.add(reservation2);
+
+        when(reservationDao.findReservationsOfTime(any(Date.class), any(Date.class))).thenReturn(list);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
@@ -163,11 +179,53 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
 
     @Test
     public void getNextMonthReservationsTest(){
-        //TODO
+        List<Reservation> list = new ArrayList<>();
+        list.add(reservation1);
+        list.add(reservation2);
+
+        when(reservationDao.findReservationsOfTime(any(Date.class), any(Date.class))).thenReturn(list);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservationService.getReservationsOfTime(nextMonthFirstDay, nextMonthLastDay);
+        verify(reservationDao).findReservationsOfTime(any(Date.class), any(Date.class));
     }
 
     @Test
     public void getFutureReservationsOfCustomerTest(){
-        //TODO
+        Customer customer = new Customer();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date thisMonthFirstDay = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        //calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date nextMonthLastDay = calendar.getTime();
+
+        reservation1.setCustomer(customer);
+        reservation1.setStartOfReservation(nextMonthFirstDay);
+        reservation1.setEndOfReservation(nextMonthLastDay);
+
+        reservation2.setCustomer(customer);
+        reservation2.setStartOfReservation(thisMonthFirstDay);
+        reservation2.setEndOfReservation(nextMonthLastDay);
+
+        List<Reservation> list = new ArrayList<>();
+        list.add(reservation1);
+        list.add(reservation2);
+        when(reservationDao.findReservationsOfCustomer(any(Customer.class))).thenReturn(list);
+
+        list = reservationService.getFutureReservationsOfCustomer(customer);
+        verify(reservationDao).findReservationsOfCustomer(any(Customer.class));
+
+        Assert.assertTrue(list.contains(reservation1));
+        Assert.assertTrue(!list.contains(reservation2));
     }
 }

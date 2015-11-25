@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.bookingmanager.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,42 +24,42 @@ public class Customer {
      * First name of this customer.
      */
     @NotNull
-    private String name;
+    private String name = "";
 
     /**
      * Surname of this customer.
      */
     @NotNull
-    private String surname;
+    private String surname = "";
 
     /**
      * Email of this customer.
      */
     @NotNull
-    private String email;
+    private String email = "";
 
     /**
      * Username of this customer that he uses to log in to the reservation system.
      * It can be null as a customer can be listed in the reservation system,
      * but the customer has no access to the system.
      */
-    private String username;
+    private String username = "";
 
     /**
      * Password of this customer that he uses to log in to the reservation system.
      */
-    private String password;
+    private String password = "";
 
     /**
      * List of all reservation that are associated with this customer.
      */
     @OneToMany(mappedBy = "customer")
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
 
     /**
      * If set to true, then this user has administrator rights in the system.
      */
-    private boolean isAdmin;
+    private boolean isAdmin = false;
 
     public Long getId() {
         return id;
