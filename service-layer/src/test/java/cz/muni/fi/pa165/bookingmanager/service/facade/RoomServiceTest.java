@@ -1,14 +1,13 @@
-package cz.muni.fi.pa165.bookingmanager.service;
+package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.service.RoomServiceImpl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Currency;
 import java.util.List;
-import org.hibernate.service.spi.ServiceException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -28,7 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RoomServiceImplTest{
+public class RoomServiceTest{
     
     @Mock
     private RoomDao roomDao;
@@ -40,6 +39,7 @@ public class RoomServiceImplTest{
       
     private Room room1;
     private Room room2;
+    private Room room3;
     
     @Before
     public void createRoom(){
@@ -47,6 +47,7 @@ public class RoomServiceImplTest{
         MockitoAnnotations.initMocks(this);
         room1 = new Room();
         room2 = new Room();
+        room3 = new Room();
 
         room1.setName("57");
         room1.setNumberOfBeds(3);
@@ -55,6 +56,10 @@ public class RoomServiceImplTest{
         room2.setName("120");
         room2.setNumberOfBeds(1);
         room2.setPrice(new BigDecimal("150.00"));
+        
+        room3.setName("58");
+        room3.setNumberOfBeds(3);
+        room3.setPrice(new BigDecimal("80.00"));
     }
     
     @Test
@@ -93,13 +98,54 @@ public class RoomServiceImplTest{
         roomService.findAll();
         verify(roomDao).findAll();
     }
-    /*
+    
+    @Test
+    public void findByPriceTest(){
+        List<Room> list = new ArrayList<>();
+        BigDecimal price = new BigDecimal("80.0");
+        when(roomDao.findRoomByPrice(price)).thenReturn(list);
+        roomService.findByPrice(price);
+        verify(roomDao).findRoomByPrice(price);
+    }
+    
+    @Test
+    public void findByNumberOfBedsTest(){
+        List<Room> list = new ArrayList<>();
+        int numberOfBeds = 8;
+        when(roomDao.findRoomByNumberOfBeds(numberOfBeds)).thenReturn(list);
+        roomService.findByNumberOfBeds(numberOfBeds);
+        verify(roomDao).findRoomByNumberOfBeds(numberOfBeds);
+    }
+    
+    @Test
+    public void findByPriceCurrencyTest(){
+        List<Room> list = new ArrayList<>();
+        Currency currency = Currency.getInstance("EUR");
+        when(roomDao.findRoomByPriceCurrency(currency)).thenReturn(list);
+        roomService.findByPriceCurrency(currency);
+        verify(roomDao).findRoomByPriceCurrency(currency);
+    }
+    
     @Test
     public void changeRoomPriceTest(){
-        doNothing().when(roomDao).update(any(Room.class));
-        room1.setName("Zmenena izba");        
-        roomService.updateRoom(room1);
-        verify(roomDao).update(any(Room.class));
-    }
-    */
+        List<Room> list = new ArrayList<>();
+        BigDecimal price = new BigDecimal("99.0");
+        Currency currency = Currency.getInstance("CZK");
+        
+        roomService.changeRoomPrice(room1, price, currency);
+        when(roomDao.findRoomByPrice(price)).thenReturn(list);
+        roomService.findByPrice(price);
+        verify(roomDao).findRoomByPrice(price);
+    }  
+    
+    @Test
+    public void changeNumberOfBedsTest(){
+        List<Room> list = new ArrayList<>();
+        int numberOfBeds = 33;
+        
+        roomService.changeNumberOfBeds(room1, numberOfBeds);
+        when(roomDao.findRoomByNumberOfBeds(numberOfBeds)).thenReturn(list);
+        roomService.findByNumberOfBeds(numberOfBeds);
+        verify(roomDao).findRoomByNumberOfBeds(numberOfBeds);
+    }   
 }
