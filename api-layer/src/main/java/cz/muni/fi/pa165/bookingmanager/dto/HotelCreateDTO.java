@@ -6,7 +6,8 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 
 
-
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 /**
@@ -15,8 +16,12 @@ import java.util.Objects;
  */
 public class HotelCreateDTO {
 
+    @NotNull
+    @Size(min = 1, max = 30)
     private String name;
-    
+
+    @NotNull
+    @Size(min = 1, max = 60)
     private String address;
     
     private String description;

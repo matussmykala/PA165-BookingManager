@@ -19,6 +19,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>BookingManagerService-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
@@ -30,6 +35,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
+            <exclusions>
+                <!-- needed to replace commons-logging with slf4j -->
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -64,6 +76,7 @@
             <groupId>org.glassfish.web</groupId>
             <artifactId>javax.el</artifactId>
             <version>2.2.4</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -73,6 +86,31 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope><!-- logging implementation should not be part of a library, but is needed for tests -->
+        </dependency>
+
+
+        <!-- For embedded usage -->
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
         </dependency>
     </dependencies>
 </project>
