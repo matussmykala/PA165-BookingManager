@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,38 +13,27 @@ import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
-import org.hibernate.service.spi.ServiceException;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertNull;
 
 /**
  * @author matus
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class ReservationServiceTest extends AbstractTestNGSpringContextTests
+public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
 {
     @Mock
     private ReservationDao reservationDao;
@@ -61,8 +49,10 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
     private Reservation reservation1;
     private Reservation reservation2;
 
-    @BeforeMethod
+    @Before
     public void createReservations(){
+        MockitoAnnotations.initMocks(this);
+
         reservation1 = new Reservation();
         reservation2 = new Reservation();
 
@@ -77,12 +67,6 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
         reservation2.setStartOfReservation(nextMonthFirstDay);
         reservation1.setEndOfReservation(nextMonthLastDay);
         reservation2.setEndOfReservation(nextMonthLastDay);
-    }
-
-    @BeforeMethod
-    public void setup() throws ServiceException
-    {
-        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -225,7 +209,7 @@ public class ReservationServiceTest extends AbstractTestNGSpringContextTests
         list = reservationService.getFutureReservationsOfCustomer(customer);
         verify(reservationDao).findReservationsOfCustomer(any(Customer.class));
 
-        Assert.assertTrue(list.contains(reservation1));
-        Assert.assertTrue(!list.contains(reservation2));
+        assertTrue(list.contains(reservation1));
+        assertTrue(!list.contains(reservation2));
     }
 }
