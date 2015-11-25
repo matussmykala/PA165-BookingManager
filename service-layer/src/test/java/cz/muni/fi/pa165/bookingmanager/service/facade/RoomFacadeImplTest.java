@@ -6,9 +6,11 @@ import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.Currency;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
@@ -20,6 +22,7 @@ import org.testng.annotations.Test;
  * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
+@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes=ServiceConfiguration.class)
 public class RoomFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests{
     @Mock

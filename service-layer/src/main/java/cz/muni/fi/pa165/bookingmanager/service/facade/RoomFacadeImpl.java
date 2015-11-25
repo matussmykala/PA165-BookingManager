@@ -96,4 +96,29 @@ public class RoomFacadeImpl implements RoomFacade{
         roomService.changeNumberOfBeds(roomService.findById(roomId), newNumberOfBeds);
     }
 
+    @Override
+    public List<RoomDTO> getRoomsByPrice(BigDecimal price) {
+        if(price == null){
+            throw new IllegalArgumentException("price is null");
+        }
+        return beanMappingService.mapTo(roomService.findByPrice(price), RoomDTO.class);
+    }
+
+    @Override
+    public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds) {
+        
+        if(numberOfBeds < 0){
+            throw new IllegalArgumentException("numberOfBeds is less than 0");
+        }
+        return beanMappingService.mapTo(roomService.findByNumberOfBeds(numberOfBeds), RoomDTO.class);
+    }
+
+    @Override
+    public List<RoomDTO> getRoomsByPriceCurrency(Currency currency) {
+        if(currency == null){
+            throw new IllegalArgumentException("currency is null");
+        }
+        return beanMappingService.mapTo(roomService.findByPriceCurrency(currency), RoomDTO.class);
+    }
+
 }

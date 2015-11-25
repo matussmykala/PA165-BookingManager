@@ -59,4 +59,28 @@ public interface RoomFacade {
      * @return List<RoomDTO> - list of all rooms 
      */
     public List<RoomDTO> getAllRooms();
+    
+    /**
+     * Get rooms with specific price
+     * 
+     * @price price of room
+     * @return List<RoomDTO> - list of rooms with specific price
+     */
+    public List<RoomDTO> getRoomsByPrice(BigDecimal price);
+    
+    /**
+     * Get rooms with specific numberof beds
+     * 
+     * @numberOfBeds number of beds
+     * @return List<RoomDTO> - list of rooms with specific numberof beds
+     */
+    public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds);
+    
+    /**
+     * Get rooms with specific price currency
+     * 
+     * @currency specific price currency
+     * @return List<RoomDTO> - list of rooms with specific price currency
+     */
+    public List<RoomDTO> getRoomsByPriceCurrency(Currency currency);
 }

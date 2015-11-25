@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import java.math.BigDecimal;
+import java.util.Currency;
 
 import java.util.List;
 
@@ -32,11 +34,37 @@ public interface RoomDao {
     public List<Room> findAll();
     
     /**
+     * Return list of rooms with specific price
+     *
+     * @price Price of room
+     * @return list of rooms with specific price
+     */
+    public List<Room> findRoomByPrice(BigDecimal price);
+    
+    /**
+     * Return list of rooms with specific number of beds
+     *
+     * @numberOfBeds number of beds
+     * @return list of rooms with specific price
+     */
+    public List<Room> findRoomByNumberOfBeds(int numberOfBeds);
+    
+    /**
+     * Return list of rooms with specific price currency
+     *
+     * @currency currency of room price
+     * @return list of rooms with specific price
+     */
+    public List<Room> findRoomByPriceCurrency(Currency currency);   
+    
+    
+    /**
      * Update room entry
      *
      * @param room room object with updated information
      */
     public void update(Room room);
+    
     
     /**
      * Delete room entry

@@ -69,4 +69,28 @@ public interface RoomService {
      * @param numberOfBeds - new number of beds in room
      */
     public void changeNumberOfBeds(Room room, int numberOfBeds) throws DataAccessException;
+    
+    /**
+     * Find rooms by price
+     * 
+     * @param price - price of rooms which have to be found
+     * @return rooms with specific price
+     */
+    public List<Room> findByPrice(BigDecimal price) throws DataAccessException;
+    
+    /**
+     * Find rooms by price currency
+     * 
+     * @param currency - price currency of rooms which have to be found
+     * @return rooms with specific price currency
+     */
+    public List<Room> findByPriceCurrency(Currency currency) throws DataAccessException;
+    
+    /**
+     * Find rooms by number of beds
+     * 
+     * @param numberOfBeds - number of beds in room
+     * @return rooms with specific number of beds
+     */
+    public List<Room> findByNumberOfBeds(int numberOfBeds) throws DataAccessException;
 }

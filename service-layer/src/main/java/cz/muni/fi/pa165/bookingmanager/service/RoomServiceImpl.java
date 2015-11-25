@@ -16,7 +16,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Implementation of RoomService interface
+ * 
  * @author Martin Cuchran
  */
 @Service
@@ -82,4 +83,31 @@ public class RoomServiceImpl implements RoomService{
             roomDao.update(room);
         }catch(DataAccessException ex){};        
     }    
+
+    @Override
+    public List<Room> findByPrice(BigDecimal price) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findRoomByPrice(price));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Room> findByPriceCurrency(Currency currency) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findRoomByPriceCurrency(currency));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Room> findByNumberOfBeds(int numberOfBeds) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findRoomByNumberOfBeds(numberOfBeds));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
+    }
 }
