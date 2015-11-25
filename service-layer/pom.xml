@@ -13,58 +13,37 @@
     <dependencies>
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>BookingManagerService-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
-            <type>jar</type>
+            <artifactId>BookingManagerService-dao-layer</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
-            <version>5.5.1</version>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>4.2.2.RELEASE</version>
-            <type>jar</type>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>4.2.2.RELEASE</version>
-            <type>jar</type>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.el</artifactId>
+            <scope>test</scope><!-- conflicts with tomcat libraries, but needed for tests -->
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>2.0.2-beta</version>
             <scope>test</scope>
-            <type>jar</type>
         </dependency>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.8.8</version>
-            <scope>test</scope>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>BookingManagerService-dao-layer</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope><!-- logging implementation should not be part of a library, but is needed for tests -->
         </dependency>
     </dependencies>
 </project>

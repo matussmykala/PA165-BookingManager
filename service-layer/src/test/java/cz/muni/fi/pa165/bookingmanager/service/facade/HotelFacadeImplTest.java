@@ -10,21 +10,21 @@ import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 /**
  *
  * @author ivet
  */
 @ContextConfiguration(classes=ServiceConfiguration.class)
-public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContextTests{
+public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContextTests {
     
     @Mock
     private HotelService hotelService;
@@ -32,10 +32,9 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     @Autowired
     @InjectMocks
     private HotelFacade hotelFacade;
-    
-    
-    
-    @BeforeMethod
+
+
+    @Before
     public void setUpClass() {
          MockitoAnnotations.initMocks(this);
     }
@@ -55,7 +54,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     /**
      * Test of updateHotel method, of class HotelFacadeImpl.
      */
-    @org.junit.Test
+    @Test
     public void testUpdateHotel() {
     
     }
@@ -63,7 +62,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     /**
      * Test of deleteHotel method, of class HotelFacadeImpl.
      */
-    @org.junit.Test
+    @Test
     public void testDeleteHotel() {
       
     }
@@ -71,7 +70,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     /**
      * Test of getHotelById method, of class HotelFacadeImpl.
      */
-    @org.junit.Test
+    @Test
     public void testGetHotelById() {
   
     }
@@ -79,7 +78,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalTestNGSpringContex
     /**
      * Test of getAllHotels method, of class HotelFacadeImpl.
      */
-    @org.junit.Test
+    @Test
     public void testGetAllHotels() {
       
     }

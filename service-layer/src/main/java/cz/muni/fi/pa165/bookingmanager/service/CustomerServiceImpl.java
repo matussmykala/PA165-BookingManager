@@ -38,4 +38,55 @@ public class CustomerServiceImpl implements CustomerService {
     public Collection<Customer> getAllCustomers() {
         return customerDao.findAll();
     }
+
+    /**
+     * Finds a customer based on his ID.
+     *
+     * @param customerId ID of the customer
+     * @return customer with specified ID
+     */
+    @Override
+    public Customer findCustomerById(Long customerId) {
+        return customerDao.findById(customerId);
+    }
+
+    /**
+     * Checks if the specified user has admin role.
+     *
+     * @param customer customer to be checked
+     * @return true if given customer has admin role, false if not
+     */
+    @Override
+    public boolean isAdmin(Customer customer) {
+        if (customer == null) {
+            throw new IllegalArgumentException("customer is null");
+        }
+
+        Customer customer1 = customerDao.findById(customer.getId());
+        if (customer1 == null) {
+            throw new IllegalArgumentException("Such customer does not exist");
+        }
+
+        return customer1.isAdmin();
+    }
+
+    /**
+     * Updates an existing customer.
+     *
+     * @param customer customer to be updated
+     */
+    @Override
+    public void updateCustomer(Customer customer) {
+        customerDao.update(customer);
+    }
+
+    /**
+     * Deletes a customer with given ID
+     *
+     * @param customerId ID of a customer that will be deleted
+     */
+    @Override
+    public void deleteCustomer(Long customerId) {
+        customerDao.delete(customerDao.findById(customerId));
+    }
 }
