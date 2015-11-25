@@ -7,21 +7,20 @@ import java.util.Date;
  */
 public class ReservationDTO
 {
-
     /**
      * Id.
      */
-    private Long id;
+    private Long id = (long) 0;
 
     /**
      * Date and time when the reservation begins.
      */
-    private Date startOfReservation;
+    private Date startOfReservation = new Date();
 
     /**
      * Date and time, when the reservation ends.
      */
-    private Date endOfReservation;
+    private Date endOfReservation = new Date();
 
     /**
      * Customer who books the room.
@@ -96,17 +95,28 @@ public class ReservationDTO
         if (!endOfReservation.equals(that.endOfReservation)) return false;
         if (!customer.equals(that.customer)) return false;
         return room.equals(that.room);
-
     }
 
     @Override
     public int hashCode()
     {
-        int result = id.hashCode();
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + startOfReservation.hashCode();
         result = 31 * result + endOfReservation.hashCode();
         result = 31 * result + customer.hashCode();
         result = 31 * result + room.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ReservationDTO{" +
+                "id=" + id +
+                ", startOfReservation=" + startOfReservation +
+                ", endOfReservation=" + endOfReservation +
+                ", customer=" + customer +
+                ", room=" + room +
+                '}';
     }
 }
