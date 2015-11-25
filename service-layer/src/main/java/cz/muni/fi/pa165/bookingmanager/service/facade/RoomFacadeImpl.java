@@ -33,6 +33,10 @@ public class RoomFacadeImpl implements RoomFacade{
     @Inject
     private BeanMappingService beanMappingService;
 
+  
+    
+    
+    
     @Override
     public void deleteRoom(Long RoomId) {
         if (RoomId == null) {
@@ -43,7 +47,20 @@ public class RoomFacadeImpl implements RoomFacade{
         }
         roomService.deleteRoom(roomService.findById(RoomId));
     }
+    
+    
 
+    @Override
+    public long createRoom(RoomCreateDTO roomCreateDTO) {
+        if (roomCreateDTO == null) {
+            throw new IllegalArgumentException("roomCreateDTO is null");
+        }
+
+        Room mappedRoom = beanMappingService.mapTo(roomCreateDTO, Room.class);
+        Room room = roomService.createRoom(mappedRoom);
+        return room.getId();
+    }
+    
     @Override
     public RoomDTO getRoomById(Long RoomId) {
         if (RoomId == null) {
@@ -59,18 +76,7 @@ public class RoomFacadeImpl implements RoomFacade{
     public List<RoomDTO> getAllRooms() {
         return beanMappingService.mapTo(roomService.findAll(), RoomDTO.class);
     }
-
-    @Override
-    public long createRoom(RoomCreateDTO roomCreateDTO) {
-        if (roomCreateDTO == null) {
-            throw new IllegalArgumentException("roomCreateDTO is null");
-        }
-
-        Room mappedRoom = beanMappingService.mapTo(roomCreateDTO, Room.class);
-        Room room = roomService.createRoom(mappedRoom);
-        return room.getId();
-    }
-
+    
     @Override
     public void changeRoomPrice(Long roomId, BigDecimal newPrice, Currency newCurrency) {
         if(roomId == null){
@@ -120,5 +126,4 @@ public class RoomFacadeImpl implements RoomFacade{
         }
         return beanMappingService.mapTo(roomService.findByPriceCurrency(currency), RoomDTO.class);
     }
-
 }

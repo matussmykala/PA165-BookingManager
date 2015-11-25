@@ -2,71 +2,104 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
-import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
-import java.util.Currency;
-import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import org.hibernate.service.spi.ServiceException;
-import org.junit.Assert;
-import static org.junit.Assert.fail;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.testng.annotations.BeforeMethod;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Test of RoomService class
  * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
-@ContextConfiguration(classes=ServiceConfiguration.class)
-public class RoomServiceImplTest extends AbstractJUnit4SpringContextTests {
+@RunWith(MockitoJUnitRunner.class)
+public class RoomServiceImplTest{
     
     @Mock
-    private RoomDao roomDAO;
+    private RoomDao roomDao;
         
-    @Inject
+    @Autowired
     @InjectMocks
-    private RoomService roomService;
-
-    @BeforeClass
-    public void setup() throws ServiceException
-    {
-        MockitoAnnotations.initMocks(this);
-    }
+    private RoomServiceImpl roomService;
     
-    private Room testRoom;
+      
+    private Room room1;
+    private Room room2;
     
-    @BeforeMethod
-    public void prepareTestRoom(){
-    	testRoom = new Room();
-        testRoom.setName("Room with ocean view");
-        testRoom.setCurrency(Currency.getInstance("EUR"));
-        testRoom.setPrice(new BigDecimal("25.0"));
-        testRoom.setNumberOfBeds(2);        
-    }
-    
-    @Test
-    public void changeRoomNumberOfBeds(){
-        Room createdRoom = roomService.createRoom(testRoom);
-        Assert.assertTrue(createdRoom.equals(testRoom));
-    }   
-    
-    @Test
-    public void testFindRoombyId() {
-        try {
-            roomService.findById(null);
-            fail("No IllegalArgumentException for null id");
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
+    @Before
+    public void createRoom(){
         
-        roomService.createRoom(testRoom);
-        when(roomService.findById(testRoom.getId())).thenReturn(testRoom);
+        MockitoAnnotations.initMocks(this);
+        room1 = new Room();
+        room2 = new Room();
+
+        room1.setName("57");
+        room1.setNumberOfBeds(3);
+        room1.setPrice(new BigDecimal("80.00"));
+
+        room2.setName("120");
+        room2.setNumberOfBeds(1);
+        room2.setPrice(new BigDecimal("150.00"));
     }
+    
+    @Test
+    public void createRoomTest(){
+        doNothing().when(roomDao).create(any(Room.class));
+        roomService.createRoom(room1);
+        verify(roomDao).create(room1);
+    } 
+    
+    @Test
+    public void findbyIdTest(){
+        when(roomDao.findById(any(Long.class))).thenReturn(room1);
+        roomService.findById((long) 0);
+        verify(roomDao).findById(anyLong());
+    }
+    
+    @Test
+    public void updateRoomTest(){
+        doNothing().when(roomDao).update(any(Room.class));
+        room1.setName("Zmenena izba");        
+        roomService.updateRoom(room1);
+        verify(roomDao).update(any(Room.class));
+    }
+    
+    @Test
+    public void deleteRoomTest(){
+        doNothing().when(roomDao).delete(any(Room.class));
+        roomService.deleteRoom(room1);
+        verify(roomDao).delete(any(Room.class));
+    }
+    
+    @Test
+    public void findAllTest(){
+        List<Room> list = new ArrayList<>();
+        when(roomDao.findAll()).thenReturn(list);
+        roomService.findAll();
+        verify(roomDao).findAll();
+    }
+    /*
+    @Test
+    public void changeRoomPriceTest(){
+        doNothing().when(roomDao).update(any(Room.class));
+        room1.setName("Zmenena izba");        
+        roomService.updateRoom(room1);
+        verify(roomDao).update(any(Room.class));
+    }
+    */
 }
