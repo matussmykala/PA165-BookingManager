@@ -12,10 +12,12 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +36,7 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Autowired
     private RoomService roomService;
     @Autowired
-    private BeanMappingService beanMappingService;
+    private BeanMappingService beanMappingService;// = new BeanMappingServiceImpl();
 
     public void setReservationService(ReservationService reservationService)
     {

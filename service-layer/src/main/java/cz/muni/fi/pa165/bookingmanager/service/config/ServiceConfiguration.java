@@ -9,8 +9,14 @@ import cz.muni.fi.pa165.bookingmanager.PersistenceSampleApplicationContext;
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingServiceImpl;
+import cz.muni.fi.pa165.bookingmanager.service.ReservationServiceImpl;
+import cz.muni.fi.pa165.bookingmanager.service.facade.HotelFacadeImpl;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.dozer.loader.api.BeanMappingBuilder;
@@ -26,6 +32,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(PersistenceSampleApplicationContext.class)
+//@ComponentScan(basePackageClasses={ReservationServiceImpl.class, HotelFacadeImpl.class, BeanMappingServiceImpl.class})
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.bookingmanager.service"})
 public class ServiceConfiguration {
 
@@ -49,6 +56,7 @@ public class ServiceConfiguration {
                 mapping(HotelCreateDTO.class,Hotel.class);
 //                mapping(Hotel.class, HotelCreateDTO.class);
 			mapping(Customer.class, CustomerDTO.class);
+			mapping(Reservation.class, ReservationDTO.class);
 		}
 	}
 

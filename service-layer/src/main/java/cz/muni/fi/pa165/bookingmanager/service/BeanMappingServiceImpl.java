@@ -10,15 +10,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BeanMappingServiceImpl implements BeanMappingService {
-	
+
     @Autowired
-    private Mapper dozer;
+    private Mapper dozer = new DozerBeanMapper();
 
     public  <T> List<T> mapTo(Collection<?> objects, Class<T> mapToClass) {
         List<T> mappedCollection = new ArrayList<>();
@@ -32,7 +33,7 @@ public class BeanMappingServiceImpl implements BeanMappingService {
     {
         return dozer.map(u,mapToClass);
     }
-    
+
     public Mapper getMapper(){
     	return dozer;
     }
