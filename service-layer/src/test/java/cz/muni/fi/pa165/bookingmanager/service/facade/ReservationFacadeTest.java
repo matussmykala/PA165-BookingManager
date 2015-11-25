@@ -13,6 +13,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
+import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
@@ -32,6 +33,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -53,6 +55,8 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
     private RoomService roomService;
     @Mock
     private CustomerService customerService;
+    @Autowired
+    private BeanMappingService beanMappingService;
 
     //ugly peace of code, but wasn't able to do better way
     //----------------------------------------------------
@@ -74,6 +78,7 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
         //----------------------------------------------------
         //reservationFacade = new ReservationFacadeImpl();
         reservationFacade.setReservationService(reservationService);
+        reservationFacade.setBeanMappingService(beanMappingService);
         //----------------------------------------------------
 
         reservation1 = new Reservation();
@@ -85,6 +90,18 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
         nextMonthFirstDay = calendar.getTime();
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         nextMonthLastDay = calendar.getTime();
+
+        reservation1.setId((long) 2);
+        reservation1.setCustomer(new Customer());
+        reservation1.setRoom(new Room());
+        reservation1.setStartOfReservation(nextMonthFirstDay);
+        reservation1.setEndOfReservation(nextMonthLastDay);
+
+        reservation2.setId((long) 2);
+        reservation2.setCustomer(new Customer());
+        reservation2.setRoom(new Room());
+        reservation2.setStartOfReservation(nextMonthFirstDay);
+        reservation2.setEndOfReservation(nextMonthLastDay);
     }
 
 
@@ -101,25 +118,35 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
             }
         }).when(reservationService).createReservation(any(Customer.class), any(Room.class), any(Date.class), any(Date.class));
 
-        assertNull(reservation1.getId());
+        assertNotEquals(reservation1.getId(), new Long("1"));
 
         reservationFacade.createReservation((long) 0, (long) 0, nextMonthFirstDay, nextMonthLastDay);
         verify(reservationService).createReservation(any(Customer.class), any(Room.class),
                 any(Date.class), any(Date.class));
 
-        assertNotNull(reservation1.getId());
+        assertEquals(reservation1.getId(), new Long("1"));
     }
 
     @Test
     public void getAllReservationsTest(){
         List<Reservation> list = new ArrayList<>();
+
         list.add(reservation1);
         list.add(reservation2);
         when(reservationService.getAllReservations()).thenReturn(list);
         List<ReservationDTO> dtoList = reservationFacade.getAllReservations();
         assertEquals(dtoList.size(), 2);
+        for (ReservationDTO r : dtoList){
+            System.out.println("blabla " + r.toString());
+        }
 
-        System.out.println(dtoList.get(0).toString());
+        //System.out.println(dtoList.get(0).toString());
+
+        assertNotNull(dtoList.get(0));
+        assertNotNull(dtoList.get(0).getCustomer());
+        assertNotNull(dtoList.get(0).getCustomer().getEmail());
+
+
 
         assertEquals(dtoList.get(0).getCustomer().getEmail(), reservation1.getCustomer().getEmail());
         assertEquals(dtoList.get(0).getRoom().getName(), reservation1.getRoom().getName());
