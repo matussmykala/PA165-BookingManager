@@ -104,23 +104,6 @@ public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
     }
 
     @Test
-    public void createReservation2Test(){
-        doNothing().when(roomDao).create(any(Room.class));
-        doNothing().when(customerDao).create(any(Customer.class));
-        doNothing().when(reservationDao).create(any(Reservation.class));
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 1);
-        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-        Date nextMonthFirstDay = calendar.getTime();
-        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-        Date nextMonthLastDay = calendar.getTime();
-
-        reservationService.createReservation(new Customer(), new Room(), nextMonthFirstDay, nextMonthLastDay);
-        verify(reservationDao).create(any(Reservation.class));
-    }
-
-    @Test
     public void updateReservationTest(){
         doNothing().when(reservationDao).update(any(Reservation.class));
 
@@ -188,7 +171,6 @@ public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
         calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         Date thisMonthFirstDay = calendar.getTime();
         calendar.add(Calendar.MONTH, 1);
-        //calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
         Date nextMonthFirstDay = calendar.getTime();
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         Date nextMonthLastDay = calendar.getTime();

@@ -38,11 +38,21 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Autowired
     private RoomService roomService;
     @Autowired
-    private BeanMappingService beanMappingService;// = new BeanMappingServiceImpl();
+    private BeanMappingService beanMappingService;
 
     public void setBeanMappingService(BeanMappingService beanMappingService)
     {
         this.beanMappingService = beanMappingService;
+    }
+
+    public void setCustomerService(CustomerService customerService)
+    {
+        this.customerService = customerService;
+    }
+
+    public void setRoomService(RoomService roomService)
+    {
+        this.roomService = roomService;
     }
 
     public void setReservationService(ReservationService reservationService)
@@ -60,10 +70,9 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public List<ReservationDTO> getReservationsByCustomer(Long customerId)
     {
-        //Customer customer = customerService.getCustomerById(customerId);
-        //List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
-        //return beanMappingService.mapTo(reservations, ReservationDTO.class);
-        return null;
+        Customer customer = customerService.findCustomerById(customerId);
+        List<Reservation> reservations = reservationService.getReservationsByCustomer(customer);
+        return beanMappingService.mapTo(reservations, ReservationDTO.class);
     }
 
     @Override
@@ -74,26 +83,19 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public void createReservation(Long customerId, Long roomId, Date from, Date to)
+    public void createReservation(ReservationDTO reservation)
     {
-        //Customer customer = customerService.getCustomerById(customerId);
-        //Room room = roomService.getRoomById(roomId);
-        Customer customer = new Customer();
-        Room room = new Room();
-        room.setNumberOfBeds(1);
-        room.setCurrency(Currency.getInstance("EUR"));
-        room.setPrice(new BigDecimal("1.0"));
-        room.setName("roomname");
-        reservationService.createReservation(customer, room, from, to);
+        Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
+        reservationService.createReservation(r);
     }
 
     @Override
     public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
     {
-        //Customer customer = customerService.getCustomerById(customerId);
-        //Room room = roomService.getRoomById(roomId);
-        //Reservation reservation = reservationService.getReservationById(id);
-        //reservationService.updateReservation(reservation, customer, room, from, to);
+        Customer customer = customerService.findCustomerById(customerId);
+        Room room = roomService.findById(roomId);
+        Reservation reservation = reservationService.getReservationById(id);
+        reservationService.updateReservation(reservation, customer, room, from, to);
     }
 
     @Override
@@ -106,13 +108,11 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public List<ReservationDTO> getFutureReservationsOfCustomer(Long customerId)
     {
-        /*
-        Customer customer = customerService.getCustomerById(customerId);
+
+        Customer customer = customerService.findCustomerById(customerId);
         return beanMappingService.mapTo(
                 reservationService.getFutureReservationsOfCustomer(customer), ReservationDTO.class
         );
-        */
-        return null;
     }
 
     @Override

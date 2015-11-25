@@ -53,16 +53,6 @@ public interface ReservationService
     Reservation getReservationById(Long id);
 
     /**
-     * Books the room for the customer for time period <from, to>.
-     *
-     * @param customer    customer
-     * @param room        room
-     * @param from        beggining of the reservation
-     * @param to          end of the reservation
-     */
-    void createReservation(Customer customer, Room room, Date from, Date to);
-
-    /**
      * Updates the reservation according to parameters.
      *
      * @param customer    customer id

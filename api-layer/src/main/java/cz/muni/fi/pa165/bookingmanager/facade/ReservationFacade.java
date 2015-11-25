@@ -35,14 +35,11 @@ public interface ReservationFacade
     public ReservationDTO getReservationById(Long id);
 
     /**
-     * Books the room with roomId for the customer with customerId for time period <from, to>.
+     * Creates the reservation according to reservationDto parameters..
      *
-     * @param customerId    customer id
-     * @param roomId        room id
-     * @param from          beggining of the reservation
-     * @param to            end of the reservation
+     * @param reservation    reservation to create
      */
-    public void createReservation(Long customerId, Long roomId, Date from, Date to);
+    public void createReservation(ReservationDTO reservation);
 
     /**
      * Updates the reservation with id according to parameters.
