@@ -51,7 +51,7 @@ public class RoomFacadeImpl implements RoomFacade{
     
 
     @Override
-    public long createRoom(RoomCreateDTO roomCreateDTO) {
+    public long createRoom(RoomDTO roomCreateDTO) {
         if (roomCreateDTO == null) {
             throw new IllegalArgumentException("roomCreateDTO is null");
         }
@@ -125,5 +125,13 @@ public class RoomFacadeImpl implements RoomFacade{
             throw new IllegalArgumentException("currency is null");
         }
         return beanMappingService.mapTo(roomService.findByPriceCurrency(currency), RoomDTO.class);
+    }
+
+    public void setRoomService(RoomService roomService) {
+        this.roomService = roomService;
+    }
+
+    public void setBeanMappingService(BeanMappingService beanMappingService) {
+        this.beanMappingService = beanMappingService;
     }
 }

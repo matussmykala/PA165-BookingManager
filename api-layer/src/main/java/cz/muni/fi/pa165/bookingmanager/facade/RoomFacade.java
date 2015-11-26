@@ -19,7 +19,7 @@ public interface RoomFacade {
      * @param roomCreateDTO - room which will be created
      * @return id of created room
      */
-    public long createRoom(RoomCreateDTO roomCreateDTO);
+    public long createRoom(RoomDTO roomCreateDTO);
     
     /**
      * Change price of room
