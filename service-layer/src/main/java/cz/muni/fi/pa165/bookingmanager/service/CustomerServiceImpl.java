@@ -1,13 +1,20 @@
 package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
+import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
+ * Implementation of CustomerService interface.
+ *
  * Created on 22.11.2015.
  *
  * @author Vladimir Caniga
@@ -18,6 +25,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerDao customerDao;
 
+    @Autowired
+    private ReservationDao reservationDao;
+
     /**
      * Registers a new customer.
      *
@@ -26,6 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void registerCustomer(Customer customer, String unencryptedPassword) {
+        customer.setPassword(unencryptedPassword);
         customerDao.create(customer);
     }
 
@@ -88,5 +99,23 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public void deleteCustomer(Long customerId) {
         customerDao.delete(customerDao.findById(customerId));
+    }
+
+    /**
+     * Returns a collection of all customers that have at least one reservation
+     * in the system.
+     *
+     * @return customers with reservation
+     */
+    @Override
+    public Collection<Customer> getCustomersWithReservation() {
+        List<Reservation> reservations = reservationDao.findAll();
+        Set<Customer> customers = new HashSet<>();
+
+        for (Reservation reservation : reservations) {
+            customers.add(reservation.getCustomer());
+        }
+
+        return customers;
     }
 }

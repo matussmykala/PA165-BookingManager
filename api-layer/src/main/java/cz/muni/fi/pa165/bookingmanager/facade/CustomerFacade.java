@@ -5,6 +5,9 @@ import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import java.util.Collection;
 
 /**
+ * Customer facade interface that specifies possible operations
+ * with CustomerDTOs.
+ *
  * Created on 22.11.2015.
  *
  * @author Vladimir Caniga
@@ -55,4 +58,12 @@ public interface CustomerFacade {
      * @param customerId ID of a customer that will be deleted
      */
     void deleteCustomer(Long customerId);
+
+    /**
+     * Returns a collection of all customers that have at least one reservation
+     * in the system.
+     *
+     * @return customers with reservation
+     */
+    Collection<CustomerDTO> getCustomersWithReservation();
 }
