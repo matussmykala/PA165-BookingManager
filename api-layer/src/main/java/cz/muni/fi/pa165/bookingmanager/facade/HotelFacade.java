@@ -8,6 +8,8 @@ package cz.muni.fi.pa165.bookingmanager.facade;
 import cz.muni.fi.pa165.bookingmanager.dto.ChangeImageDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -60,6 +62,31 @@ public interface HotelFacade {
       * @param image - that will be added to hotel description
       */
      public void changeImage(ChangeImageDTO image);
+     
+      /**
+     * Find hotel by name
+     * 
+     * @param name - name of hotel
+     * @return found hotel
+     */
+    public HotelDTO findByName(String name);
+    
+    /**
+     * Find all hotels in city
+     * 
+     * @param adress
+     * @return all hotels in city
+     */
+    public List<HotelDTO> findByAdress(String adress);
+    
+    /**
+     * Find all free rooms in hotel in specific range of time
+     * 
+     * @param start
+     * @param end
+     * @return free rooms in hotel 
+     */
+    public List<RoomDTO> findFreeRoomInRange(Date start, Date end);
     
      
     

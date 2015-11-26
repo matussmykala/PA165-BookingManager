@@ -56,4 +56,11 @@ public interface HotelDao {
      * @param hotel
      */
     public void delete(Hotel hotel);
+    
+    /**
+     * Find hotels in city
+     * @param address
+     * @return 
+     */
+    public List<Hotel> findByAdress(String address);
 }

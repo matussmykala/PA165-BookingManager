@@ -7,6 +7,7 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 import cz.muni.fi.pa165.bookingmanager.dto.ChangeImageDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
@@ -46,8 +47,8 @@ public class HotelFacadeImpl implements HotelFacade{
         //set Date to entity
         Date now = new Date();
         mappedHotel.setLastUpdateDay(now);
-        Hotel hotel = hotelService.createHotel(mappedHotel);
-        return hotel.getId();
+        hotelService.createHotel(mappedHotel);
+        return mappedHotel.getId();
     }
 
     @Override
@@ -56,7 +57,7 @@ public class HotelFacadeImpl implements HotelFacade{
             throw new IllegalArgumentException("HotelId is null");
         }
         if (hotelService.findById(hotelDTO.getId()) == null) {
-            throw new IllegalArgumentException("Hotel does not exist");
+           throw new IllegalArgumentException("Hotel does not exist");
         }
         Hotel mappedHotel = beanMappingService.mapTo(hotelDTO, Hotel.class);
         //set Date to entity
@@ -71,9 +72,9 @@ public class HotelFacadeImpl implements HotelFacade{
         if (HotelId == null) {
             throw new IllegalArgumentException("HotelId is null");
         }
-        if (hotelService.findById(HotelId) == null) {
+       if (hotelService.findById(HotelId) == null) {
             throw new IllegalArgumentException("Hotel does not exist");
-        }
+       }
         hotelService.deleteHotel(hotelService.findById(HotelId));
     }
 
@@ -99,5 +100,32 @@ public class HotelFacadeImpl implements HotelFacade{
         hotel.setImage(dto.getImage());
         hotel.setImageMimeType(dto.getImageMimeType());
     }
+    
+    @Override
+    public HotelDTO findByName(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public List<HotelDTO> findByAdress(String adress) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<RoomDTO> findFreeRoomInRange(Date start, Date end) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    //just for test
+    public HotelFacadeImpl(HotelService hotelService, BeanMappingService beanMappingService){
+        this.hotelService=hotelService;
+        this.beanMappingService=beanMappingService;
+    }
+    public HotelFacadeImpl(){
+        
+    }
+
+    
+   
  }

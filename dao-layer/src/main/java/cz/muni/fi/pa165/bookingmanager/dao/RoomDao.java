@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 
 import java.util.List;
@@ -44,4 +45,11 @@ public interface RoomDao {
      * @param room room object that is to be removed from database
      */
     public void delete(Room room);
+    
+    /**
+     * Find rooms in hotel
+     * @param name 
+     * @return rooms in hotel
+     */
+    public List<Room> findByNameOfHotel(String name);
 }
