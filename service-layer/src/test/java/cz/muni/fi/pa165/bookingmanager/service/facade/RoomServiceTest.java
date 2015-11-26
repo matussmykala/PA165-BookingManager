@@ -6,9 +6,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
-import cz.muni.fi.pa165.bookingmanager.service.ReservationServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
-import cz.muni.fi.pa165.bookingmanager.service.RoomServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -35,25 +33,27 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 
 /**
  * Test of Room Service layer
- * 
+ *
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTests{
-    
+
     @Mock
     private RoomDao roomDao;
-    
+
     @Mock
     private ReservationDao reservationDao;
-        
+
     @Autowired
     @InjectMocks
-    private RoomService roomServiceImpl;
-    
-    private ReservationService reservationServiceImpl;
-    
-      
+    private RoomService roomService;
+
+    @Autowired
+    @InjectMocks
+    private ReservationService reservationService;
+
+
     private Room room1;
     private Room room2;
     private Room room3;
@@ -63,13 +63,13 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     private Hotel hotel2;
     private Date nextMonthFirstDay;
     private Date nextMonthLastDay;
-    
+
     /**
      * Prepare example objects
      */
     @Before
     public void createRoom(){
-        
+
         MockitoAnnotations.initMocks(this);
         room1 = new Room();
         room2 = new Room();
@@ -86,21 +86,21 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         room2.setNumberOfBeds(1);
         room2.setPrice(new BigDecimal("150.00"));
         room2.setHotel(hotel2);
-        
+
         room3.setId((long) 3);
         room3.setName("58");
         room3.setNumberOfBeds(3);
         room3.setPrice(new BigDecimal("80.00"));
-        
+
         hotel1 = new Hotel();
         hotel2 = new Hotel();
-        
+
         hotel1.setName("Hotel 1");
         hotel1.setAddress("Hotel address 1");
-        
+
         hotel2.setName("Hotel 2");
         hotel2.setAddress("Hotel address 2");
-        
+
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -110,43 +110,43 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         reservation1 = new Reservation();
         reservation2 = new Reservation();
-        
+
         reservation1.setStartOfReservation(nextMonthFirstDay);
         reservation1.setEndOfReservation(nextMonthLastDay);
         reservation1.setRoom(room1);
-        
-        
+
+
         reservation2.setStartOfReservation(nextMonthFirstDay);
         reservation2.setEndOfReservation(nextMonthLastDay);
         reservation2.setRoom(room2);
     }
-    
+
     /**
-     * Test of creating room 
+     * Test of creating room
      */
     @Test
     public void createRoomTest(){
-        
+
         doAnswer(invocationOnMock -> {
             room1.setId((long) 1);
             return null;
         }).when(roomDao).create(any(Room.class));
         assertNotEquals(room1.getId(), new Long("2"));
-        roomServiceImpl.createRoom(room1);     
+        roomService.createRoom(room1);
         verify(roomDao).create(any(Room.class));
         assertEquals(room1.getId(), new Long("1"));
-    } 
-    
+    }
+
     /**
      * Test of finding room by id
      */
     @Test
     public void findbyIdTest(){
         when(roomDao.findById(any(Long.class))).thenReturn(room1);
-        assertEquals(roomServiceImpl.findById((long) 0),room1);
+        assertEquals(roomService.findById((long) 0),room1);
         verify(roomDao).findById(anyLong());
     }
-    
+
     /**
      * Test of updating room
      */
@@ -156,13 +156,13 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         doAnswer(invocationOnMock -> {
             room1.setName(roomName);;
             return null;
-        }).when(roomDao).update(any(Room.class));        
+        }).when(roomDao).update(any(Room.class));
         assertNotEquals(room1.getName(), roomName);
-        roomServiceImpl.updateRoom(room1);
-        assertEquals(room1.getName(), roomName);      
+        roomService.updateRoom(room1);
+        assertEquals(room1.getName(), roomName);
         verify(roomDao).update(any(Room.class));
     }
-    
+
     /**
      * Test of deleting room
      */
@@ -173,11 +173,11 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
             return null;
         }).when(roomDao).delete(any(Room.class));
         assertNotEquals(room1, null);
-        roomServiceImpl.deleteRoom(room1);
+        roomService.deleteRoom(room1);
         verify(roomDao).delete(any(Room.class));
         assertEquals(room1, null);
     }
-    
+
     /**
      * Test of finding all rooms
      */
@@ -188,10 +188,10 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         list.add(room2);
         list.add(room3);
         when(roomDao.findAll()).thenReturn(list);
-        assertEquals((roomServiceImpl.findAll()).size(), 3);
+        assertEquals((roomService.findAll()).size(), 3);
         verify(roomDao).findAll();
     }
-    
+
     /**
      * Test of finding room by price
      */
@@ -202,10 +202,10 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         list.add(room3);
         BigDecimal price = new BigDecimal("25.0");
         when(roomDao.findRoomByPrice(any(BigDecimal.class))).thenReturn(list);
-        assertEquals((roomServiceImpl.findByPrice(price)).size(), 2);
+        assertEquals((roomService.findByPrice(price)).size(), 2);
         verify(roomDao).findRoomByPrice(any(BigDecimal.class));
     }
-    
+
     /**
      * Test of finfing rooms by number of beds
      */
@@ -216,10 +216,10 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         list.add(room3);
         int numberOfBeds = 3;
         when(roomDao.findRoomByNumberOfBeds(anyInt())).thenReturn(list);
-        assertEquals((roomServiceImpl.findByNumberOfBeds(numberOfBeds)).size(), 2);
+        assertEquals((roomService.findByNumberOfBeds(numberOfBeds)).size(), 2);
         verify(roomDao).findRoomByNumberOfBeds(anyInt());
     }
-    
+
     /**
      * Test of changing price of room
      */
@@ -233,11 +233,11 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
             return null;
         }).when(roomDao).update(any(Room.class));
         assertNotEquals(room1.getPrice(), price);
-        roomServiceImpl.changeRoomPrice(room1, price);
+        roomService.changeRoomPrice(room1, price);
         verify(roomDao).update(any(Room.class));
-        assertEquals(room1.getPrice(), price); 
-    }  
-    
+        assertEquals(room1.getPrice(), price);
+    }
+
     /**
      * Test of changing number of beds in room
      */
@@ -251,11 +251,11 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
             return null;
         }).when(roomDao).update(any(Room.class));
         assertNotEquals(room1.getNumberOfBeds(), numberOfBeds);
-        roomServiceImpl.changeNumberOfBeds(room1,numberOfBeds);
+        roomService.changeNumberOfBeds(room1, numberOfBeds);
         verify(roomDao).update(any(Room.class));
-        assertEquals(room1.getNumberOfBeds(), numberOfBeds);   
-    } 
-    
+        assertEquals(room1.getNumberOfBeds(), numberOfBeds);
+    }
+
     /**
      * Test of finding rooms by hotel
      */
@@ -265,26 +265,26 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         list.add(room1);
         Hotel hotel = new Hotel();
         when(roomDao.findByHotel(any(Hotel.class))).thenReturn(list);
-        assertEquals((roomServiceImpl.findByHotel(hotel)).size(), 1);
+        assertEquals((roomService.findByHotel(hotel)).size(), 1);
         verify(roomDao).findByHotel(any(Hotel.class));
     }
-    
+
     /**
      * Test of finding reserved rooms at specific time
      */
     @Test
     public void findReservedRoomsAtSpecificTimeTest(){
-        /*
+
         List<Reservation> list = new ArrayList<>();
         list.add(reservation1);
         list.add(reservation2);
-        
+
         when(reservationDao.findReservationsOfTime(any(Date.class),any(Date.class))).thenReturn(list);
-        List<Room> reservedRooms = roomServiceImpl.findReservedRoomsAtSpecificTime(nextMonthFirstDay, nextMonthLastDay);
-             
+        List<Room> reservedRooms = roomService.findReservedRoomsAtSpecificTime(nextMonthFirstDay, nextMonthLastDay);
+
         verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
         assertTrue(reservedRooms.contains(room1));
         assertTrue(reservedRooms.contains(room2));
-        */        
+
     }
 }
