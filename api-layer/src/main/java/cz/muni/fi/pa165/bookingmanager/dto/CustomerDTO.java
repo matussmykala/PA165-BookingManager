@@ -7,18 +7,39 @@ package cz.muni.fi.pa165.bookingmanager.dto;
  */
 public class CustomerDTO {
 
+    /**
+     * Generated ID of the customer
+     */
     private Long id;
 
+    /**
+     * First name of the customer
+     */
     private String name;
 
+    /**
+     * Surname of the customer
+     */
     private String surname;
 
+    /**
+     * Email of the customer
+     */
     private String email;
 
+    /**
+     * Username of the customer
+     */
     private String username;
 
+    /**
+     * Password of the customer
+     */
     private String password;
 
+    /**
+     * Set to true if the customer has admin role assigned
+     */
     private boolean isAdmin;
 
     public Long getId() {
