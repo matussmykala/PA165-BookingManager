@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
  * @author Martin Cuchran
  */
 
-@Service
 public interface RoomService {
     /**
      * Create room
