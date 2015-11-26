@@ -97,7 +97,7 @@ public interface HotelFacade {
      * @param end
      * @return free rooms in hotel 
      */
-   // public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end);
+    public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end);
     
      
     

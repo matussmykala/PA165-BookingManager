@@ -125,4 +125,18 @@ public class RoomServiceImpl implements RoomService{
         }catch(DataAccessException ex){};
         return Collections.unmodifiableList(rooms);
     }
+
+    @Override
+    public List<Room> findFreeRoomsAtSpecificTime(Date from, Date to) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        rooms.addAll(roomDao.findAll());
+        List<Reservation> reservations = new ArrayList<>();
+
+        reservations.addAll(reservationService.getReservationsOfTime(from, to));
+
+        for (final Reservation reservation : reservations) {
+          rooms.remove(reservation.getRoom());
+        }
+        return Collections.unmodifiableList(rooms);
+    }
 }

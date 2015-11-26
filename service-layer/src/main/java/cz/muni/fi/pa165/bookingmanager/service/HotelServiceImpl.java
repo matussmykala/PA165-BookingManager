@@ -105,7 +105,7 @@ public class HotelServiceImpl implements HotelService {
         return Collections.unmodifiableList(roomsInHotel);
 
     }
-/*
+
     @Override
     public List<Room> findBookedRoomInRange(Hotel hotel, Date start, Date end) {
         List<Room> freeRooms = new ArrayList<Room>();
@@ -118,6 +118,6 @@ public class HotelServiceImpl implements HotelService {
 
         return Collections.unmodifiableList(roomsInHotel);
     }
-    */
+    
 
 }

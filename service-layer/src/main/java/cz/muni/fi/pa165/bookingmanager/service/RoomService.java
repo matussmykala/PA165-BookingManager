@@ -101,4 +101,13 @@ public interface RoomService {
      * @return rooms with reservation in specific time window
      */
     public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException;
+    
+    /**
+     * Find free rooms in specific time window
+     *
+     * @param from
+     * @param to
+     * @return free rooms in specific time window
+     */
+    public List<Room> findFreeRoomsAtSpecificTime(Date from, Date to) throws DataAccessException;
 }

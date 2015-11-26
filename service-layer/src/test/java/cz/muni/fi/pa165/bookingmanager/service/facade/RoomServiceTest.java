@@ -14,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -285,6 +286,25 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
         assertTrue(reservedRooms.contains(room1));
         assertTrue(reservedRooms.contains(room2));
+
+    }
+    
+    /**
+     * Test of finding free rooms at specific time
+     */
+    @Test
+    public void findFreeRoomsAtSpecificTimeTest(){
+
+        List<Reservation> list = new ArrayList<>();
+        list.add(reservation1);
+        list.add(reservation2);
+
+        when(reservationDao.findReservationsOfTime(any(Date.class),any(Date.class))).thenReturn(list);
+        List<Room> reservedRooms = roomService.findFreeRoomsAtSpecificTime(nextMonthFirstDay, nextMonthLastDay);
+
+        verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
+        assertFalse(reservedRooms.contains(room1));
+        assertFalse(reservedRooms.contains(room2));
 
     }
 }
