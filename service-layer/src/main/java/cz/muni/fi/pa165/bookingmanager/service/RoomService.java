@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -84,4 +85,21 @@ public interface RoomService {
      * @return rooms with specific number of beds
      */
     public List<Room> findByNumberOfBeds(int numberOfBeds) throws DataAccessException;
+    
+    /**
+     * Find rooms by specific hotel
+     * 
+     * @param hotel 
+     * @return rooms of specific hotel
+     */
+    public List<Room> findByHotel(Hotel hotel) throws DataAccessException;
+    
+    /**
+     * Find rooms with reservation in specific time window
+     * 
+     * @param from
+     * @param to
+     * @return rooms with reservation in specific time window
+     */
+    public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException;
 }
