@@ -46,11 +46,6 @@ public class ServiceConfiguration {
 		return dozer;
 	}
 
-	/**
-	 * Custom config for Dozer if needed
-	 * @author nguyen
-	 *
-	 */
 	public class DozerCustomConfig extends BeanMappingBuilder {
 	    @Override
 	    protected void configure() {

@@ -51,14 +51,14 @@ public class RoomFacadeImpl implements RoomFacade{
     
 
     @Override
-    public long createRoom(RoomDTO roomCreateDTO) {
+    public void createRoom(RoomDTO roomCreateDTO) {
         if (roomCreateDTO == null) {
             throw new IllegalArgumentException("roomCreateDTO is null");
         }
 
         Room mappedRoom = beanMappingService.mapTo(roomCreateDTO, Room.class);
         Room room = roomService.createRoom(mappedRoom);
-        return room.getId();
+        //return room.getId();
     }
     
     @Override
@@ -66,10 +66,12 @@ public class RoomFacadeImpl implements RoomFacade{
         if (RoomId == null) {
             throw new IllegalArgumentException("Room ID is null");
         }
-        if (roomService.findById(RoomId) == null) {
+        Room room = roomService.findById(RoomId);
+        
+        if (room == null) {
             throw new IllegalArgumentException("Room does not exist");
         }
-        return beanMappingService.mapTo(roomService.findById(RoomId), RoomDTO.class);
+        return beanMappingService.mapTo(room, RoomDTO.class);
     }
 
     @Override
