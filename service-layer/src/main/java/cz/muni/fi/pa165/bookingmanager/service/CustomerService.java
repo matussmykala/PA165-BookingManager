@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 /**
+ * Interface that specifies all possible operations with Customer
+ * entities on service layer.
+ *
  * Created on 22.11.2015.
  *
  * @author Vladimir Caniga
@@ -57,4 +60,12 @@ public interface CustomerService {
      * @param customerId ID of a customer that will be deleted
      */
     void deleteCustomer(Long customerId);
+
+    /**
+     * Returns a collection of all customers that have at least one reservation
+     * in the system.
+     *
+     * @return customers with reservation
+     */
+    Collection<Customer> getCustomersWithReservation();
 }
