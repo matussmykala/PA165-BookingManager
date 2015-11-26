@@ -5,7 +5,9 @@ import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationServiceImpl;
+import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
@@ -15,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 /**
  * Test of Room Service layer
@@ -35,7 +39,7 @@ import org.springframework.test.context.ContextConfiguration;
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
-public class RoomServiceTest{
+public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTests{
     
     @Mock
     private RoomDao roomDao;
@@ -45,9 +49,9 @@ public class RoomServiceTest{
         
     @Autowired
     @InjectMocks
-    private RoomServiceImpl roomServiceImpl;
+    private RoomService roomServiceImpl;
     
-    private ReservationServiceImpl reservationServiceImpl;
+    private ReservationService reservationServiceImpl;
     
       
     private Room room1;
@@ -281,6 +285,6 @@ public class RoomServiceTest{
         verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
         assertTrue(reservedRooms.contains(room1));
         assertTrue(reservedRooms.contains(room2));
-                */
+        */        
     }
 }
