@@ -5,7 +5,6 @@
  */
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
-
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
@@ -167,17 +166,28 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
 
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
     /**
      * Test of createHotel method, of class HotelFacadeImpl.
      */
     @Test
     public void testCreateHotel() {
+<<<<<<< HEAD
 
         Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO1, Hotel.class);
         verify(hotelService).createHotel(mappedHotel);
 
         assertEquals(hotel1.getId(), new Long("10"));
 
+=======
+        //HotelCreateDTO hotelDTO = new HotelCreateDTO();
+        //hotelDTO.setName("Park Hotel");
+        //hotelDTO.setAddress("Praha");
+        //hotelFacade.createHotel(hotelDTO);
+>>>>>>> origin/master
     }
 
     /**
@@ -186,6 +196,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     @Test
     public void testUpdateHotel() {
 
+<<<<<<< HEAD
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -211,6 +222,8 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         assertEquals("Park Hotel", hotel2.getName());
         assertEquals("Praha", hotel2.getAddress());
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -219,6 +232,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     @Test
     public void testDeleteHotel() {
 
+<<<<<<< HEAD
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -237,6 +251,8 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         assertNull(hotel1);
         assertNotNull(hotel2);
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -245,9 +261,12 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     @Test
     public void testGetHotelById() {
 
+<<<<<<< HEAD
         HotelDTO found = hotelFacade.getHotelById(new Long(10));
         assertEquals(found.getId(), new Long(10));
 
+=======
+>>>>>>> origin/master
     }
 
     /**
@@ -255,6 +274,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testGetAllHotels() {
+<<<<<<< HEAD
         List<Hotel> list = new ArrayList<>();
 
         list.add(hotel1);
@@ -304,4 +324,9 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     public void testDeleteInvalidArgument() {
         hotelFacade.deleteHotel(null);
     }
+=======
+
+    }
+
+>>>>>>> origin/master
 }
