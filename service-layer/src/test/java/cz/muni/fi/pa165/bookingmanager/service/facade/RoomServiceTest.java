@@ -1,35 +1,36 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
+import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.service.ReservationServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.RoomServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Currency;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyLong;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 /**
- * Test of RoomService class
+ * Test of Room Service layer
  * 
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
@@ -38,16 +39,30 @@ public class RoomServiceTest{
     
     @Mock
     private RoomDao roomDao;
+    
+    @Mock
+    private ReservationDao reservationDao;
         
     @Autowired
     @InjectMocks
     private RoomServiceImpl roomServiceImpl;
     
+    private ReservationServiceImpl reservationServiceImpl;
+    
       
     private Room room1;
     private Room room2;
     private Room room3;
+    private Reservation reservation1;
+    private Reservation reservation2;
+    private Hotel hotel1;
+    private Hotel hotel2;
+    private Date nextMonthFirstDay;
+    private Date nextMonthLastDay;
     
+    /**
+     * Prepare example objects
+     */
     @Before
     public void createRoom(){
         
@@ -56,41 +71,97 @@ public class RoomServiceTest{
         room2 = new Room();
         room3 = new Room();
 
+        room1.setId((long) 1);
         room1.setName("57");
         room1.setNumberOfBeds(3);
         room1.setPrice(new BigDecimal("80.00"));
+        room1.setHotel(hotel1);
 
+        room2.setId((long) 2);
         room2.setName("120");
         room2.setNumberOfBeds(1);
         room2.setPrice(new BigDecimal("150.00"));
+        room2.setHotel(hotel2);
         
+        room3.setId((long) 3);
         room3.setName("58");
         room3.setNumberOfBeds(3);
         room3.setPrice(new BigDecimal("80.00"));
+        
+        hotel1 = new Hotel();
+        hotel2 = new Hotel();
+        
+        hotel1.setName("Hotel 1");
+        hotel1.setAddress("Hotel address 1");
+        
+        hotel2.setName("Hotel 2");
+        hotel2.setAddress("Hotel address 2");
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+        nextMonthFirstDay = calendar.getTime();
+        calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        nextMonthLastDay = calendar.getTime();
+
+        reservation1 = new Reservation();
+        reservation2 = new Reservation();
+        
+        reservation1.setStartOfReservation(nextMonthFirstDay);
+        reservation1.setEndOfReservation(nextMonthLastDay);
+        reservation1.setRoom(room1);
+        
+        
+        reservation2.setStartOfReservation(nextMonthFirstDay);
+        reservation2.setEndOfReservation(nextMonthLastDay);
+        reservation2.setRoom(room2);
     }
     
+    /**
+     * Test of creating room 
+     */
     @Test
     public void createRoomTest(){
-        doNothing().when(roomDao).create(any(Room.class));
-        roomServiceImpl.createRoom(room1);
-        verify(roomDao).create(room1);
+        
+        doAnswer(invocationOnMock -> {
+            room1.setId((long) 1);
+            return null;
+        }).when(roomDao).create(any(Room.class));
+        assertNotEquals(room1.getId(), new Long("2"));
+        roomServiceImpl.createRoom(room1);     
+        verify(roomDao).create(any(Room.class));
+        assertEquals(room1.getId(), new Long("1"));
     } 
     
+    /**
+     * Test of finding room by id
+     */
     @Test
     public void findbyIdTest(){
         when(roomDao.findById(any(Long.class))).thenReturn(room1);
-        roomServiceImpl.findById((long) 0);
+        assertEquals(roomServiceImpl.findById((long) 0),room1);
         verify(roomDao).findById(anyLong());
     }
     
+    /**
+     * Test of updating room
+     */
     @Test
     public void updateRoomTest(){
-        doNothing().when(roomDao).update(any(Room.class));
-        room1.setName("Zmenena izba");        
+        String roomName = "Zmenenea izba";
+        doAnswer(invocationOnMock -> {
+            room1.setName(roomName);;
+            return null;
+        }).when(roomDao).update(any(Room.class));        
+        assertNotEquals(room1.getName(), roomName);
         roomServiceImpl.updateRoom(room1);
+        assertEquals(room1.getName(), roomName);      
         verify(roomDao).update(any(Room.class));
     }
     
+    /**
+     * Test of deleting room
+     */
     @Test
     public void deleteRoomTest(){
         doAnswer(invocationOnMock -> {
@@ -103,6 +174,9 @@ public class RoomServiceTest{
         assertEquals(room1, null);
     }
     
+    /**
+     * Test of finding all rooms
+     */
     @Test
     public void findAllTest(){
         List<Room> list = new ArrayList<>();
@@ -114,6 +188,9 @@ public class RoomServiceTest{
         verify(roomDao).findAll();
     }
     
+    /**
+     * Test of finding room by price
+     */
     @Test
     public void findByPriceTest(){
         List<Room> list = new ArrayList<>();
@@ -125,6 +202,9 @@ public class RoomServiceTest{
         verify(roomDao).findRoomByPrice(any(BigDecimal.class));
     }
     
+    /**
+     * Test of finfing rooms by number of beds
+     */
     @Test
     public void findByNumberOfBedsTest(){
         List<Room> list = new ArrayList<>();
@@ -136,7 +216,9 @@ public class RoomServiceTest{
         verify(roomDao).findRoomByNumberOfBeds(anyInt());
     }
     
-    
+    /**
+     * Test of changing price of room
+     */
     @Test
     public void changeRoomPriceTest(){
 
@@ -149,11 +231,12 @@ public class RoomServiceTest{
         assertNotEquals(room1.getPrice(), price);
         roomServiceImpl.changeRoomPrice(room1, price);
         verify(roomDao).update(any(Room.class));
-        assertEquals(room1.getPrice(), price);
-
-        
+        assertEquals(room1.getPrice(), price); 
     }  
     
+    /**
+     * Test of changing number of beds in room
+     */
     @Test
     public void changeNumberOfBedsTest(){
 
@@ -166,7 +249,38 @@ public class RoomServiceTest{
         assertNotEquals(room1.getNumberOfBeds(), numberOfBeds);
         roomServiceImpl.changeNumberOfBeds(room1,numberOfBeds);
         verify(roomDao).update(any(Room.class));
-        assertEquals(room1.getNumberOfBeds(), numberOfBeds);
+        assertEquals(room1.getNumberOfBeds(), numberOfBeds);   
+    } 
+    
+    /**
+     * Test of finding rooms by hotel
+     */
+    @Test
+    public void findByHotelTest(){
+        List<Room> list = new ArrayList<>();
+        list.add(room1);
+        Hotel hotel = new Hotel();
+        when(roomDao.findByHotel(any(Hotel.class))).thenReturn(list);
+        assertEquals((roomServiceImpl.findByHotel(hotel)).size(), 1);
+        verify(roomDao).findByHotel(any(Hotel.class));
+    }
+    
+    /**
+     * Test of finding reserved rooms at specific time
+     */
+    @Test
+    public void findReservedRoomsAtSpecificTimeTest(){
+        /*
+        List<Reservation> list = new ArrayList<>();
+        list.add(reservation1);
+        list.add(reservation2);
         
-    }   
+        when(reservationDao.findReservationsOfTime(any(Date.class),any(Date.class))).thenReturn(list);
+        List<Room> reservedRooms = roomServiceImpl.findReservedRoomsAtSpecificTime(nextMonthFirstDay, nextMonthLastDay);
+             
+        verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
+        assertTrue(reservedRooms.contains(room1));
+        assertTrue(reservedRooms.contains(room2));
+                */
+    }
 }

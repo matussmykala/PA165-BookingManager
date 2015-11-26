@@ -3,14 +3,14 @@ package cz.muni.fi.pa165.bookingmanager.service;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Room service layer, basic and nontrivial methods declaration
+ * 
  * @author Martin Cuchran
  */
 

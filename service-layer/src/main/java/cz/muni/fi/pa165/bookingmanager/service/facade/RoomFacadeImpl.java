@@ -1,13 +1,11 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
-import cz.muni.fi.pa165.bookingmanager.dto.RoomCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -41,9 +39,6 @@ public class RoomFacadeImpl implements RoomFacade{
     public void deleteRoom(Long RoomId) {
         if (RoomId == null) {
             throw new IllegalArgumentException("Room ID is null");
-        }
-        if (roomService.findById(RoomId) == null) {
-            throw new IllegalArgumentException("Room does not exist");
         }
         roomService.deleteRoom(roomService.findById(RoomId));
     }

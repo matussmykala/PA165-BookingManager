@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;

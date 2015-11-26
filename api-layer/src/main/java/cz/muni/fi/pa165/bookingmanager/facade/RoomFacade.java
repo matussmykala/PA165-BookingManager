@@ -1,10 +1,8 @@
 
 package cz.muni.fi.pa165.bookingmanager.facade;
 
-import cz.muni.fi.pa165.bookingmanager.dto.RoomCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.List;
 
 /**
@@ -17,7 +15,6 @@ public interface RoomFacade {
      * Create Room
      * 
      * @param roomCreateDTO - room which will be created
-     * @return id of created room
      */
     public void createRoom(RoomDTO roomCreateDTO);
     
