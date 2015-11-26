@@ -73,7 +73,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         room1.setId((long) 2);
         room1.setHotel(new Hotel());
         room1.setName("Room1");
-        room1.setNumberOfBeds(1);
+        room1.setNumberOfBeds(2);
         room1.setPrice(new BigDecimal("25.0"));
         //room1.setRoom(new Room());
 
@@ -81,7 +81,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         room2.setId((long) 2);
         room2.setHotel(new Hotel());
         room2.setName("Room2");
-        room2.setNumberOfBeds(1);
+        room2.setNumberOfBeds(2);
         room2.setPrice(new BigDecimal("35.0"));
         //room2.setRoom(new Room());
 
@@ -127,10 +127,10 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals(dtoRoom.getNumberOfBeds(), room1.getNumberOfBeds());
         assertEquals(dtoRoom.getPrice(), room1.getPrice());
 
-        assertEquals(dtoRoom.getName() , room2.getName());
-        assertEquals(dtoRoom.getNumberOfBeds(), room2.getNumberOfBeds());
-        assertEquals(dtoRoom.getPrice(), room2.getPrice());
-
+        assertNotEquals(dtoRoom.getName() , room2.getName());
+        assertNotEquals(dtoRoom.getNumberOfBeds(), room2.getNumberOfBeds());
+        assertNotEquals(dtoRoom.getPrice(), room2.getPrice());
+        
         verify(roomService).findById(any(Long.class));
     }
     
