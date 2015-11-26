@@ -1,28 +1,41 @@
 
 package cz.muni.fi.pa165.bookingmanager.facade;
 
+import cz.muni.fi.pa165.bookingmanager.dto.RoomCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.List;
 
 /**
- *
+ * Room facade interface
+ * 
  * @author Martin Cuchran
  */
 public interface RoomFacade {
     /**
      * Create Room
      * 
-     * @param room - room which will be created
+     * @param roomCreateDTO - room which will be created
      * @return id of created room
      */
-    //public Long createRoom(RoomCreateDTO room);
+    public long createRoom(RoomDTO roomCreateDTO);
     
     /**
-     * Update Room
+     * Change price of room
      * 
-     * @param roomDTO - room which will be updated
+     * @param roomId - room id where price is changed
+     * @param newPrice - new price
      */
-    public void updateRoom(RoomDTO roomDTO);
+    public void changeRoomPrice(Long roomId, BigDecimal newPrice);
+    
+    /**
+     * Change number of beds in room
+     * 
+     * @param RoomId - Room id where number of beds is changed
+     * @param newNumberOfBeds - new number of beds
+     */
+    public void changeRoomNumberOfBeds(Long RoomId, int newNumberOfBeds);
     
     /**
      * Remove room
@@ -42,7 +55,24 @@ public interface RoomFacade {
     /**
      * Get all rooms
      * 
-     * @return List<RoomDTO> - list of all rooms which are in system
+     * @return List<RoomDTO> - list of all rooms 
      */
     public List<RoomDTO> getAllRooms();
+    
+    /**
+     * Get rooms with specific price
+     * 
+     * @price price of room
+     * @return List<RoomDTO> - list of rooms with specific price
+     */
+    public List<RoomDTO> getRoomsByPrice(BigDecimal price);
+    
+    /**
+     * Get rooms with specific numberof beds
+     * 
+     * @numberOfBeds number of beds
+     * @return List<RoomDTO> - list of rooms with specific numberof beds
+     */
+    public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds);
+    
 }

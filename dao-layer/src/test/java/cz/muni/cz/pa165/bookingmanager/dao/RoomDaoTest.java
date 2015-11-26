@@ -67,8 +67,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
     private Date date1;
     private Date date2;
 
-    private final Currency CZK = Currency.getInstance("CZK");
-
     @Before
     public void setUpClass() {
 
@@ -112,14 +110,12 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         room1.setName("57");
         room1.setNumberOfBeds(3);
         room1.setPrice(new BigDecimal("80.00"));
-        room1.setCurrency(CZK);
         room1.setHotel(hotel);
         room1.setReservation(reservation1);
 
         room2.setName("120");
         room2.setNumberOfBeds(1);
         room2.setPrice(new BigDecimal("150.00"));
-        room2.setCurrency(CZK);
         room2.setHotel(hotel);
         room2.setReservation(reservation1);
 
@@ -203,7 +199,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName(null);
         wrongRoom.setNumberOfBeds(1);
         wrongRoom.setPrice(new BigDecimal("150.00"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
@@ -218,7 +213,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName("007");
         wrongRoom.setNumberOfBeds(-1);
         wrongRoom.setPrice(new BigDecimal("150.00"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
@@ -233,7 +227,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName("007");
         wrongRoom.setNumberOfBeds(1);
         wrongRoom.setPrice(new BigDecimal("-1"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
@@ -262,7 +255,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName(null);
         wrongRoom.setNumberOfBeds(1);
         wrongRoom.setPrice(new BigDecimal("150.00"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
@@ -277,7 +269,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName("007");
         wrongRoom.setNumberOfBeds(-1);
         wrongRoom.setPrice(new BigDecimal("150.00"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
@@ -292,7 +283,6 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         wrongRoom.setName("007");
         wrongRoom.setNumberOfBeds(1);
         wrongRoom.setPrice(new BigDecimal("-1"));
-        wrongRoom.setCurrency(CZK);
         wrongRoom.setHotel(hotel);
         wrongRoom.setReservation(reservation1);
         try {
