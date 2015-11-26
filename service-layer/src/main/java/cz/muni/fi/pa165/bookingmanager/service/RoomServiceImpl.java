@@ -3,11 +3,13 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -97,6 +99,29 @@ public class RoomServiceImpl implements RoomService{
         List<Room> rooms = new ArrayList<>();
         try{
             rooms.addAll(roomDao.findRoomByNumberOfBeds(numberOfBeds));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        List<Reservation> reservations = new ArrayList<>();
+        ReservationService reservationService = new ReservationServiceImpl();
+
+        reservations.addAll(reservationService.getReservationsOfTime(from, to));
+        
+        for (final Reservation reservation : reservations) {
+          rooms.add(reservation.getRoom());
+        }
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Room> findByHotel(Hotel hotel) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findByHotel(hotel));
         }catch(DataAccessException ex){};
         return Collections.unmodifiableList(rooms);
     }

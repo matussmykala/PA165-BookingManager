@@ -80,10 +80,10 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findByNameOfHotel(String name) {
+    public List<Room> findByHotel(Hotel hotel) {
           try {
-            return Collections.unmodifiableList(em.createQuery("Select r from Room r where r.hotel.name = :name", Room.class)
-                    .setParameter("name", name).getResultList());
+            return Collections.unmodifiableList(em.createQuery("Select r from Room r where r.hotel = :hotel", Room.class)
+                    .setParameter("hotel", hotel).getResultList());
         } catch (NoResultException nrf) {
             return null;
         }
