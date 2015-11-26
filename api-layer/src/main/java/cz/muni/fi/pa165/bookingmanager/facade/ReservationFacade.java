@@ -73,6 +73,4 @@ public interface ReservationFacade
      * @return list of reservation which starts next month
      */
     public List<ReservationDTO> getNextMonthReservations();
-
-    //TODO getAllFreeRooms
 }
