@@ -8,6 +8,7 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
@@ -16,14 +17,12 @@ import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 import javax.validation.ConstraintViolationException;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Matchers.any;
@@ -70,6 +69,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
 
     private HotelDTO hotelDTO1;
     private HotelDTO hotelDTO2;
+    
 
     @Before
     public void setUpClass() {
@@ -93,7 +93,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         room3 = new Room();
         room3.setName("010");
         room3.setNumberOfBeds(2);
-        room3.setPrice(new BigDecimal("75.0"));
+        
         room3.setHotel(hotel1);
 
         hotel1 = new Hotel();
@@ -259,6 +259,83 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         List<HotelDTO> dtoList = hotelFacade.getAllHotels();
         assertEquals(dtoList.size(), 2);
     }
+    
+    /**
+     * Test of getHotelByName method, of class HoteLFacadeImpl
+     */
+    @Test
+    public void testGetHotelByName(){
+        HotelDTO hotelDTO;
+        when(hotelService.findByName("Voronez")).thenReturn(hotel1);
+        hotelDTO = hotelFacade.findByName("Voronez");
+        assertEquals(hotelDTO.getName(),"Voronez");
+    }
+    
+    /**
+     * Test of getHotelByAdress method, of class HoteLFacadeImpl
+     */
+    @Test
+    public void testGetHotelByAdress(){
+        List<Hotel> result = new ArrayList<>();
+        result.add(hotel1);
+        when(hotelService.findByAdress("Brno")).thenReturn(result);
+        List<HotelDTO> dtoList = hotelFacade.findByAddress("Brno");
+        assertEquals(dtoList.size(), 1);
+    }
+    
+    /**
+     * Test of findFreeRoomInRange method, of class HoteLFacadeImpl
+     */
+    /*
+    @Test
+    public void testFindFreeRoomInRange(){
+        List<Room> bookedRooms = new ArrayList<>();
+        bookedRooms.add(room1);
+        bookedRooms.add(room2);
+        
+        Date start;
+        Date end;
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, 5);
+        start = calendar.getTime();
+        calendar.set(Calendar.DATE, 25);
+        end = calendar.getTime();
+        
+        when(hotelService.findBookedRoomInRange(hotel1, start, end)).thenReturn(bookedRooms);
+        
+        List<RoomDTO> dtoList = hotelFacade.findBookedRoomInRange(hotelDTO1, start, end);
+        assertEquals(dtoList.size(), 2);
+    }
+    */
+    
+    
+    /**
+     * Test of findBookedRoomInRange method, of class HoteLFacadeImpl
+     */
+    @Test
+    public void testFindBookedRoomInRange(){
+        List<Room> freeRooms = new ArrayList<>();
+        freeRooms.add(room1);
+        freeRooms.add(room2);
+        
+        Date start;
+        Date end;
+        
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.set(Calendar.DATE, 5);
+        start = calendar.getTime();
+        calendar.set(Calendar.DATE, 25);
+        end = calendar.getTime();
+        
+        when(hotelService.findFreeRoomInRange(hotel1, start, end)).thenReturn(freeRooms);
+        
+        List<RoomDTO> dtoList = hotelFacade.findFreeRoomInRange(hotelDTO1, start, end);
+        assertEquals(dtoList.size(), 2);
+    }
+    
 
     @Test
     public void testCreateInvalidName() {

@@ -25,7 +25,7 @@ public interface HotelService {
      * 
      * @param hotel
      * @throws DataAccessException when error on DAO layer appears
-     * @return createdHOtel
+     * 
      */
     public void createHotel(Hotel hotel) throws DataAccessException;
     
@@ -69,7 +69,7 @@ public interface HotelService {
     /**
      * Find all hotels in city
      * 
-     * @param adress
+     * @param address in which city you want to find hotel
      * @return all hotels in city
      */
     public List<Hotel> findByAdress(String address);
@@ -77,13 +77,22 @@ public interface HotelService {
     /**
      * Find all free rooms in hotel in specific range of time
      * 
+     * @hotel of which you want to know free rooms in range of time
      * @param start
      * @param end
      * @return free rooms in hotel 
      */
     public List<Room> findFreeRoomInRange(Hotel hotel, Date start, Date end);
     
-    
+    /**
+     * Find all booked rooms in hotel in specific range of time
+     * 
+     * @hotel of which you want to know booked rooms in range of time
+     * @param start
+     * @param end
+     * @return free rooms in hotel 
+     */
+  //  public List<Room> findBookedRoomInRange(Hotel hotel, Date start, Date end);
     
     
 }

@@ -68,25 +68,25 @@ public class HotelFacadeImpl implements HotelFacade{
     }
 
     @Override
-    public void deleteHotel(Long HotelId) {
-        if (HotelId == null) {
+    public void deleteHotel(Long hotelId) {
+        if (hotelId == null) {
             throw new IllegalArgumentException("HotelId is null");
         }
-       if (hotelService.findById(HotelId) == null) {
+       if (hotelService.findById(hotelId) == null) {
             throw new IllegalArgumentException("Hotel does not exist");
        }
-        hotelService.deleteHotel(hotelService.findById(HotelId));
+        hotelService.deleteHotel(hotelService.findById(hotelId));
     }
 
     @Override
-    public HotelDTO getHotelById(Long HotelId) {
-        if (HotelId == null) {
+    public HotelDTO getHotelById(Long hotelId) {
+        if (hotelId == null) {
             throw new IllegalArgumentException("HotelId is null");
         }
-        if (hotelService.findById(HotelId) == null) {
+        if (hotelService.findById(hotelId) == null) {
             throw new IllegalArgumentException("Hotel does not exist");
         }
-        return beanMappingService.mapTo(hotelService.findById(HotelId), HotelDTO.class);
+        return beanMappingService.mapTo(hotelService.findById(hotelId), HotelDTO.class);
     }
 
     @Override
@@ -94,29 +94,59 @@ public class HotelFacadeImpl implements HotelFacade{
         return beanMappingService.mapTo(hotelService.findAll(), HotelDTO.class);
     }
 
+     
     @Override
+    public HotelDTO findByName(String name) {
+        if(name==null){
+            throw new IllegalArgumentException("Name is null");
+        }
+            return beanMappingService.mapTo(hotelService.findByName(name), HotelDTO.class);
+    }
+    
+
+    @Override
+    public List<HotelDTO> findByAddress(String address) {
+            if(address==null){
+            throw new IllegalArgumentException("Address is null");
+        }
+            return beanMappingService.mapTo(hotelService.findByAdress(address), HotelDTO.class);
+    }
+    
+    
+    @Override
+    public List<RoomDTO> findFreeRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
+        if (hotelDTO == null) {
+            throw new IllegalArgumentException("HotelId is null");
+        }
+        if (hotelDTO.getId() == null) {
+            throw new IllegalArgumentException("Hotel does not exist");
+        }
+        Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
+        
+        return beanMappingService.mapTo(hotelService.findFreeRoomInRange(hotel, start, end), RoomDTO.class);
+    }
+    /*
+    @Override
+    public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
+        if (hotelDTO == null) {
+            throw new IllegalArgumentException("HotelId is null");
+        }
+        if (hotelDTO.getId() == null) {
+            throw new IllegalArgumentException("Hotel does not exist");
+        }
+        Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
+        
+        return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
+    }
+    */
+
+     /*
     public void changeImage(ChangeImageDTO dto) {
         Hotel hotel = hotelService.findById(dto.getId());
         hotel.setImage(dto.getImage());
         hotel.setImageMimeType(dto.getImageMimeType());
-    }
-    
-    @Override
-    public HotelDTO findByName(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<HotelDTO> findByAdress(String adress) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<RoomDTO> findFreeRoomInRange(Date start, Date end) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
+    } */
+       
     //just for test
     public HotelFacadeImpl(HotelService hotelService, BeanMappingService beanMappingService){
         this.hotelService=hotelService;
@@ -126,6 +156,4 @@ public class HotelFacadeImpl implements HotelFacade{
         
     }
 
-    
-   
- }
+  }

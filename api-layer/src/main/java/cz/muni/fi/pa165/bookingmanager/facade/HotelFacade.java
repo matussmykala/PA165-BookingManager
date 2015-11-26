@@ -58,10 +58,10 @@ public interface HotelFacade {
     public List<HotelDTO> getAllHotels();
     
      /**
-      * Change image of hotel
+      * Change image of hotel WILL BE IMPLEMENTED LATER
       * @param image - that will be added to hotel description
       */
-     public void changeImage(ChangeImageDTO image);
+    // public void changeImage(ChangeImageDTO image);
      
       /**
      * Find hotel by name
@@ -77,16 +77,27 @@ public interface HotelFacade {
      * @param adress
      * @return all hotels in city
      */
-    public List<HotelDTO> findByAdress(String adress);
+    public List<HotelDTO> findByAddress(String address);
     
     /**
      * Find all free rooms in hotel in specific range of time
      * 
+     * @hotel of which you want to know free rooms in range of time
      * @param start
      * @param end
      * @return free rooms in hotel 
      */
-    public List<RoomDTO> findFreeRoomInRange(Date start, Date end);
+    public List<RoomDTO> findFreeRoomInRange(HotelDTO hotelDTO, Date start, Date end);
+    
+    /**
+     * Find all booked rooms in hotel in specific range of time
+     * 
+     * @hotel of which you want to know booked rooms in range of time
+     * @param start
+     * @param end
+     * @return free rooms in hotel 
+     */
+   // public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end);
     
      
     
