@@ -286,7 +286,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     /**
      * Test of findFreeRoomInRange method, of class HoteLFacadeImpl
      */
-    /*
+    
     @Test
     public void testFindFreeRoomInRange(){
         List<Room> bookedRooms = new ArrayList<>();
@@ -308,7 +308,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         List<RoomDTO> dtoList = hotelFacade.findBookedRoomInRange(hotelDTO1, start, end);
         assertEquals(dtoList.size(), 2);
     }
-    */
+    
     
     
     /**

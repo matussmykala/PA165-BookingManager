@@ -92,7 +92,7 @@ public interface HotelService {
      * @param end
      * @return free rooms in hotel 
      */
-  //  public List<Room> findBookedRoomInRange(Hotel hotel, Date start, Date end);
+    public List<Room> findBookedRoomInRange(Hotel hotel, Date start, Date end);
     
     
 }

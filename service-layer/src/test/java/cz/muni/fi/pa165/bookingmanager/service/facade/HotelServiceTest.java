@@ -222,7 +222,7 @@ public class HotelServiceTest extends AbstractJUnit4SpringContextTests{
         when(roomService.findByHotel(hotel1)).thenReturn(rooms);
         when(roomService.findReservedRoomsAtSpecificTime(date1, date2)).thenReturn(freeRooms);
         
-        reservedRoomsInHotel = hotelService.findReservedRoomInRange(hotel1, date1, date2);
+        reservedRoomsInHotel = hotelService.findBookedRoomInRange(hotel1, date1, date2);
         assertEquals(reservedRoomsInHotel.size(), 1);
          
     

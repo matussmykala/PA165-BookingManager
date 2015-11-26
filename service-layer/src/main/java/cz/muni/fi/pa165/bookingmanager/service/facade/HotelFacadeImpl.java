@@ -125,7 +125,7 @@ public class HotelFacadeImpl implements HotelFacade{
         
         return beanMappingService.mapTo(hotelService.findFreeRoomInRange(hotel, start, end), RoomDTO.class);
     }
-    /*
+    
     @Override
     public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
         if (hotelDTO == null) {
@@ -138,7 +138,7 @@ public class HotelFacadeImpl implements HotelFacade{
         
         return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
     }
-    */
+    
 
      /*
     public void changeImage(ChangeImageDTO dto) {
