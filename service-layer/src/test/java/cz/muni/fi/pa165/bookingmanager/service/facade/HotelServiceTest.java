@@ -199,7 +199,7 @@ public class HotelServiceTest extends AbstractJUnit4SpringContextTests{
     
     }
     
-    /*
+    
     @Test
     public void testFindReservedRoomInRange(){
         List<Room> rooms = new ArrayList<>();
@@ -220,13 +220,13 @@ public class HotelServiceTest extends AbstractJUnit4SpringContextTests{
         date2 = calendar.getTime();
         
         when(roomService.findByHotel(hotel1)).thenReturn(rooms);
-        when(roomService.findReservedRoomsAtSpecificTime(date1, date2)).thenReturn(freeRooms);
+        when(roomService.findFreeRoomsAtSpecificTime(date1, date2)).thenReturn(freeRooms);
         
         reservedRoomsInHotel = hotelService.findBookedRoomInRange(hotel1, date1, date2);
         assertEquals(reservedRoomsInHotel.size(), 1);
          
     
     }
-    */
+    
     
 }
