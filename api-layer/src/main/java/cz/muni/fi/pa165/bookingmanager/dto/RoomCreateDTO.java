@@ -5,16 +5,12 @@ import java.util.Currency;
 import java.util.Objects;
 
 /**
- * Room DTO implementation
+ * Implements RoomCreateDTO
  * 
- * @author Martin Cuchran
+ * @author Martin Cuchran <cuchy92@gmail.com>
  */
-public class RoomDTO {
-    
-    /**
-     * id of room
-     */
-    private Long id;    
+public class RoomCreateDTO {
+   
     /**
      * Name of room
      */
@@ -34,55 +30,33 @@ public class RoomDTO {
      * Currency of room price
      */
     private Currency currency;
-    
-    /**
-     *  Gets id
-     * 
-     * @return id
-     */
-    public Long getId() {
-        return id;
-    }
 
     /**
-     * Sets id
-     * 
-     * @param id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    /**
-     * Gets name
-     * 
-     * @return name
+     *
+     * @return
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets name
-     * 
+     *
      * @param name
      */
     public void setName(String name) {
         this.name = name;
-    }   
+    }
 
     /**
-     * Gets numberofBeds
-     * 
-     * @return numberOfBeds
+     *
+     * @return
      */
     public int getNumberOfBeds() {
         return numberOfBeds;
     }
 
     /**
-     * Sets numberOfBeds
-     * 
+     *
      * @param numberOfBeds
      */
     public void setNumberOfBeds(int numberOfBeds) {
@@ -90,17 +64,15 @@ public class RoomDTO {
     }
 
     /**
-     * Gets price
-     * 
-     * @return price
+     *
+     * @return
      */
     public BigDecimal getPrice() {
         return price;
     }
 
     /**
-     * Sets price
-     * 
+     *
      * @param price
      */
     public void setPrice(BigDecimal price) {
@@ -108,17 +80,15 @@ public class RoomDTO {
     }
 
     /**
-     * Gets currency
-     * 
-     * @return currency
+     *
+     * @return
      */
     public Currency getCurrency() {
         return currency;
     }
 
     /**
-     * Sets currency
-     * 
+     *
      * @param currency
      */
     public void setCurrency(Currency currency) {
@@ -127,11 +97,11 @@ public class RoomDTO {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 11 * hash + Objects.hashCode(this.name);
-        hash = 11 * hash + this.numberOfBeds;
-        hash = 11 * hash + Objects.hashCode(this.price);
-        hash = 11 * hash + Objects.hashCode(this.currency);
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.name);
+        hash = 61 * hash + this.numberOfBeds;
+        hash = 61 * hash + Objects.hashCode(this.price);
+        hash = 61 * hash + Objects.hashCode(this.currency);
         return hash;
     }
 
@@ -143,7 +113,7 @@ public class RoomDTO {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final RoomDTO other = (RoomDTO) obj;
+        final RoomCreateDTO other = (RoomCreateDTO) obj;
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
@@ -161,6 +131,6 @@ public class RoomDTO {
 
     @Override
     public String toString() {
-        return "RoomDTO{" + "id=" + id + ", name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + ", currency=" + currency + '}';
-    }    
+        return "RoomCreateDTO{" + "name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + ", currency=" + currency + '}';
+    }        
 }

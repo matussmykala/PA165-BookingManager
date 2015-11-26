@@ -49,8 +49,8 @@ public class Room {
     /**
      * currency of the price
      */
-    @NotNull
-    private Currency currency;
+    //@NotNull
+    private Currency currency = Currency.getInstance("EUR");
 
     /**
      * The associated hotel to this room.

@@ -10,9 +10,11 @@ import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.facade.HotelFacadeImpl;
@@ -53,10 +55,11 @@ public class ServiceConfiguration {
 	    @Override
 	    protected void configure() {
                 mapping(Hotel.class, HotelDTO.class);
+                mapping(Hotel.class, RoomDTO.class);
+                //mapping(Room.class, RoomDTO.class);
                 mapping(HotelCreateDTO.class,Hotel.class);
-//                mapping(Hotel.class, HotelCreateDTO.class);
-			mapping(Customer.class, CustomerDTO.class);
-			mapping(Reservation.class, ReservationDTO.class);
+		mapping(Customer.class, CustomerDTO.class);
+		mapping(Reservation.class, ReservationDTO.class);
 		}
 	}
 
