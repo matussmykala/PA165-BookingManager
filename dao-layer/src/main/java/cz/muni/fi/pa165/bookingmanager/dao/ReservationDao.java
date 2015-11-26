@@ -66,4 +66,13 @@ public interface ReservationDao {
      * @param reservation
      */
     public void delete(Reservation reservation);
+    
+    /**
+     * Find reservations of room in range of time
+     * @param id
+     * @param from
+     * @param to
+     * @return 
+     */
+    public List<Reservation> findReservationOfRoom(Long id, Date from, Date to);
 }

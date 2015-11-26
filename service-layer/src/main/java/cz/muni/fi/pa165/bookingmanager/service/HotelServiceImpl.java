@@ -7,8 +7,11 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
+import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +27,14 @@ public class HotelServiceImpl implements HotelService{
     @Autowired
     private HotelDao hotelDao;
     
+    @Autowired
+    private RoomDao roomDao;
+    
     @Override
-    public Hotel createHotel(Hotel hotel) throws DataAccessException{
+    public void createHotel(Hotel hotel) throws DataAccessException{
         try{
             hotelDao.create(hotel);
         }catch(DataAccessException dae){};
-        return hotel;
     }
     
     @Override
@@ -71,6 +76,27 @@ public class HotelServiceImpl implements HotelService{
             hotels.addAll(hotelDao.findAll());
         }catch(DataAccessException dae){};
         return Collections.unmodifiableList(hotels);
+    }
+
+    @Override
+    public List<Hotel> findByAdress(String address) {
+        List<Hotel> hotels = new ArrayList<>();
+        try{
+            hotels.addAll(hotelDao.findByAdress(address));
+        }catch(DataAccessException dae){};
+        return Collections.unmodifiableList(hotels);
+    }
+
+    @Override
+    public List<Room> findFreeRoomInRange(Hotel hotel,Date start, Date end) {
+          
+          
+          
+          return null;
+          
+         
+         
+       
     }
 
      

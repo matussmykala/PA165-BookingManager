@@ -5,8 +5,11 @@
  */
 package cz.muni.fi.pa165.bookingmanager.service;
 
+
 import org.springframework.stereotype.Service;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 
@@ -24,7 +27,7 @@ public interface HotelService {
      * @throws DataAccessException when error on DAO layer appears
      * @return createdHOtel
      */
-    public Hotel createHotel(Hotel hotel) throws DataAccessException;
+    public void createHotel(Hotel hotel) throws DataAccessException;
     
     /**
      * Update hotel
@@ -62,48 +65,23 @@ public interface HotelService {
      */
     public List<Hotel> findAll() throws DataAccessException;
     
+        
     /**
-     * Add room into hotel
+     * Find all hotels in city
      * 
-     * @param hotel into which room will be added
-     * @param room which will be added into hotel 
+     * @param adress
+     * @return all hotels in city
      */
+    public List<Hotel> findByAdress(String address);
     
     /**
-    public void addRoom(Hotel hotel, Room room);
-    
-    /**
-     * Remove room from hotel
+     * Find all free rooms in hotel in specific range of time
      * 
-     * @param hotel from which room will be removed
-     * @param room which will be removed from hotel 
+     * @param start
+     * @param end
+     * @return free rooms in hotel 
      */
-    /**
-    public void deleteRoom(Hotel hotel, Room room);
-    
-    /**
-     * Get all rooms in hotel 
-     * Method will be implemented after implementation of RoomService
-     * 
-     * @param HotelId - id of hotel whose rooms user wants to know
-     * @return List<Room> - list of rooms in hotel
-     */
-    /**
-    public List<Room> getAllRoomsInHotel(Long HotelId);
-    
-    
-     /**
-     * Get all free rooms in hotel 
-     * Method will be implemented after implementation of RoomService
-     * 
-     * @param HotelId - id of hotel whose free rooms user wants to know
-     * @param startOfPeriod - from which date room has to be free
-     * @param endOfPeriod - until which date room has to be free
-     * @return List<Room> - list of free rooms in hotel during determined days
-     */
-    /**
-    public List<Room> getAllFreeRoomsInHotel(Long HotelId, Date startOfPeriod, Date endOfPeriod);
-    */
+    public List<Room> findFreeRoomInRange(Hotel hotel, Date start, Date end);
     
     
     

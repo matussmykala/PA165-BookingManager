@@ -33,6 +33,8 @@
         <dependency>
             <groupId>net.sf.dozer</groupId>
             <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
@@ -58,6 +60,13 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <scope>test</scope><!-- logging implementation should not be part of a library, but is needed for tests -->
+        </dependency>
+        <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>BookingManagerService-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>test</scope>
+            <type>jar</type>
         </dependency>
     </dependencies>
 </project>

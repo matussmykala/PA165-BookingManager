@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.dao;
 
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
+import javax.persistence.NoResultException;
 
 /**
  * Class implements basic CRUD operations for entity Room.
@@ -73,5 +75,16 @@ public class RoomDaoImpl implements RoomDao {
     @Override
     public void delete(Room room) {
         em.remove(room);
+    }
+
+    @Override
+    public List<Room> findByNameOfHotel(String name) {
+          try {
+            return Collections.unmodifiableList(em.createQuery("Select r from Room r where r.hotel.name = :name", Room.class)
+                    .setParameter("name", name).getResultList());
+        } catch (NoResultException nrf) {
+            return null;
+        }
+        
     }
 }

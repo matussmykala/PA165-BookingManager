@@ -8,7 +8,9 @@ import java.util.Locale;
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
+import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
@@ -60,8 +62,6 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
 
     //ugly peace of code, but wasn't able to do better way
     //----------------------------------------------------
-    //@Autowired
-    //@InjectMocks
     private ReservationFacadeImpl reservationFacade = new ReservationFacadeImpl();
     //----------------------------------------------------
 
@@ -76,8 +76,9 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
 
         //ugly peace of code, but wasn't able to do better way
         //----------------------------------------------------
-        //reservationFacade = new ReservationFacadeImpl();
         reservationFacade.setReservationService(reservationService);
+        reservationFacade.setCustomerService(customerService);
+        reservationFacade.setRoomService(roomService);
         reservationFacade.setBeanMappingService(beanMappingService);
         //----------------------------------------------------
 
@@ -108,21 +109,22 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
     @Test
     public void createReservationTest(){
 
-        doAnswer(new Answer()
-        {
-            @Override
-            public Object answer(InvocationOnMock invocationOnMock) throws Throwable
-            {
-                reservation1.setId((long) 1);
-                return null;
-            }
-        }).when(reservationService).createReservation(any(Customer.class), any(Room.class), any(Date.class), any(Date.class));
+        doAnswer(invocationOnMock -> {
+            reservation1.setId((long) 1);
+            return null;
+        }).when(reservationService).createReservation(any(Reservation.class));
 
         assertNotEquals(reservation1.getId(), new Long("1"));
 
-        reservationFacade.createReservation((long) 0, (long) 0, nextMonthFirstDay, nextMonthLastDay);
-        verify(reservationService).createReservation(any(Customer.class), any(Room.class),
-                any(Date.class), any(Date.class));
+        ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setId(reservation1.getId());
+        reservationDTO.setStartOfReservation(reservation1.getStartOfReservation());
+        reservationDTO.setEndOfReservation(reservation1.getEndOfReservation());
+        reservationDTO.setCustomer(new CustomerDTO());
+        reservationDTO.setRoom(new RoomDTO());
+
+        reservationFacade.createReservation(reservationDTO);
+        verify(reservationService).createReservation(any(Reservation.class));
 
         assertEquals(reservation1.getId(), new Long("1"));
     }
@@ -136,17 +138,10 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
         when(reservationService.getAllReservations()).thenReturn(list);
         List<ReservationDTO> dtoList = reservationFacade.getAllReservations();
         assertEquals(dtoList.size(), 2);
-        for (ReservationDTO r : dtoList){
-            System.out.println("blabla " + r.toString());
-        }
-
-        //System.out.println(dtoList.get(0).toString());
 
         assertNotNull(dtoList.get(0));
         assertNotNull(dtoList.get(0).getCustomer());
         assertNotNull(dtoList.get(0).getCustomer().getEmail());
-
-
 
         assertEquals(dtoList.get(0).getCustomer().getEmail(), reservation1.getCustomer().getEmail());
         assertEquals(dtoList.get(0).getRoom().getName(), reservation1.getRoom().getName());
