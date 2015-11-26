@@ -68,9 +68,8 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public void changeRoomPrice(Room room, BigDecimal price, Currency currency) throws DataAccessException {
+    public void changeRoomPrice(Room room, BigDecimal price) throws DataAccessException {
         room.setPrice(price);
-        room.setCurrency(currency);
         try{
             roomDao.update(room);
         }catch(DataAccessException ex){};        
@@ -89,15 +88,6 @@ public class RoomServiceImpl implements RoomService{
         List<Room> rooms = new ArrayList<>();
         try{
             rooms.addAll(roomDao.findRoomByPrice(price));
-        }catch(DataAccessException ex){};
-        return Collections.unmodifiableList(rooms);
-    }
-
-    @Override
-    public List<Room> findByPriceCurrency(Currency currency) throws DataAccessException {
-        List<Room> rooms = new ArrayList<>();
-        try{
-            rooms.addAll(roomDao.findRoomByPriceCurrency(currency));
         }catch(DataAccessException ex){};
         return Collections.unmodifiableList(rooms);
     }

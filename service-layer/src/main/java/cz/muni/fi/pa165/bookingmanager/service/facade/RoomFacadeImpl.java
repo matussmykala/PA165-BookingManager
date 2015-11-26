@@ -78,17 +78,14 @@ public class RoomFacadeImpl implements RoomFacade{
     }
     
     @Override
-    public void changeRoomPrice(Long roomId, BigDecimal newPrice, Currency newCurrency) {
+    public void changeRoomPrice(Long roomId, BigDecimal newPrice) {
         if(roomId == null){
             throw new IllegalArgumentException("roomId is null");
         }
         if(newPrice.compareTo(new BigDecimal("0.0"))== -1){
             throw new IllegalArgumentException("newPrice is less than 0");
         }
-        if(newCurrency == null){
-            throw new IllegalArgumentException("newCurrency is null");
-        }
-        roomService.changeRoomPrice(roomService.findById(roomId), newPrice, newCurrency);
+        roomService.changeRoomPrice(roomService.findById(roomId), newPrice);
     }
 
     @Override
@@ -117,14 +114,6 @@ public class RoomFacadeImpl implements RoomFacade{
             throw new IllegalArgumentException("numberOfBeds is less than 0");
         }
         return beanMappingService.mapTo(roomService.findByNumberOfBeds(numberOfBeds), RoomDTO.class);
-    }
-
-    @Override
-    public List<RoomDTO> getRoomsByPriceCurrency(Currency currency) {
-        if(currency == null){
-            throw new IllegalArgumentException("currency is null");
-        }
-        return beanMappingService.mapTo(roomService.findByPriceCurrency(currency), RoomDTO.class);
     }
 
     public void setRoomService(RoomService roomService) {

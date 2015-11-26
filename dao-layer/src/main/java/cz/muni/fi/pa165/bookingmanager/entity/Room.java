@@ -46,11 +46,6 @@ public class Room {
     @Min(0)
     private BigDecimal price;
 
-    /**
-     * currency of the price
-     */
-    //@NotNull
-    private Currency currency = Currency.getInstance("EUR");
 
     /**
      * The associated hotel to this room.
@@ -112,13 +107,6 @@ public class Room {
         this.price = price;
     }
 
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
 
     @Override
     public int hashCode() {
