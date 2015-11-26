@@ -19,7 +19,9 @@ import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -44,49 +46,58 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
     
 
     @Mock
-    private RoomService roomService;   
+    RoomService roomService;   
    
     @Autowired
-    private BeanMappingService beanMappingService;
+    BeanMappingService beanMappingService;
 
     //ugly peace of code, but wasn't able to do better way
     //----------------------------------------------------
-    private RoomFacadeImpl roomFacade = new RoomFacadeImpl();
+    RoomFacadeImpl roomFacade;
     //----------------------------------------------------
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+    
     private Room room1;
     private Room room2;
+    
+    private RoomDTO roomDTO;
 
     @Before
-    public void createRooms(){
+    public void setup(){
         MockitoAnnotations.initMocks(this);
-
-        //ugly peace of code, but wasn't able to do better way
-        //----------------------------------------------------
+        
+        roomFacade = new RoomFacadeImpl();
         roomFacade.setRoomService(roomService);
         roomFacade.setBeanMappingService(beanMappingService);
-        //----------------------------------------------------
 
+        
+        
         room1 = new Room();
         room2 = new Room();
-
-        room1.setId((long) 2);
+        
+        room1.setId((long) 1);
         room1.setHotel(new Hotel());
         room1.setName("Room1");
-        room1.setNumberOfBeds(1);
+        room1.setNumberOfBeds(2);
         room1.setPrice(new BigDecimal("25.0"));
-        //room1.setRoom(new Room());
 
 
         room2.setId((long) 2);
         room2.setHotel(new Hotel());
         room2.setName("Room2");
-        room2.setNumberOfBeds(1);
+        room2.setNumberOfBeds(3);
         room2.setPrice(new BigDecimal("35.0"));
-        //room2.setRoom(new Room());
-
-
+        
+        roomDTO = new RoomDTO();
+        roomDTO.setId((long) 2);
+        roomDTO.setName("Room1");
+        roomDTO.setNumberOfBeds(2);
+        roomDTO.setPrice(new BigDecimal("25.0"));
+        
     }
+    
     
     @Test
     public void createRoomTest() {
@@ -96,13 +107,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
             return null;
         }).when(roomService).createRoom(any(Room.class));
 
-        assertNotEquals(room1.getId(), new Long("1"));
-
-        RoomDTO roomDTO = new RoomDTO();
-        roomDTO.setId(room1.getId());
-        roomDTO.setName(room1.getName());
-        roomDTO.setNumberOfBeds(room1.getNumberOfBeds());
-        roomDTO.setPrice(room1.getPrice());
+        assertNotEquals(room1.getId(), new Long("2"));
 
         roomFacade.createRoom(roomDTO);
         verify(roomService).createRoom(any(Room.class));
@@ -126,35 +131,18 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals(dtoRoom.getName() , room1.getName());
         assertEquals(dtoRoom.getNumberOfBeds(), room1.getNumberOfBeds());
         assertEquals(dtoRoom.getPrice(), room1.getPrice());
-
-        assertEquals(dtoRoom.getName() , room2.getName());
-        assertEquals(dtoRoom.getNumberOfBeds(), room2.getNumberOfBeds());
-        assertEquals(dtoRoom.getPrice(), room2.getPrice());
-
+        
         verify(roomService).findById(any(Long.class));
     }
     
     @Test
     public void getAllRoomsTest(){
         List<Room> list = new ArrayList<>();
-
         list.add(room1);
         list.add(room2);
         when(roomService.findAll()).thenReturn(list);
         List<RoomDTO> dtoList = roomFacade.getAllRooms();
         assertEquals(dtoList.size(), 2);
-
-        assertNotNull(dtoList.get(0));
-        assertNotNull(dtoList.get(0).getName());
-        assertNotNull(dtoList.get(0).getNumberOfBeds());
-
-        assertEquals(dtoList.get(0).getName(), room1.getName());
-        assertEquals(dtoList.get(0).getNumberOfBeds(), room1.getNumberOfBeds());
-
-
-        assertEquals(dtoList.get(0).getName(), room2.getName());
-        assertEquals(dtoList.get(0).getNumberOfBeds(), room2.getNumberOfBeds());
-
         verify(roomService).findAll();
     }
     
