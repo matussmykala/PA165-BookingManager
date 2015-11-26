@@ -2,11 +2,9 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
-import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,6 +25,8 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**
+ * Tests for CustomerFacade class.
+ *
  * Created on 25.11.2015.
  *
  * @author Vladimir Caniga
@@ -42,7 +42,7 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
 
     //    @Autowired
 //    @InjectMocks
-    CustomerFacade customerFacade;
+    CustomerFacadeImpl customerFacade;
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
@@ -57,7 +57,8 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         MockitoAnnotations.initMocks(this);
 
         customerFacade = new CustomerFacadeImpl();
-
+        customerFacade.setBeanMappingService(beanMappingService);
+        customerFacade.setCustomerService(customerService);
 
         customer1 = new Customer();
         customer1.setName("Janko");
@@ -65,6 +66,7 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         customer1.setEmail("j.hrasko@email.com");
         customer1.setUsername("jhrasko");
         customer1.setIsAdmin(true);
+        customer1.setId(1L);
 
         customer2 = new Customer();
         customer2.setName("Emanuel");
@@ -72,12 +74,14 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         customer2.setEmail("e.bacigala@email.com");
         customer2.setUsername("ebacigala");
         customer2.setIsAdmin(false);
+        customer2.setId(2L);
 
         customer1DTO = new CustomerDTO();
         customer1DTO.setName("Janko");
         customer1DTO.setSurname("Hrasko");
         customer1DTO.setEmail("j.hrasko@email.com");
         customer1DTO.setUsername("jhrasko");
+        customer1DTO.setId(1L);
     }
 
     @Test
@@ -107,9 +111,9 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         when(customerService.getAllCustomers()).thenReturn(customers);
 
         Collection<CustomerDTO> result = customerFacade.getAllCustomers();
-        verify(customerService.getAllCustomers());
+        verify(customerService).getAllCustomers();
 
-        Assert.assertTrue(result.size() == 1);
+        assertTrue(result.size() == 1);
         CustomerDTO resultDTO = result.stream().findFirst().get();
 
         assertEquals("Janko", resultDTO.getName());
@@ -123,7 +127,7 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         when(customerService.findCustomerById(any(Long.class))).thenReturn(customer1);
 
         CustomerDTO resultDTO = customerFacade.findCustomerById(1L);
-        verify(customerService.findCustomerById(1L));
+        verify(customerService).findCustomerById(1L);
 
         assertEquals("Janko", resultDTO.getName());
         assertEquals("Hrasko", resultDTO.getSurname());
@@ -142,13 +146,13 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
         when(customerService.isAdmin(any(Customer.class))).thenReturn(true);
 
         boolean result = customerFacade.isAdmin(customer1DTO);
-        verify(customerService.isAdmin(any(Customer.class)));
+        verify(customerService).isAdmin(any(Customer.class));
         assertTrue(result);
 
         when(customerService.isAdmin(any(Customer.class))).thenReturn(false);
 
         result = customerFacade.isAdmin(customer1DTO);
-        verify(customerService.isAdmin(any(Customer.class)));
+        verify(customerService, times(2)).isAdmin(any(Customer.class));
         assertFalse(result);
     }
 
@@ -186,5 +190,22 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
     public void deleteCustomerNullIdTest() {
         expectedException.expect(IllegalArgumentException.class);
         customerFacade.deleteCustomer(null);
+    }
+
+    @Test
+    public void getCustomersWithReservation() {
+        List<Customer> customers = new ArrayList<>();
+        customers.add(customer1);
+        when(customerService.getCustomersWithReservation()).thenReturn(customers);
+
+        Collection<CustomerDTO> customerDTOs = customerFacade.getCustomersWithReservation();
+        verify(customerService).getCustomersWithReservation();
+        assertEquals(1, customerDTOs.size());
+        CustomerDTO resultDTO = customerDTOs.stream().findFirst().get();
+
+        assertEquals("Janko", resultDTO.getName());
+        assertEquals("Hrasko", resultDTO.getSurname());
+        assertEquals("j.hrasko@email.com", resultDTO.getEmail());
+        assertEquals("jhrasko", resultDTO.getUsername());
     }
 }

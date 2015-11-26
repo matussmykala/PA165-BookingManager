@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 
 /**
+ * Data Transfer Object of a Customer entity.
+ *
  * Created on 22.11.2015.
  *
  * @author Vladimir Caniga

@@ -1,10 +1,11 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
+import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -17,12 +18,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
+ * Tests for CustomerService class
+ *
  * Created on 25.11.2015.
  *
  * @author Vladimir Caniga
@@ -32,6 +38,9 @@ public class CustomerServiceTest extends AbstractJUnit4SpringContextTests {
 
     @Mock
     private CustomerDao customerDao;
+
+    @Mock
+    private ReservationDao reservationDao;
 
     @Autowired
     @InjectMocks
@@ -91,11 +100,11 @@ public class CustomerServiceTest extends AbstractJUnit4SpringContextTests {
     public void isAdminTest() {
         when(customerDao.findById(any(Long.class))).thenReturn(customer1);
 
-        Assert.assertTrue(customerService.isAdmin(customer1));
+        assertTrue(customerService.isAdmin(customer1));
 
         when(customerDao.findById(any(Long.class))).thenReturn(customer2);
 
-        Assert.assertFalse(customerService.isAdmin(customer2));
+        assertFalse(customerService.isAdmin(customer2));
     }
 
     @Test
@@ -127,5 +136,22 @@ public class CustomerServiceTest extends AbstractJUnit4SpringContextTests {
         customer1.setId(null);
         expectedException.expect(IllegalArgumentException.class);
         customerService.isAdmin(customer1);
+    }
+
+    @Test
+    public void getCustomersWithReservationTest() {
+        Reservation reservation1 = new Reservation();
+        reservation1.setCustomer(customer1);
+        Reservation reservation2 = new Reservation();
+        reservation2.setCustomer(customer2);
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+
+        when(reservationDao.findAll()).thenReturn(reservations);
+        Collection<Customer> customers = customerService.getCustomersWithReservation();
+        verify(reservationDao).findAll();
+        assertTrue(customers.contains(customer1));
+        assertTrue(customers.contains(customer2));
     }
 }
