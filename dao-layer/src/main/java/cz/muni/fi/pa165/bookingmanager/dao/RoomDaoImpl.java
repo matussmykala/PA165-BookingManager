@@ -2,12 +2,14 @@ package cz.muni.fi.pa165.bookingmanager.dao;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import java.math.BigDecimal;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.Collections;
+import java.util.Currency;
 import java.util.List;
 import javax.persistence.NoResultException;
 
@@ -78,13 +80,34 @@ public class RoomDaoImpl implements RoomDao {
     }
 
     @Override
-    public List<Room> findByNameOfHotel(String name) {
+    public List<Room> findByHotel(Hotel hotel) {
           try {
-            return Collections.unmodifiableList(em.createQuery("Select r from Room r where r.hotel.name = :name", Room.class)
-                    .setParameter("name", name).getResultList());
+            return Collections.unmodifiableList(em.createQuery("Select r from Room r where r.hotel = :hotel", Room.class)
+                    .setParameter("hotel", hotel).getResultList());
         } catch (NoResultException nrf) {
             return null;
         }
         
+    }
+
+    @Override
+    public List<Room> findRoomByPrice(BigDecimal price) {
+         TypedQuery<Room> tq = em.createQuery("Select r from Room r where r.price = :price", Room.class)
+                    .setParameter("price", price);
+        return Collections.unmodifiableList(tq.getResultList());
+    }
+
+    @Override
+    public List<Room> findRoomByNumberOfBeds(int numberOfBeds) {
+        TypedQuery<Room> tq = em.createQuery("Select r from Room r where r.numberOfBeds = :numberOfBeds", Room.class)
+                    .setParameter("numberOfBeds", numberOfBeds);
+        return Collections.unmodifiableList(tq.getResultList());
+    }
+
+    @Override
+    public List<Room> findRoomByPriceCurrency(Currency currency) {
+        TypedQuery<Room> tq = em.createQuery("Select r from Room r where r.currency = :currency", Room.class)
+                    .setParameter("currency", currency);
+        return Collections.unmodifiableList(tq.getResultList());
     }
 }

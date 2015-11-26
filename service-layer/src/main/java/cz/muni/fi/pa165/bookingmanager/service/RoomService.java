@@ -3,13 +3,14 @@ package cz.muni.fi.pa165.bookingmanager.service;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
-import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Room service layer, basic and nontrivial methods declaration
+ * 
  * @author Martin Cuchran
  */
 
@@ -52,28 +53,53 @@ public interface RoomService {
      */
     public List<Room> findAll() throws DataAccessException;
     
+       
     /**
-     * Show all rooms with specific price
+     * Change price of room
      * 
+     * @param room - room where price is changed
      * @param price - price of room
-     * @param currency - price currency
-     * @return all rooms with specific price
      */
-    public List<Room> findAllRoomsByPrice(BigDecimal price, Currency currency) throws DataAccessException;
+    public void changeRoomPrice(Room room, BigDecimal price) throws DataAccessException;
     
     /**
-     * Show all rooms with specific number of beds
+     * Change number of beds in room
+     * 
+     * @param room - room where price is changed
+     * @param numberOfBeds - new number of beds in room
+     */
+    public void changeNumberOfBeds(Room room, int numberOfBeds) throws DataAccessException;
+    
+    /**
+     * Find rooms by price
+     * 
+     * @param price - price of rooms which have to be found
+     * @return rooms with specific price
+     */
+    public List<Room> findByPrice(BigDecimal price) throws DataAccessException;
+    
+    /**
+     * Find rooms by number of beds
      * 
      * @param numberOfBeds - number of beds in room
-     * @return all rooms with specific price
+     * @return rooms with specific number of beds
      */
-    public List<Room> findAllRoomsByNumberOfBeds(int numberOfBeds) throws DataAccessException;
+    public List<Room> findByNumberOfBeds(int numberOfBeds) throws DataAccessException;
     
     /**
-     * Show all rooms from specific hotel
+     * Find rooms by specific hotel
      * 
-     * @param hotel - hotel
-     * @return all rooms with specific price
+     * @param hotel 
+     * @return rooms of specific hotel
      */
-    public List<Room> findAllRoomsByHotel(Hotel hotel) throws DataAccessException;
+    public List<Room> findByHotel(Hotel hotel) throws DataAccessException;
+    
+    /**
+     * Find rooms with reservation in specific time window
+     * 
+     * @param from
+     * @param to
+     * @return rooms with reservation in specific time window
+     */
+    public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException;
 }

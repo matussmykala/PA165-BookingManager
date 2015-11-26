@@ -2,15 +2,20 @@ package cz.muni.fi.pa165.bookingmanager.dto;
 
 import java.math.BigDecimal;
 import java.util.Currency;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- *
+ * Room DTO implementation
+ * 
  * @author Martin Cuchran
  */
 public class RoomDTO {
     
+    /**
+     * id of room
+     */
     private Long id;    
     /**
      * Name of room
@@ -33,15 +38,27 @@ public class RoomDTO {
     private Currency currency;
     
     /**
-     *
-     * @return
+     * Hotel which room belongs to
+     */
+    private HotelDTO hotel;
+    
+    /**
+     * Reservations where room is used
+     */
+    private Set<ReservationDTO> reservations = new HashSet<ReservationDTO>();
+    
+    /**
+     *  Gets id
+     * 
+     * @return id
      */
     public Long getId() {
         return id;
     }
 
     /**
-     *
+     * Sets id
+     * 
      * @param id
      */
     public void setId(Long id) {
@@ -49,15 +66,17 @@ public class RoomDTO {
     }
 
     /**
-     *
-     * @return
+     * Gets name
+     * 
+     * @return name
      */
     public String getName() {
         return name;
     }
 
     /**
-     *
+     * Sets name
+     * 
      * @param name
      */
     public void setName(String name) {
@@ -65,15 +84,17 @@ public class RoomDTO {
     }   
 
     /**
-     *
-     * @return
+     * Gets numberofBeds
+     * 
+     * @return numberOfBeds
      */
     public int getNumberOfBeds() {
         return numberOfBeds;
     }
 
     /**
-     *
+     * Sets numberOfBeds
+     * 
      * @param numberOfBeds
      */
     public void setNumberOfBeds(int numberOfBeds) {
@@ -81,15 +102,17 @@ public class RoomDTO {
     }
 
     /**
-     *
-     * @return
+     * Gets price
+     * 
+     * @return price
      */
     public BigDecimal getPrice() {
         return price;
     }
 
     /**
-     *
+     * Sets price
+     * 
      * @param price
      */
     public void setPrice(BigDecimal price) {
@@ -97,15 +120,17 @@ public class RoomDTO {
     }
 
     /**
-     *
-     * @return
+     * Gets currency
+     * 
+     * @return currency
      */
     public Currency getCurrency() {
         return currency;
     }
 
     /**
-     *
+     * Sets currency
+     * 
      * @param currency
      */
     public void setCurrency(Currency currency) {
@@ -145,8 +170,9 @@ public class RoomDTO {
         }
         return true;
     }
-    
-    
 
-    
+    @Override
+    public String toString() {
+        return "RoomDTO{" + "id=" + id + ", name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + ", currency=" + currency + '}';
+    }    
 }

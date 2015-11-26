@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import java.util.Collection;
 
 /**
+ * Implementation of CustomerFacade
+ *
  * Created on 22.11.2015.
  *
  * @author Vladimir Caniga
@@ -122,5 +124,24 @@ public class CustomerFacadeImpl implements CustomerFacade {
         }
 
         customerService.deleteCustomer(customerId);
+    }
+
+    /**
+     * Returns a collection of all customers that have at least one reservation
+     * in the system.
+     *
+     * @return customers with reservation
+     */
+    @Override
+    public Collection<CustomerDTO> getCustomersWithReservation() {
+        return beanMappingService.mapTo(customerService.getCustomersWithReservation(), CustomerDTO.class);
+    }
+
+    public void setCustomerService(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    public void setBeanMappingService(BeanMappingService beanMappingService) {
+        this.beanMappingService = beanMappingService;
     }
 }

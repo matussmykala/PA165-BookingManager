@@ -3,27 +3,29 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Currency;
+import java.util.Date;
 import java.util.List;
+import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Implementation of RoomService interface
+ * 
  * @author Martin Cuchran
  */
 @Service
 public class RoomServiceImpl implements RoomService{
     final static Logger log = LoggerFactory.getLogger(RoomServiceImpl.class);
     
-    @Autowired
+    @Inject
     private RoomDao roomDao;
     
     @Override
@@ -67,17 +69,59 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public List<Room> findAllRoomsByPrice(BigDecimal price, Currency currency) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void changeRoomPrice(Room room, BigDecimal price) throws DataAccessException {
+        room.setPrice(price);
+        try{
+            roomDao.update(room);
+        }catch(DataAccessException ex){};        
+    }
+    
+    @Override
+    public void changeNumberOfBeds(Room room, int numberOfBeds) throws DataAccessException {
+        room.setNumberOfBeds(numberOfBeds);        
+        try{
+            roomDao.update(room);
+        }catch(DataAccessException ex){};        
+    }    
+
+    @Override
+    public List<Room> findByPrice(BigDecimal price) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findRoomByPrice(price));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
     }
 
     @Override
-    public List<Room> findAllRoomsByNumberOfBeds(int numberOfBeds) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Room> findByNumberOfBeds(int numberOfBeds) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findRoomByNumberOfBeds(numberOfBeds));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
     }
 
     @Override
-    public List<Room> findAllRoomsByHotel(Hotel hotel) throws DataAccessException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        List<Reservation> reservations = new ArrayList<>();
+        ReservationService reservationService = new ReservationServiceImpl();
+
+        reservations.addAll(reservationService.getReservationsOfTime(from, to));
+        
+        for (final Reservation reservation : reservations) {
+          rooms.add(reservation.getRoom());
+        }
+        return Collections.unmodifiableList(rooms);
+    }
+
+    @Override
+    public List<Room> findByHotel(Hotel hotel) throws DataAccessException {
+        List<Room> rooms = new ArrayList<>();
+        try{
+            rooms.addAll(roomDao.findByHotel(hotel));
+        }catch(DataAccessException ex){};
+        return Collections.unmodifiableList(rooms);
     }
 }
