@@ -81,7 +81,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
 
 
     }
-    
+    /*
     @Test
     public void createRoomTest() {
 
@@ -104,7 +104,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
 
         assertEquals(room1.getId(), new Long("1"));
     }  
-    
+    */
     @Test
     public void deleteRoomTest(){
         when(roomService.findById(any(Long.class))).thenReturn(room1);
