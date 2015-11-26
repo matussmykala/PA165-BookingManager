@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
@@ -77,6 +78,18 @@ public class ReservationDaoImpl implements ReservationDao{
         query.setParameter("startDate", from);
         query.setParameter("endDate", to);
         return Collections.unmodifiableList(query.getResultList());
+    }
+    
+    public List<Reservation> findReservationOfRoom(Long id, Date from, Date to){
+        {
+        TypedQuery<Reservation> query = em.createQuery(
+                "SELECT r FROM Reservation r WHERE r.room.id=:id and r.startOfReservation BETWEEN :startDate AND :endDate",
+                Reservation.class);
+        query.setParameter("id",id);
+        query.setParameter("startDate", from);
+        query.setParameter("endDate", to);
+        return Collections.unmodifiableList(query.getResultList());
+    }
     }
 
     /**

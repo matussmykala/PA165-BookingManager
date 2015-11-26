@@ -60,4 +60,14 @@ public class HotelDaoImpl implements HotelDao {
         em.remove(hotel);
     }
 
+    @Override
+    public List<Hotel> findByAdress(String address) {
+        try {
+            return Collections.unmodifiableList(em.createQuery("Select h from Hotel h where h.address = :address", Hotel.class)
+                    .setParameter("address", address).getResultList());
+        } catch (NoResultException nrf) {
+            return null;
+        }
+    }
+
 }
