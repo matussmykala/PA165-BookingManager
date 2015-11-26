@@ -67,7 +67,6 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     private Customer customer2;
     private Date date1;
     private Date date2;
-    private Currency euro;
             
     /**
      * Create tested objects
@@ -77,18 +76,15 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         r1 = new Reservation();
         r2 = new Reservation();
         
-        euro = Currency.getInstance("EUR");
         
         room = new Room();
         room.setName("Room1");
         room.setNumberOfBeds(3);
-        room.setCurrency(euro);
         room.setPrice(new BigDecimal("15.0"));
         
         room2 = new Room();
         room2.setName("Room2");
         room2.setNumberOfBeds(3);
-        room2.setCurrency(euro);
         room2.setPrice(new BigDecimal("20.0"));
         
         hotel = new Hotel();

@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.bookingmanager.dto;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Room DTO implementation
@@ -34,6 +36,16 @@ public class RoomDTO {
      * Currency of room price
      */
     private Currency currency;
+    
+    /**
+     * Hotel which room belongs to
+     */
+    private HotelDTO hotel;
+    
+    /**
+     * Reservations where room is used
+     */
+    private Set<ReservationDTO> reservations = new HashSet<ReservationDTO>();
     
     /**
      *  Gets id

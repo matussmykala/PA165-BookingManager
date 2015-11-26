@@ -76,26 +76,22 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         room1.setName("001");
         room1.setNumberOfBeds(2);
         room1.setPrice(new BigDecimal("100.0"));
-        room1.setCurrency(eur);
 
         room2 = new Room();
         room2.setName("002");
         room2.setNumberOfBeds(3);
         room2.setPrice(new BigDecimal("150.0"));
-        room2.setCurrency(eur);
 
         room3 = new Room();
         room3.setName("010");
         room3.setNumberOfBeds(2);
         room3.setPrice(new BigDecimal("75.0"));
-        room3.setCurrency(eur);
         room3.setHotel(hotel2);
 
         room4 = new Room();
         room4.setName("123");
         room4.setNumberOfBeds(5);
         room4.setPrice(new BigDecimal("340"));
-        room4.setCurrency(eur);
     }
 
     /**

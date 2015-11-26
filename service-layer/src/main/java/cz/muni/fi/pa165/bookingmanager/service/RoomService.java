@@ -58,9 +58,8 @@ public interface RoomService {
      * 
      * @param room - room where price is changed
      * @param price - price of room
-     * @param currency - price currency
      */
-    public void changeRoomPrice(Room room, BigDecimal price, Currency currency) throws DataAccessException;
+    public void changeRoomPrice(Room room, BigDecimal price) throws DataAccessException;
     
     /**
      * Change number of beds in room
@@ -77,14 +76,6 @@ public interface RoomService {
      * @return rooms with specific price
      */
     public List<Room> findByPrice(BigDecimal price) throws DataAccessException;
-    
-    /**
-     * Find rooms by price currency
-     * 
-     * @param currency - price currency of rooms which have to be found
-     * @return rooms with specific price currency
-     */
-    public List<Room> findByPriceCurrency(Currency currency) throws DataAccessException;
     
     /**
      * Find rooms by number of beds

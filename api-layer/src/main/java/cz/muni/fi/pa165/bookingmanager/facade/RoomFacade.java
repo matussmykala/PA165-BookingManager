@@ -26,9 +26,8 @@ public interface RoomFacade {
      * 
      * @param roomId - room id where price is changed
      * @param newPrice - new price
-     * @param newCurrency - currency of new price
      */
-    public void changeRoomPrice(Long roomId, BigDecimal newPrice, Currency newCurrency);
+    public void changeRoomPrice(Long roomId, BigDecimal newPrice);
     
     /**
      * Change number of beds in room
@@ -76,11 +75,4 @@ public interface RoomFacade {
      */
     public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds);
     
-    /**
-     * Get rooms with specific price currency
-     * 
-     * @currency specific price currency
-     * @return List<RoomDTO> - list of rooms with specific price currency
-     */
-    public List<RoomDTO> getRoomsByPriceCurrency(Currency currency);
 }

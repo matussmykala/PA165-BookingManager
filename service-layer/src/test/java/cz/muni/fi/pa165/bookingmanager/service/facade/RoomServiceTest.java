@@ -117,22 +117,13 @@ public class RoomServiceTest{
         verify(roomDao).findRoomByNumberOfBeds(numberOfBeds);
     }
     
-    @Test
-    public void findByPriceCurrencyTest(){
-        List<Room> list = new ArrayList<>();
-        Currency currency = Currency.getInstance("EUR");
-        when(roomDao.findRoomByPriceCurrency(currency)).thenReturn(list);
-        roomService.findByPriceCurrency(currency);
-        verify(roomDao).findRoomByPriceCurrency(currency);
-    }
     
     @Test
     public void changeRoomPriceTest(){
         List<Room> list = new ArrayList<>();
         BigDecimal price = new BigDecimal("99.0");
-        Currency currency = Currency.getInstance("CZK");
         
-        roomService.changeRoomPrice(room1, price, currency);
+        roomService.changeRoomPrice(room1, price);
         when(roomDao.findRoomByPrice(price)).thenReturn(list);
         roomService.findByPrice(price);
         verify(roomDao).findRoomByPrice(price);
