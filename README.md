@@ -1,7 +1,9 @@
 # PA165-BookingManager
-[![Build Status](https://travis-ci.org/matussmykala/PA165-BookingManager.svg?branch=master)](https://travis-ci.org/matussmykala/PA165-BookingManager)
 
 Project for pa165.
+
+# Travis CI - Build status 
+[![Build Status](https://travis-ci.org/matussmykala/PA165-BookingManager.svg?branch=master)](https://travis-ci.org/matussmykala/PA165-BookingManager)
 
 # Requirements
 
