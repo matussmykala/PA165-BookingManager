@@ -28,16 +28,15 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 /**
  * Test of  implementation of Room Facade layer
- * 
+ *
  * @author Martin Cuchran <cuchy92@gmail.com>
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
-    
 
     @Mock
-    RoomService roomService;   
-   
+    RoomService roomService;
+
     @Autowired
     BeanMappingService beanMappingService;
 
@@ -45,66 +44,57 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    
+
     private Room room1;
     private Room room2;
-    
-    private RoomDTO roomDTO;
 
+    private RoomDTO roomDTO;
 
     @Before
     public void setup(){
         MockitoAnnotations.initMocks(this);
-        
+
         roomFacade = new RoomFacadeImpl();
         roomFacade.setRoomService(roomService);
         roomFacade.setBeanMappingService(beanMappingService);
 
-        
-        
         room1 = new Room();
         room2 = new Room();
-        
+
         room1.setId((long) 1);
         room1.setHotel(new Hotel());
         room1.setName("Room1");
         room1.setNumberOfBeds(2);
         room1.setPrice(new BigDecimal("25.0"));
 
-
         room2.setId((long) 2);
         room2.setHotel(new Hotel());
         room2.setName("Room2");
         room2.setNumberOfBeds(3);
         room2.setPrice(new BigDecimal("35.0"));
-        
+
         roomDTO = new RoomDTO();
         roomDTO.setId((long) 2);
         roomDTO.setName("Room1");
         roomDTO.setNumberOfBeds(2);
         roomDTO.setPrice(new BigDecimal("25.0"));
-        
     }
-    
+
     /**
      * Tests creation of room on facade layer
      */
     @Test
     public void createRoomTest() {
-
         doAnswer(invocationOnMock -> {
             room1.setId((long) 1);
             return null;
         }).when(roomService).createRoom(any(Room.class));
-
         assertNotEquals(room1.getId(), new Long("2"));
-
         roomFacade.createRoom(roomDTO);
         verify(roomService).createRoom(any(Room.class));
-
         assertEquals(room1.getId(), new Long("1"));
-    }  
-    
+    }
+
     /**
      * Tests delete of room on facade layer
      */
@@ -119,7 +109,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         verify(roomService).deleteRoom(any(Room.class));
         assertEquals(room2,null);
     }
-    
+
     /**
      * Tests obtaining of room by id on facade layer
      */
@@ -127,14 +117,12 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
     public void getRoomByIdTest(){
         when(roomService.findById(any(Long.class))).thenReturn(room1);
         RoomDTO dtoRoom = roomFacade.getRoomById((long) 1);
-
         assertEquals(dtoRoom.getName() , room1.getName());
         assertEquals(dtoRoom.getNumberOfBeds(), room1.getNumberOfBeds());
         assertEquals(dtoRoom.getPrice(), room1.getPrice());
-        
         verify(roomService).findById(any(Long.class));
     }
-    
+
     /**
      * Tests obtaining of all rooms on facade layer
      */
@@ -148,7 +136,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals(dtoList.size(), 2);
         verify(roomService).findAll();
     }
-    
+
     /**
      * Tests obtaining of rooms by number of beds on facade layer
      */
@@ -160,7 +148,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals((roomFacade.getRoomsByNumberOfBeds(1)).size(),1);
         verify(roomService).findByNumberOfBeds(anyInt());
     }
-    
+
     /**
      * Tests obtaining of rooms by price on facade layer
      */
@@ -172,7 +160,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals((roomFacade.getRoomsByPrice(new BigDecimal("35.0"))).size(),1);
         verify(roomService).findByPrice(any(BigDecimal.class));
     }
-    
+
     /**
      * Tests room number of beds change on facade layer
      */
@@ -188,7 +176,7 @@ public class RoomFacadeImplTest extends AbstractJUnit4SpringContextTests{
         assertEquals(room1.getNumberOfBeds(), numberOfBeds);
         verify(roomService).changeNumberOfBeds(any(Room.class), anyInt());
     }
-    
+
     /**
      * Tests room price change on facade layer
      */

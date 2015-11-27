@@ -8,14 +8,12 @@ import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.inject.Inject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Implementation of RoomFacade interface
- * 
+ *
  * @author Martin Cuchran
  */
 
@@ -23,18 +21,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class RoomFacadeImpl implements RoomFacade{
 
-    final static Logger log = LoggerFactory.getLogger(RoomFacadeImpl.class);
-
     @Inject
     private RoomService roomService;
 
     @Inject
     private BeanMappingService beanMappingService;
 
-  
-    
-    
-    
     @Override
     public void deleteRoom(Long RoomId) {
         if (RoomId == null) {
@@ -42,27 +34,23 @@ public class RoomFacadeImpl implements RoomFacade{
         }
         roomService.deleteRoom(roomService.findById(RoomId));
     }
-    
-    
 
     @Override
     public void createRoom(RoomDTO roomCreateDTO) {
         if (roomCreateDTO == null) {
             throw new IllegalArgumentException("roomCreateDTO is null");
         }
-
         Room mappedRoom = beanMappingService.mapTo(roomCreateDTO, Room.class);
-        Room room = roomService.createRoom(mappedRoom);
-        //return room.getId();
+        roomService.createRoom(mappedRoom);
     }
-    
+
     @Override
     public RoomDTO getRoomById(Long RoomId) {
         if (RoomId == null) {
             throw new IllegalArgumentException("Room ID is null");
         }
         Room room = roomService.findById(RoomId);
-        
+
         if (room == null) {
             throw new IllegalArgumentException("Room does not exist");
         }
@@ -73,7 +61,7 @@ public class RoomFacadeImpl implements RoomFacade{
     public List<RoomDTO> getAllRooms() {
         return beanMappingService.mapTo(roomService.findAll(), RoomDTO.class);
     }
-    
+
     @Override
     public void changeRoomPrice(Long roomId, BigDecimal newPrice) {
         if(roomId == null){
@@ -106,7 +94,7 @@ public class RoomFacadeImpl implements RoomFacade{
 
     @Override
     public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds) {
-        
+
         if(numberOfBeds < 0){
             throw new IllegalArgumentException("numberOfBeds is less than 0");
         }

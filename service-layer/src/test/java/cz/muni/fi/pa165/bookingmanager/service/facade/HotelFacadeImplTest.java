@@ -50,7 +50,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     @Autowired
     BeanMappingService beanMappingService;
 
-    //private HotelFacadeImpl hotelFacade = new HotelFacadeImpl();
     private HotelFacadeImpl hotelFacade;
 
     private Hotel hotel1;
@@ -59,24 +58,21 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     private Room room1;
     private Room room2;
     private Room room3;
-    private Room room4;
 
     private HotelCreateDTO hotelCreateDTO1;
     private HotelCreateDTO hotelCreateDTO2;
 
     private Calendar calendar;
-    private Date date;
 
     private HotelDTO hotelDTO1;
     private HotelDTO hotelDTO2;
-    
+
 
     @Before
     public void setUpClass() {
         MockitoAnnotations.initMocks(this);
 
         hotelFacade = new HotelFacadeImpl(hotelService, beanMappingService);
-
 
         room1 = new Room();
         room1.setName("001");
@@ -93,7 +89,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         room3 = new Room();
         room3.setName("010");
         room3.setNumberOfBeds(2);
-        
         room3.setHotel(hotel1);
 
         hotel1 = new Hotel();
@@ -158,9 +153,8 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
             }
         }).when(hotelService).findById(11l);
 
-        Long id1 = hotelFacade.createHotel(hotelCreateDTO1);
-        Long id2 = hotelFacade.createHotel(hotelCreateDTO2);
-
+        hotelFacade.createHotel(hotelCreateDTO1);
+        hotelFacade.createHotel(hotelCreateDTO2);
     }
 
     /**
@@ -168,12 +162,9 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testCreateHotel() {
-
         Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO1, Hotel.class);
         verify(hotelService).createHotel(mappedHotel);
-
         assertEquals(hotel1.getId(), new Long("10"));
-
     }
 
     /**
@@ -181,7 +172,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testUpdateHotel() {
-
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -206,7 +196,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         assertEquals(hotel2.getId(), new Long("11"));
         assertEquals("Park Hotel", hotel2.getName());
         assertEquals("Praha", hotel2.getAddress());
-
     }
 
     /**
@@ -214,7 +203,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testDeleteHotel() {
-
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -229,10 +217,8 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         assertNotNull(hotelDTO2);
         Long id = hotel1.getId();
         hotelFacade.deleteHotel(id);
-
         assertNull(hotel1);
         assertNotNull(hotel2);
-
     }
 
     /**
@@ -240,10 +226,8 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
      */
     @Test
     public void testGetHotelById() {
-
         HotelDTO found = hotelFacade.getHotelById(new Long(10));
         assertEquals(found.getId(), new Long(10));
-
     }
 
     /**
@@ -252,14 +236,13 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     @Test
     public void testGetAllHotels() {
         List<Hotel> list = new ArrayList<>();
-
         list.add(hotel1);
         list.add(hotel2);
         when(hotelService.findAll()).thenReturn(list);
         List<HotelDTO> dtoList = hotelFacade.getAllHotels();
         assertEquals(dtoList.size(), 2);
     }
-    
+
     /**
      * Test of getHotelByName method, of class HoteLFacadeImpl
      */
@@ -270,7 +253,7 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         hotelDTO = hotelFacade.findByName("Voronez");
         assertEquals(hotelDTO.getName(),"Voronez");
     }
-    
+
     /**
      * Test of getHotelByAdress method, of class HoteLFacadeImpl
      */
@@ -282,35 +265,35 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         List<HotelDTO> dtoList = hotelFacade.findByAddress("Brno");
         assertEquals(dtoList.size(), 1);
     }
-    
+
     /**
      * Test of findFreeRoomInRange method, of class HoteLFacadeImpl
      */
-    
+
     @Test
     public void testFindFreeRoomInRange(){
         List<Room> bookedRooms = new ArrayList<>();
         bookedRooms.add(room1);
         bookedRooms.add(room2);
-        
+
         Date start;
         Date end;
-        
+
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DATE, 5);
         start = calendar.getTime();
         calendar.set(Calendar.DATE, 25);
         end = calendar.getTime();
-        
+
         when(hotelService.findBookedRoomInRange(hotel1, start, end)).thenReturn(bookedRooms);
-        
+
         List<RoomDTO> dtoList = hotelFacade.findBookedRoomInRange(hotelDTO1, start, end);
         assertEquals(dtoList.size(), 2);
     }
-    
-    
-    
+
+
+
     /**
      * Test of findBookedRoomInRange method, of class HoteLFacadeImpl
      */
@@ -319,23 +302,23 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
         List<Room> freeRooms = new ArrayList<>();
         freeRooms.add(room1);
         freeRooms.add(room2);
-        
+
         Date start;
         Date end;
-        
+
         calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
         calendar.set(Calendar.DATE, 5);
         start = calendar.getTime();
         calendar.set(Calendar.DATE, 25);
         end = calendar.getTime();
-        
+
         when(hotelService.findFreeRoomInRange(hotel1, start, end)).thenReturn(freeRooms);
-        
+
         List<RoomDTO> dtoList = hotelFacade.findFreeRoomInRange(hotelDTO1, start, end);
         assertEquals(dtoList.size(), 2);
     }
-    
+
 
     @Test
     public void testCreateInvalidName() {

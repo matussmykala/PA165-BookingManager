@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.bookingmanager.dto;
-
 
 import java.util.Date;
 import java.util.Objects;
@@ -14,38 +8,38 @@ import java.util.Objects;
  * @author ivet
  */
 public class HotelDTO {
-    
+
     private Long id;
-    
+
     /**
      * Name of hotel
      */
     private String name;
-    
+
     /**
      * Address of hotel
      */
     private String address;
-    
+
     /**
      * Short description about hotel
      */
     private String description;
-    
+
     /**
      * Picture of hotel
      */
-    
+
     private byte[] image;
 
     private String imageMimeType;
-    
+
     /**
      * Date of creating or last updating hotel
      */
     private Date lastUpdateDay;
-    
-    
+
+
     public Long getId() {
         return id;
     }
@@ -101,8 +95,8 @@ public class HotelDTO {
     public void setLastUpdateDay(Date lastUpdateDay) {
         this.lastUpdateDay = lastUpdateDay;
     }
-    
-        
+
+
     /**
      * HashCode use parameters name and address
      * @return hash
@@ -137,9 +131,4 @@ public class HotelDTO {
         }
         return true;
     }
-    
-    
-    
-    
-    
 }

@@ -60,10 +60,7 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
     @Autowired
     private BeanMappingService beanMappingService;
 
-    //ugly peace of code, but wasn't able to do better way
-    //----------------------------------------------------
     private ReservationFacadeImpl reservationFacade = new ReservationFacadeImpl();
-    //----------------------------------------------------
 
     private Reservation reservation1;
     private Reservation reservation2;
@@ -74,13 +71,10 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
     public void createReservations(){
         MockitoAnnotations.initMocks(this);
 
-        //ugly peace of code, but wasn't able to do better way
-        //----------------------------------------------------
         reservationFacade.setReservationService(reservationService);
         reservationFacade.setCustomerService(customerService);
         reservationFacade.setRoomService(roomService);
         reservationFacade.setBeanMappingService(beanMappingService);
-        //----------------------------------------------------
 
         reservation1 = new Reservation();
         reservation2 = new Reservation();
@@ -108,7 +102,6 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
 
     @Test
     public void createReservationTest(){
-
         doAnswer(invocationOnMock -> {
             reservation1.setId((long) 1);
             return null;

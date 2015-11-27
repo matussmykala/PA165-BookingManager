@@ -13,16 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+/**
+ *
+ * @author ivet
+ */
 @Service
 public class HotelServiceImpl implements HotelService {
 
-    final static Logger log = LoggerFactory.getLogger(HotelServiceImpl.class);
-
     @Autowired
     private HotelDao hotelDao;
-
-    @Autowired
-    private ReservationService reservationService;
 
     @Autowired
     private RoomService roomService;
@@ -98,12 +97,8 @@ public class HotelServiceImpl implements HotelService {
 
         bookedRooms.addAll(roomService.findReservedRoomsAtSpecificTime(start, end));
         roomsInHotel.addAll(roomService.findByHotel(hotel));
-
         roomsInHotel.removeAll(bookedRooms);
-
-       
         return Collections.unmodifiableList(roomsInHotel);
-
     }
 
     @Override
@@ -113,11 +108,7 @@ public class HotelServiceImpl implements HotelService {
 
         freeRooms.addAll(roomService.findFreeRoomsAtSpecificTime(start, end));
         roomsInHotel.addAll(roomService.findByHotel(hotel));
-
         roomsInHotel.removeAll(freeRooms);
-
         return Collections.unmodifiableList(roomsInHotel);
     }
-    
-
 }

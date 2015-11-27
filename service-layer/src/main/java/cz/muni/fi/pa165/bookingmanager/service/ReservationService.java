@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.bookingmanager.service;
 import java.util.Date;
 import java.util.List;
 
-import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
@@ -12,7 +11,6 @@ import cz.muni.fi.pa165.bookingmanager.entity.Room;
  */
 public interface ReservationService
 {
-
     /**
      * Creates the reservation.
      *

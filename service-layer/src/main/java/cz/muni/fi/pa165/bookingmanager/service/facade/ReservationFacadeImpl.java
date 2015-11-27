@@ -1,8 +1,4 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
@@ -12,16 +8,12 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
-import cz.muni.fi.pa165.bookingmanager.service.BeanMappingServiceImpl;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
-import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
-import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -108,7 +100,6 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public List<ReservationDTO> getFutureReservationsOfCustomer(Long customerId)
     {
-
         Customer customer = customerService.findCustomerById(customerId);
         return beanMappingService.mapTo(
                 reservationService.getFutureReservationsOfCustomer(customer), ReservationDTO.class

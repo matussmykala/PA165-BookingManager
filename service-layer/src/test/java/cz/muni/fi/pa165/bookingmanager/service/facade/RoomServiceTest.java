@@ -54,7 +54,6 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     @InjectMocks
     private ReservationService reservationService;
 
-
     private Room room1;
     private Room room2;
     private Room room3;
@@ -288,13 +287,12 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         assertTrue(reservedRooms.contains(room2));
 
     }
-    
+
     /**
      * Test of finding free rooms at specific time
      */
     @Test
     public void findFreeRoomsAtSpecificTimeTest(){
-
         List<Reservation> list = new ArrayList<>();
         list.add(reservation1);
         list.add(reservation2);
@@ -305,6 +303,5 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
         assertFalse(reservedRooms.contains(room1));
         assertFalse(reservedRooms.contains(room2));
-
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  *
  * @author Martin Cuchran
  */
-
+@Service
 public interface RoomService {
     /**
      * Create room
@@ -101,7 +101,7 @@ public interface RoomService {
      * @return rooms with reservation in specific time window
      */
     public List<Room> findReservedRoomsAtSpecificTime(Date from, Date to) throws DataAccessException;
-    
+
     /**
      * Find free rooms in specific time window
      *

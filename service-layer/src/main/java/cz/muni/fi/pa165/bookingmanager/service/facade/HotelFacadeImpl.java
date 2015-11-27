@@ -1,10 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.bookingmanager.service.facade;
-import cz.muni.fi.pa165.bookingmanager.dto.ChangeImageDTO;
+
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
@@ -24,12 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author ivet
  */
-
 @Service
 @Transactional
 public class HotelFacadeImpl implements HotelFacade{
-
-    final static Logger log = LoggerFactory.getLogger(HotelFacadeImpl.class);
 
     @Inject
     private HotelService hotelService;
@@ -42,7 +34,6 @@ public class HotelFacadeImpl implements HotelFacade{
         if (hotelCreateDTO == null) {
             throw new IllegalArgumentException("hotelCreateDTO is null");
         }
-
         Hotel mappedHotel = beanMappingService.mapTo(hotelCreateDTO, Hotel.class);
         //set Date to entity
         Date now = new Date();
@@ -64,7 +55,6 @@ public class HotelFacadeImpl implements HotelFacade{
         Date now = new Date();
         mappedHotel.setLastUpdateDay(now);
         hotelService.updateHotel(mappedHotel);
-
     }
 
     @Override
@@ -94,7 +84,6 @@ public class HotelFacadeImpl implements HotelFacade{
         return beanMappingService.mapTo(hotelService.findAll(), HotelDTO.class);
     }
 
-     
     @Override
     public HotelDTO findByName(String name) {
         if(name==null){
@@ -102,7 +91,6 @@ public class HotelFacadeImpl implements HotelFacade{
         }
             return beanMappingService.mapTo(hotelService.findByName(name), HotelDTO.class);
     }
-    
 
     @Override
     public List<HotelDTO> findByAddress(String address) {
@@ -111,8 +99,7 @@ public class HotelFacadeImpl implements HotelFacade{
         }
             return beanMappingService.mapTo(hotelService.findByAdress(address), HotelDTO.class);
     }
-    
-    
+
     @Override
     public List<RoomDTO> findFreeRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
         if (hotelDTO == null) {
@@ -122,10 +109,10 @@ public class HotelFacadeImpl implements HotelFacade{
             throw new IllegalArgumentException("Hotel does not exist");
         }
         Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
-        
+
         return beanMappingService.mapTo(hotelService.findFreeRoomInRange(hotel, start, end), RoomDTO.class);
     }
-    
+
     @Override
     public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
         if (hotelDTO == null) {
@@ -135,25 +122,15 @@ public class HotelFacadeImpl implements HotelFacade{
             throw new IllegalArgumentException("Hotel does not exist");
         }
         Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
-        
+
         return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
     }
-    
 
-     /*
-    public void changeImage(ChangeImageDTO dto) {
-        Hotel hotel = hotelService.findById(dto.getId());
-        hotel.setImage(dto.getImage());
-        hotel.setImageMimeType(dto.getImageMimeType());
-    } */
-       
-    //just for test
     public HotelFacadeImpl(HotelService hotelService, BeanMappingService beanMappingService){
         this.hotelService=hotelService;
         this.beanMappingService=beanMappingService;
     }
     public HotelFacadeImpl(){
-        
-    }
 
+    }
   }

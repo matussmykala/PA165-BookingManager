@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Objects;
 
@@ -15,13 +10,12 @@ public class HotelCreateDTO {
     private String name;
 
     private String address;
-    
+
     private String description;
-    
-     /**
-     * Picture of hotel
+
+    /**
+     * * Picture of hotel
      */
-    
     private byte[] image;
 
     private String imageMimeType;
@@ -65,8 +59,6 @@ public class HotelCreateDTO {
     public void setImageMimeType(String imageMimeType) {
         this.imageMimeType = imageMimeType;
     }
-    
-    
 
     /**
      * HashCode use parameters name and address
@@ -102,9 +94,4 @@ public class HotelCreateDTO {
         }
         return true;
     }
-    
-    
-    
-    
-    
 }

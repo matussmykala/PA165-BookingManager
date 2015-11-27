@@ -40,8 +40,6 @@ public class CustomerFacadeTest extends AbstractJUnit4SpringContextTests {
     @Autowired
     BeanMappingService beanMappingService;
 
-    //    @Autowired
-//    @InjectMocks
     CustomerFacadeImpl customerFacade;
 
     @Rule
