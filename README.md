@@ -21,4 +21,4 @@ mvn clean install
 
 # Repository
 
-git https://github.com/matussmykala/PA165-BookingManager.git
+git clone https://github.com/matussmykala/PA165-BookingManager.git
