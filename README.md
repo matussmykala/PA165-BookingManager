@@ -9,10 +9,9 @@ Project for pa165.
  
 # Modules
 
-pa165_booking_manager_api - API for whole app
-pa165_booking_manager_service - Data and service layer
-pa165_booking_manager_web - Web and REST server application
-pa165_booking_manager_desktop - Desktop application
+- api-layer	- API for whole app
+- dao-layer	- Data layer
+- service-layer - Service layer
 
 # Installation and run
 
