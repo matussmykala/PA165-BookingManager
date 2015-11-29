@@ -1,0 +1,31 @@
+evaluated project: https://github.com/msimacek/PA165-LibraryManager
+
+LibraryManager
+
+entity Loan
+- often missing or not very good javadoc
+
+CreateLoanDTO
+- missing javadoc
+
+LoanDTO
+- missing javadoc
+
+LoanFacade
+- not very good javadoc, eg. findById method - "Returns loan with given id or null" - when returns null?
+
+LoanFacadeImpl
+ok
+
+LoanFacadeTest
+- missing javadoc
+
+LoanServiceTest
+- missing javadoc
+- not much complex tests for non-trivial functions
+
+
+Total points: 10
+
+
+// Ivet pri celkovom pisani prosim skontroluj, ci su obsiahnute celkovo 2 non-trivial functions
