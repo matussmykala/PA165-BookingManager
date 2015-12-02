@@ -32,14 +32,16 @@
             <version>8.0.28</version>
             <scope>provided</scope>
         </dependency>
+        <!-- TODO
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>eshop-sample-data</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        !-->
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>eshop-service</artifactId>
+            <artifactId>BookingManagerService-service</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
