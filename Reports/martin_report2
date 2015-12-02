@@ -1,0 +1,14 @@
+- BookServiceImpl
+	nenasiel som ziadnu nontrivial metodu a taktiez som si nevsimol zeby tam kontrolovali vynimky.Ostatne podmienky na servisnu vrstvu boli splnene.
+- BookServiceTest 
+	Testy zakladnych metod su implementovane, vytkol by som chybajuci javadock pre jednotlive testy.
+- BookFacadeTest
+	Rovnako ako v servisnej vrtve, zakladne testy su spravne implementovane az na chybajuci javadoc v jednotlivych testoch.
+- BookFacadeImpl
+	Implementovane su len zakladne funkcie. U tychto funkcionalit nevidim ziadne nedostatky. K metodam je vytvoreny patricny javadoc.
+- BookDTO
+	Metody spravne vyuzivaju DTO objekty, napr CreateBookDTO. V poriadku, nemam pripomienky.
+- CreateBookDTO
+	Poziadavky su splnene, mozno by som pridal nejake anotacie k atributom, napr. dlzka mena, isbn atd..
+	
+	Dal by som 9 bodov kvoli chybajucim DataAccess exceptions a javadocu

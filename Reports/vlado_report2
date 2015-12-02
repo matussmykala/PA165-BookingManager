@@ -1,0 +1,22 @@
+MemberDTO, MemberRegisterDTO, MemberAuthenticateDTO
+  + Strucny a vystizny Javadoc nad triedami
+  - Ziadny Javadoc pri jednotlivych atributoch. Su ale self-explanatory, takze OK
+  + inak v poriadku
+
+MemberFacade, MemberFacadeImpl
+  + Javadoc je v poriadku okrem metody isAdmin(), kde posledny riadok - @return boolean mohol byt konkretnejsi
+  + celkovo OK
+
+MemberService, MemberServiceImpl
+  + Javadoc je v poriadku
+  - Tiez mensie nepresnosti, napr. metoda getAllLoans(Member member)
+    @return list of all loans possessed by member or null
+    Vracia null aj ked dany member nema ziadnu Loan alebo len ak sa member nenasiel?
+  - Vynimka DataAccessException nie je zachytavana na servisnej vrstve (asi -1 bod)
+
+MemberServiceTest, MemberFacadeTest
+  + nenasiel som nic zle
+  + FacadeTestConfiguration - pekny sposob, ako obist nefunkcny @InjectMocks
+
+
+Celkovo 9 bodov (-1 kvoli DataAccessException)
