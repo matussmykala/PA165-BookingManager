@@ -13,3 +13,5 @@ hs_err_pid*
 /service-layer/target/
 /dao-layer/target/
 /REST-layer/target/
+/sampleData/target/
+/user-interface/target/
