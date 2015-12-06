@@ -12,3 +12,4 @@ hs_err_pid*
 /api-layer/target/
 /service-layer/target/
 /dao-layer/target/
+/REST-layer/target/
