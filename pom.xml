@@ -18,6 +18,7 @@
         <module>service-layer</module>
         <module>REST-layer</module>
         <module>user-interface</module>
+        <module>sampleData</module>
     </modules>
 
     <dependencyManagement>
