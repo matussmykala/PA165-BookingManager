@@ -5,7 +5,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ import java.util.Collection;
  *
  * @author Vladimir Caniga
  */
-@Service
+@Component
 @Transactional
 public class CustomerFacadeImpl implements CustomerFacade {
 
