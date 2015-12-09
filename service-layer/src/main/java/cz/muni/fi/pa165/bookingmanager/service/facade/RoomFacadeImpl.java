@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Martin Cuchran
  */
 
-@Component
+@Service
 @Transactional
 public class RoomFacadeImpl implements RoomFacade{
 
