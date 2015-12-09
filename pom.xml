@@ -17,7 +17,8 @@
         <module>service-layer</module>
     <module>user-layer</module>
     <module>rest-layer</module>
-  </modules>
+        <module>web-sample-data</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>

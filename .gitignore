@@ -12,3 +12,10 @@ hs_err_pid*
 /api-layer/target/
 /service-layer/target/
 /dao-layer/target/
+/REST-layer/target/
+/sampleData/target/
+/user-interface/target/
+/rest-layer/target/
+/user-layer/target/
+nb-configuration.xml
+/web-sample-data/target/
