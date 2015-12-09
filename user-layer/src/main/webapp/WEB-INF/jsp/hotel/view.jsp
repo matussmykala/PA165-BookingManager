@@ -32,6 +32,15 @@
             </tr>
         </tbody>
     </table>
+            
+
+            
+     <form method="get" action="${pageContext.request.contextPath}/hotel/list/">
+         <p align="right">
+            <button type="submit" class="btn btn-primary">Show all</button>
+         </p>
+     </form>
+
 
 
 </jsp:attribute>
