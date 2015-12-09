@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.user.layer.controllers;
 
 
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 import cz.muni.fi.pa165.bookingmanager.service.facade.RoomFacadeImpl;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -20,8 +21,8 @@ public class RoomController {
 
     final static Logger log = LoggerFactory.getLogger(RoomController.class);
 
-    //@Autowired
-    private RoomFacadeImpl roomFacade;
+    @Autowired
+    private RoomFacade roomFacade;// = new RoomFacadeImpl();
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {

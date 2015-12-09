@@ -15,10 +15,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.validation.Validator;
 
+import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
 @EnableWebMvc
 @Configuration
-//@Import({EshopWithSampleDataConfiguration.class})
+@Import({ServiceConfiguration.class})
 @ComponentScan(basePackages = "cz.muni.fi.pa165.user.layer.controllers")
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
