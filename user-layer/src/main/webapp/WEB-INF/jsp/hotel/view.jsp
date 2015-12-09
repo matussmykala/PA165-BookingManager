@@ -18,17 +18,17 @@
         <thead>
         <tr>
             <th>id</th>
-            <th>added</th>
             <th>hotel name</th>
             <th>description</th>
+            <th>added</th>
         </tr>
         </thead>
         <tbody>
             <tr>
                 <td>${hotel.id}</td>
+                <td><c:out value="${hotel.name}"/></td>
+                <td><c:out value="${hotel.description}"/></td>
                 <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
-                <td><c:out value="${hotel.description}"/></td>
-                <td><c:out value="${hotel.description}"/></td>
             </tr>
         </tbody>
     </table>

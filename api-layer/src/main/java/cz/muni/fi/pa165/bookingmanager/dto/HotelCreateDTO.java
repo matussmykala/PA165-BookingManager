@@ -23,9 +23,11 @@ public class HotelCreateDTO {
     /**
      * * Picture of hotel
      */
+    /*
     private byte[] image;
 
     private String imageMimeType;
+    */
 
     public String getName() {
         return name;
@@ -50,7 +52,7 @@ public class HotelCreateDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    /*
     public byte[] getImage() {
         return image;
     }
@@ -65,7 +67,7 @@ public class HotelCreateDTO {
 
     public void setImageMimeType(String imageMimeType) {
         this.imageMimeType = imageMimeType;
-    }
+    } */
 
     /**
      * HashCode use parameters name and address

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional //transactions are handled on facade layer
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
 {
+    
     @Autowired
     HotelService hotelService;
     
@@ -27,8 +28,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
 
     @Override
     public void loadData() throws IOException {
+        /*
         this.createDate();
         Hotel hotel = hotel("Voronez","Brno","Luxusny hotel v Brne", "null", null, date);
+                */
     }
     
     private void createDate(){
@@ -42,8 +45,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Hotel hotel = new Hotel();
         hotel.setName(name);
         hotel.setAddress(address);
-        hotel.setImage(readImage(imageFile));
-        hotel.setImageMimeType(mimeType);
+        hotel.setDescription(description);
+      //  hotel.setImage(readImage(imageFile));
+      //  hotel.setImageMimeType(mimeType);
         hotel.setLastUpdateDay(date);
         hotelService.createHotel(hotel);
         return hotel;
