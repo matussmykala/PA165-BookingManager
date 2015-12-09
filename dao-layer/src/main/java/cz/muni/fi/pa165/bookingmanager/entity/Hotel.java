@@ -33,6 +33,8 @@ public class Hotel {
      */
     @NotNull
     private String address;
+    
+    private String description;
 
     /**
      * list of all rooms that are associated with this hotel
