@@ -1,9 +1,12 @@
 package sampleData;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
+import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
     @Autowired
     HotelService hotelService;
     
+    @Autowired
+    RoomService roomService;
+    
     public static final String JPEG = "image/jpeg";
      
     Date date;
@@ -29,6 +35,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
     public void loadData() throws IOException {
         this.createDate();
         Hotel hotel = hotel("Voronez","Brno","Luxusny hotel v Brne", "null", null, date);
+        Room room = room("Izba 1", 2, hotel, new BigDecimal("25.8"));
+        
     }
     
     private void createDate(){
@@ -61,4 +69,16 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
             return buffer.toByteArray();
         }
     }
+      
+      private Room room(String name, int numberOfBeds, Hotel hotel, BigDecimal price){
+          Room room = new Room();
+          room.setName(name);
+          room.setNumberOfBeds(numberOfBeds);
+          room.setHotel(hotel);
+          room.setPrice(price);
+          roomService.createRoom(room);
+          
+          return room;
+          
+      }
 }
