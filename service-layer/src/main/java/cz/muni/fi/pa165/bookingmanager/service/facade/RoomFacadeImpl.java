@@ -8,6 +8,8 @@ import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.inject.Inject;
+
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Martin Cuchran
  */
 
-@Service
+@Component
 @Transactional
 public class RoomFacadeImpl implements RoomFacade{
 
