@@ -18,3 +18,4 @@ hs_err_pid*
 /rest-layer/target/
 /user-layer/target/
 nb-configuration.xml
+/web-sample-data/target/
