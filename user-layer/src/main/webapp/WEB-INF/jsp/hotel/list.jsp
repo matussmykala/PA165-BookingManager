@@ -20,7 +20,6 @@
             <th>id</th>
             <th>name</th>
             <th>address</th>
-            <th>description</th>
             <th>last update</th>
         </tr>
         </thead>
@@ -31,10 +30,12 @@
                 
                 <td><c:out value="${hotel.name}"/></td>
                 <td><c:out value="${hotel.address}"/></td>
-                <td><c:out value="${hotel.description}"/></td>
                 <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
                 <td>
                     <my:a href="/hotel/view/${hotel.id}" class="btn btn-primary">View</my:a>
+                </td>
+                <td>
+                    <my:a href="/hotel/edit/${hotel.id}" class="btn btn-primary">Edit</my:a>
                 </td>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">

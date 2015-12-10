@@ -132,10 +132,31 @@ public class HotelController {
     }
     
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String updateHotel(@PathVariable("id") long id, Model model, UriComponentsBuilder uriBuilder){
-        model.addAttribute("hotelUpdate",hotelFacade.getHotelById(id));
+    public String updateHotel(@PathVariable("id") long id, @Valid @ModelAttribute("hotel") HotelDTO updatedHotel, BindingResult bindingResult,
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
+        
+         if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+            }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+            }  
+            return "hotel/edit/{id}";
+        }
+         
+        
+        HotelDTO hotel = hotelFacade.getHotelById(id);
+        hotel.setName(updatedHotel.getName());
+        hotel.setAddress(updatedHotel.getAddress());
+        hotel.setDescription(updatedHotel.getDescription());
+        hotelFacade.updateHotel(hotel);
+         
+                 
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was updated");
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
+    
+ 
     
     
     

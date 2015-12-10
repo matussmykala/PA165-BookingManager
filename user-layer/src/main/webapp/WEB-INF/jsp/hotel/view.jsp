@@ -9,29 +9,36 @@
 <my:pagetemplate title="Hotel Administration">
 <jsp:attribute name="body">
 
-    <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
-        <button type="submit" class="btn btn-primary">Delete</button>
-    </form>
-    <my:a href="/hotel/edit/${hotel.id}" class="btn btn-primary">
-         Edit
-    </my:a>
-  
 
     <table class="table">
         <thead>
         <tr>
             <th>id</th>
             <th>hotel name</th>
+            <th>address</th>
             <th>description</th>
-            <th>added</th>
+            <th>last update</th>
         </tr>
         </thead>
         <tbody>
             <tr>
                 <td>${hotel.id}</td>
                 <td><c:out value="${hotel.name}"/></td>
+                <td><c:out value="${hotel.address}"/></td>
                 <td><c:out value="${hotel.description}"/></td>
                 <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
+                <td>
+                     <form action="${pageContext.request.contextPath}/hotel/edit/${hotel.id}">
+                        <button class="btn btn-primary">Edit</button>
+         
+                    </form>
+                    
+                </td>
+                <td>
+                    <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -39,7 +46,7 @@
 
             
      <form method="get" action="${pageContext.request.contextPath}/hotel/list/">
-         <p align="right">
+         <p align="left">
             <button type="submit" class="btn btn-primary">Show all</button>
          </p>
      </form>
