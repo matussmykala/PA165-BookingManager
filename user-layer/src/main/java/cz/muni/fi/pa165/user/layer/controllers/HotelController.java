@@ -123,53 +123,22 @@ public class HotelController {
         redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was created");
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
-     /*
-     @RequestMapping(value = "/start", method = RequestMethod.POST)
-     public String findByAddress(@Valid @ModelAttribute("hotelAddress") String address, BindingResult bindingResult,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-        //in case of validation error forward back to the the form
-        if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }  
-            
-        }
-               //report success
-        return "redirect:" + uriBuilder.path("/hotel/view/{address}").buildAndExpand(address).encode().toUriString();
-    } */
      
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String editHotel(@PathVariable("id") long id,Model model){
-        model.addAttribute("hotel", hotelFacade.getHotelById(id));
-        return "hotel/edit/{id}";
+       
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String editHotel(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {
+        model.addAttribute("hotel",hotelFacade.getHotelById(id));
+        return "hotel/edit";
     }
-         
+    
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String update(@PathVariable("id") long id, @ModelAttribute HotelDTO hotel, BindingResult bindingResult,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder)  {
-        HotelDTO hotelFromDB = hotelFacade.getHotelById(id);
-        //in case of validation error forward back to the the form
-        if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }  
-            
-        } else {
-        //updatehotel
-            hotelFromDB.setName(hotel.getName());
-            hotelFromDB.setAddress(hotel.getAddress());
-            hotelFromDB.setDescription(hotel.getDescription());
-            hotelFacade.updateHotel(hotelFromDB);
-        //report success
-        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was created");
-        
-    }
+    public String updateHotel(@PathVariable("id") long id, Model model, UriComponentsBuilder uriBuilder){
+        model.addAttribute("hotelUpdate",hotelFacade.getHotelById(id));
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
-    }
+    } 
+    
+    
+    
 }
      
  

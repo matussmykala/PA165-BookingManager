@@ -17,7 +17,7 @@ public class HotelCreateDTO {
     @Size(min = 1, max = 60)
     private String address;
 
-    @Size(min = 1, max = 60)
+    
     private String description;
 
     /**
