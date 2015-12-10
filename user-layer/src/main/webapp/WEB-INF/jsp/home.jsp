@@ -10,32 +10,12 @@
 
     <div class="jumbotron">
         <h2>Welcome to PA165 project Booking Manager !</h2>
-        <h4>Find your best accommodation!</h4>
+        <h3>Find your best accommodation!</h3>
+        <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/start"
+              role="button">Make reservation</a>
     </div>
  
- <form:form method="post" action="${pageContext.request.contextPath}/hotel/find"
-               modelAttribute="hotelCreate" cssClass="form-horizontal">   
-     
-    <form class="form-horizontal">
-        <fieldset><legend>Find the Best Deals</legend>
-            <div class="form-group"><label class="col-lg-2 control-label" for="destination">Destination</label>
-                <div class="col-lg-10"><input class="form-control" id="destination" placeholder="city" type="text" /></div>
-            </div>
-            <div class="form-group"><label class="col-lg-2 control-label" for="dateFrom">Check-in Date </label>
-                <div class="col-lg-10"><input class="form-control" id="dateFrom" placeholder="DD.MM.RRRR" type="text" /></div>
-            </div>
-            <div class="form-group"><label class="col-lg-2 control-label" for="dateTo">Check-out Date </label>
-                <div class="col-lg-10"><input class="form-control" id="dateTo" placeholder="DD.MM.RRRR" type="text" /></div>
-            </div>
-            <div class="checkbox"><label><input type="checkbox" /> I am not ready to enter dates </label></div>
-            <div class="form-group">
-                <div class="col-lg-10 col-lg-offset-2"><button class="btn btn-default" type="reset">Clear</button>
-                    <button class="btn btn-primary" type="submit">Submit</button></div>
-            </div>
-        </fieldset>
-    </form>
- </form:form>
-    
+   
 
 
    

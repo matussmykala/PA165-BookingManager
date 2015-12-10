@@ -8,6 +8,8 @@ package cz.muni.fi.pa165.user.layer.controllers;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,12 +84,21 @@ public class HotelController {
      * @param model data to display
      * @return JSP page name
      */
-    @RequestMapping(value = "/view{name}", method = RequestMethod.GET)
+    /*
+    @RequestMapping(value = "/view/{name}", method = RequestMethod.GET)
     public String viewName(@PathVariable String name, Model model){
         model.addAttribute("hotel",hotelFacade.findByName(name));
         return "hotel/view";
     } 
     
+     @RequestMapping(value = "/view/{address}", method = RequestMethod.GET)
+     public String viewAddress(@PathVariable String address, Model model){
+        model.addAttribute("hotel",hotelFacade.findByAddress(address));
+        return "hotel/view";
+    } 
+    */
+    
+      
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newHotel(Model model){
         model.addAttribute("hotelCreate", new HotelCreateDTO());
@@ -112,4 +123,57 @@ public class HotelController {
         redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was created");
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
+     /*
+     @RequestMapping(value = "/start", method = RequestMethod.POST)
+     public String findByAddress(@Valid @ModelAttribute("hotelAddress") String address, BindingResult bindingResult,
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+        //in case of validation error forward back to the the form
+        if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+            }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+            }  
+            
+        }
+               //report success
+        return "redirect:" + uriBuilder.path("/hotel/view/{address}").buildAndExpand(address).encode().toUriString();
+    } */
+     
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editHotel(@PathVariable("id") long id,Model model){
+        model.addAttribute("hotel", hotelFacade.getHotelById(id));
+        return "hotel/edit/{id}";
+    }
+         
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(@PathVariable("id") long id, @ModelAttribute HotelDTO hotel, BindingResult bindingResult,
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder)  {
+        HotelDTO hotelFromDB = hotelFacade.getHotelById(id);
+        //in case of validation error forward back to the the form
+        if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+            }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+            }  
+            
+        } else {
+        //updatehotel
+            hotelFromDB.setName(hotel.getName());
+            hotelFromDB.setAddress(hotel.getAddress());
+            hotelFromDB.setDescription(hotel.getDescription());
+            hotelFacade.updateHotel(hotelFromDB);
+        //report success
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was created");
+        
+    }
+        return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
+    }
 }
+     
+ 
+    
+     
+     
+
