@@ -17,6 +17,11 @@ import javax.validation.Validator;
 
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 
+
+/**
+ * 
+ * @author ivet
+ */
 @EnableWebMvc
 @Configuration
 @Import({ServiceConfiguration.class})

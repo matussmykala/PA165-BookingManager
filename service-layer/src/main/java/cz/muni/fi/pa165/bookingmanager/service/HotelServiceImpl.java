@@ -111,4 +111,5 @@ public class HotelServiceImpl implements HotelService {
         roomsInHotel.removeAll(freeRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }
+  
 }

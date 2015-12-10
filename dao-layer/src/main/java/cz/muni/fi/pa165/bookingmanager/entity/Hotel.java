@@ -33,6 +33,8 @@ public class Hotel {
      */
     @NotNull
     private String address;
+    
+    private String description;
 
     /**
      * list of all rooms that are associated with this hotel
@@ -43,10 +45,10 @@ public class Hotel {
     /**
      * Picture of hotel
      */
-    @Lob
-    private byte[] image;
+  //  @Lob
+   // private byte[] image;
 
-    private String imageMimeType;
+ //   private String imageMimeType;
     
     /**
      * Date of creating or last updating hotel
@@ -90,7 +92,7 @@ public class Hotel {
     public void addRoom(Room room){
         this.rooms.add(room);
     }
-
+/**
     public byte[] getImage() {
         return image;
     }
@@ -106,6 +108,7 @@ public class Hotel {
     public void setImageMimeType(String imageMimeType) {
         this.imageMimeType = imageMimeType;
     }
+    */
 
     public Date getLastUpdateDay() {
         return lastUpdateDay;
@@ -113,6 +116,14 @@ public class Hotel {
 
     public void setLastUpdateDay(Date lastUpdateDay) {
         this.lastUpdateDay = lastUpdateDay;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     

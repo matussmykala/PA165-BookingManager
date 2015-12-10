@@ -9,10 +9,13 @@
 <jsp:attribute name="body">
 
     <div class="jumbotron">
-        <h1>Welcome to PA165 project Booking Manager !</h1>
-        <p class="lead"></p>
-        
+        <h2>Welcome to PA165 project Booking Manager !</h2>
+        <h3>Find your best accommodation!</h3>
+        <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/list"
+              role="button">Make reservation</a>
     </div>
+ 
+   
 
 
    

@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Objects;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -7,18 +9,25 @@ import java.util.Objects;
  */
 public class HotelCreateDTO {
 
+    @NotNull
+    @Size(min = 1, max = 30)
     private String name;
 
+    @NotNull
+    @Size(min = 1, max = 60)
     private String address;
 
+    
     private String description;
 
     /**
      * * Picture of hotel
      */
+    /*
     private byte[] image;
 
     private String imageMimeType;
+    */
 
     public String getName() {
         return name;
@@ -43,7 +52,7 @@ public class HotelCreateDTO {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    /*
     public byte[] getImage() {
         return image;
     }
@@ -58,7 +67,7 @@ public class HotelCreateDTO {
 
     public void setImageMimeType(String imageMimeType) {
         this.imageMimeType = imageMimeType;
-    }
+    } */
 
     /**
      * HashCode use parameters name and address
