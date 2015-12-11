@@ -8,10 +8,6 @@ package cz.muni.fi.pa165.user.layer.controllers;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
-import java.util.ArrayList;
-import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +31,9 @@ public class HotelController {
     
     @Autowired
     private HotelFacade hotelFacade;
+    
+    
+
     
     /**
      * Show a list of hotels
@@ -97,6 +96,35 @@ public class HotelController {
         return "hotel/view";
     } 
     */
+  
+    
+    @RequestMapping(value = "/find")
+        public String findForm(Model model){
+        
+        return "hotel/find";
+    }
+    
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(@RequestParam int filter,@RequestParam String goal, Model model, UriComponentsBuilder uriBuilder){
+        if(filter==1){
+            HotelDTO hotel = hotelFacade.findByName(goal);
+            Long id = hotel.getId();
+            model.addAttribute("hotels", hotel);
+            return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
+        }
+        else {
+        model.addAttribute("hotels",hotelFacade.findByAddress(goal));
+        return "hotel/list";
+        }
+    } 
+    
+    /*
+        @RequestMapping(value = "/find/{address}", method = RequestMethod.GET)
+    public String address(@PathVariable String address, Model model){
+        model.addAttribute("hotels",hotelFacade.findByAddress(address));
+        return "hotel/list";
+    } 
+    */
     
       
     @RequestMapping(value = "/new", method = RequestMethod.GET)
@@ -155,6 +183,24 @@ public class HotelController {
         redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was updated");
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
+    
+    public class Filter{
+        private String filter;
+        public Filter(){
+            
+        }
+
+        public String getFilter() {
+            return filter;
+        }
+
+        public void setFilter(String filter) {
+            this.filter = filter;
+        }
+        
+        
+    }
+    
     
  
     

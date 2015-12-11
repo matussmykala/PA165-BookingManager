@@ -16,7 +16,7 @@
             <th>id</th>
             <th>hotel name</th>
             <th>address</th>
-            <th>description</th>
+            <th>destination</th>
             <th>last update</th>
         </tr>
         </thead>

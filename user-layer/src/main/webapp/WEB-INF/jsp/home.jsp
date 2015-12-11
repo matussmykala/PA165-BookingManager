@@ -11,9 +11,14 @@
     <div class="jumbotron">
         <h2>Welcome to PA165 project Booking Manager !</h2>
         <h3>Find your best accommodation!</h3>
-        <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/list"
+        <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/find"
               role="button">Make reservation</a>
     </div>
+              
+              
+              
+    <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/data/data"
+              role="button">Add data</a>
  
    
 
