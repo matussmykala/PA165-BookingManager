@@ -19,7 +19,7 @@
         <tr>
             <th>id</th>
             <th>name</th>
-            <th>address</th>
+            <th>destination</th>
             <th>last update</th>
         </tr>
         </thead>

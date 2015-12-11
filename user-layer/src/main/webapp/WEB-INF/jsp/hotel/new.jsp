@@ -21,7 +21,7 @@
         </div>
             
         <div class="form-group ${address_error?'has-error':''}">
-            <form:label path="address" cssClass="col-sm-2 control-label">Address</form:label>
+            <form:label path="address" cssClass="col-sm-2 control-label">Destination</form:label>
             <div class="col-sm-10">
                 <form:input path="address" cssClass="form-control"/>
                <form:errors path="address" cssClass="help-block"/>

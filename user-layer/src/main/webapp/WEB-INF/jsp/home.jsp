@@ -14,6 +14,11 @@
         <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/find"
               role="button">Make reservation</a>
     </div>
+              
+              
+              
+    <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/data"
+              role="button">Add data</a>
  
    
 

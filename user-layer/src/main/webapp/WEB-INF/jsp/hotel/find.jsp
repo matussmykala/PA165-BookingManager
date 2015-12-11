@@ -8,8 +8,6 @@
 <my:pagetemplate title="Find your hotel">
     <jsp:attribute name="body">
         
-
-        
          <form:form method="get" action="${pageContext.request.contextPath}/hotel/search/${filter}"
                     cssClass="form-horizontal">
              
@@ -18,7 +16,7 @@
                         <select name="filter">
                         <option selected>Filter
                         <option value=1>Name</option>
-                        <option value=2>Address</option>
+                        <option value=2>Destination</option>
                     </select>   
                   
                    <div class="col-sm-10">

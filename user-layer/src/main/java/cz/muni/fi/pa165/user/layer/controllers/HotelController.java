@@ -106,22 +106,16 @@ public class HotelController {
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam int filter,@RequestParam String goal, Model model, UriComponentsBuilder uriBuilder){
-        try{
-         if(filter==1){
+        if(filter==1){
             HotelDTO hotel = hotelFacade.findByName(goal);
             Long id = hotel.getId();
             model.addAttribute("hotels", hotel);
             return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
-            
         }
         else {
         model.addAttribute("hotels",hotelFacade.findByAddress(goal));
         return "hotel/list";
         }
-        }catch(Exception ex){
-            
-        }
-        return "hotel/list";
     } 
     
     /*
