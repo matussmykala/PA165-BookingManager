@@ -17,7 +17,7 @@
               
               
               
-    <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/data"
+    <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/data/data"
               role="button">Add data</a>
  
    
