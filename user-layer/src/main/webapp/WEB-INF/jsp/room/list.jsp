@@ -7,7 +7,12 @@
 
 <my:pagetemplate title="Rooms">
 <jsp:attribute name="body">
-
+    <my:a href="/room/new" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        New room
+    </my:a>
+    
+            
     <table class="table">
         <thead>
         <tr>
@@ -23,9 +28,16 @@
                 <td>${room.id}</td>
                 <td><c:out value="${room.name}"/></td>
                 <td><c:out value="${room.numberOfBeds}"/></td>
-                <td><c:out value="${room.Price}"/></td>
+                <td><c:out value="${room.price}"/></td>
+                
                 <td>
-                    <my:a href="/room/detail/${room.id}" class="btn btn-primary">View</my:a>
+                    <my:a href="/room/view/${room.id}" class="btn btn-primary">View</my:a>
+                </td>
+                <td>
+                    <my:a href="/room/edit/${room.id}" class="btn btn-primary">Edit</my:a>
+                </td>
+                <td>
+                    <my:a href="/room/delete/${room.id}" class="btn btn-primary">Delete</my:a>
                 </td>
             </tr>
         </c:forEach>

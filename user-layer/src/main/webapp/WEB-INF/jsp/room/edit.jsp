@@ -6,11 +6,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Edit hotel">
+<my:pagetemplate title="Edit room">
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/hotel/update/${hotel.id}"
-               modelAttribute="hotel" cssClass="form-horizontal">
+    <form:form method="post" action="${pageContext.request.contextPath}/room/update/${room.id}"
+               modelAttribute="room" cssClass="form-horizontal">
         
         <div class="form-group ${name_error?'has-error':''}">
             <form:label path="name" cssClass="col-sm-2 control-label">Name</form:label>
@@ -21,18 +21,18 @@
         </div>
             
         <div class="form-group ${address_error?'has-error':''}">
-            <form:label path="address" cssClass="col-sm-2 control-label">Destination</form:label>
+            <form:label path="numberOfBeds" cssClass="col-sm-2 control-label">Number Of Beds</form:label>
             <div class="col-sm-10">
-                <form:input path="address" cssClass="form-control"/>
-               <form:errors path="address" cssClass="help-block"/>
+                <form:input path="numberOfBeds" type="number" style="width:75px;" min="1" title="Min:1" cssClass="form-control"/>
+               <form:errors path="numberOfBeds" cssClass="help-block"/>
             </div>
         </div>
         
         <div class="form-group ${description_error?'has-error':''}">
-            <form:label path="description" cssClass="col-sm-2 control-label">Description</form:label>
+            <form:label path="price" cssClass="col-sm-2 control-label">Price</form:label>
             <div class="col-sm-10">
-                <form:textarea cols="80" rows="20" path="description" cssClass="form-control"/>
-                <form:errors path="description" cssClass="help-block"/>
+                <form:input path="price" style="width:75px;" pattern="^\d+\.?\d{1,2}$" title="Format: '12.34'" cssClass="form-control"/>
+                <form:errors path="price" cssClass="help-block"/>
             </div>
         </div>
        

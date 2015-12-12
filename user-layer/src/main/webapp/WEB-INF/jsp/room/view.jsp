@@ -22,22 +22,17 @@
         </thead>
         <tbody>
             <tr>
-                <td>${hotel.id}</td>
-                <td><c:out value="${hotel.name}"/></td>
-                <td><c:out value="${hotel.address}"/></td>
-                <td><c:out value="${hotel.description}"/></td>
-                <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
+                <td>${room.id}</td>
+                <td><c:out value="${room.name}"/></td>
+                <td><c:out value="${room.numberOfBeds}"/></td>
+                <td><c:out value="${room.price}"/></td>
                 <td>
-                     <form action="${pageContext.request.contextPath}/hotel/edit/${hotel.id}">
+                     <form action="${pageContext.request.contextPath}/room/edit/${room.id}">
                         <button class="btn btn-primary">Edit</button>
-         
                     </form>
-                    
                 </td>
                 <td>
-                    <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
+                    <my:a href="/room/delete/${room.id}" class="btn btn-primary">Delete</my:a>
                 </td>
             </tr>
         </tbody>
@@ -45,7 +40,7 @@
             
 
             
-     <form method="get" action="${pageContext.request.contextPath}/hotel/list/">
+     <form method="get" action="${pageContext.request.contextPath}/room/list/">
          <p align="left">
             <button type="submit" class="btn btn-primary">Show all</button>
          </p>
