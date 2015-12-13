@@ -14,11 +14,8 @@
                     cssClass="form-horizontal">
              
          <div style="margin-top:10px;"><label for="filter">Hotel/Destination</label>
-                <select class="form-control" id="filter" name="filter">
-                    <option value="1">Name</option>
-                    <option value="2">Destination</option>
-                </select>
-               <input class="form-control" name="goal" value="<c:out value='${filter}'/>" placeholder="Search" type="text"/>
+                
+               <input class="form-control" name="goal" placeholder="Search" type="text"/>
              
          </div>
         

@@ -30,6 +30,7 @@ public class RoomFacadeImpl implements RoomFacade{
     
     @Inject 
     private HotelService hotelService;
+    
 
     @Inject
     private BeanMappingService beanMappingService;

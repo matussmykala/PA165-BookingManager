@@ -41,6 +41,22 @@ public class RoomDTO {
      * Hotel which room belongs to
      */
     private HotelDTO hotel;
+
+    public HotelDTO getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(HotelDTO hotel) {
+        this.hotel = hotel;
+    }
+
+    public Set<ReservationDTO> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<ReservationDTO> reservations) {
+        this.reservations = reservations;
+    }
     
     /**
      * Reservations where room is used
