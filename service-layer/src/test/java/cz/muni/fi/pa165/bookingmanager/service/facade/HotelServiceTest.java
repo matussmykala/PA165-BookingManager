@@ -167,7 +167,7 @@ public class HotelServiceTest extends AbstractJUnit4SpringContextTests{
         calendar.set(Calendar.DATE, 25);
         date2 = calendar.getTime();
 
-        when(roomService.findByHotel(hotel1)).thenReturn(rooms);
+        when(roomService.findByHotel(hotel1.getId())).thenReturn(rooms);
         when(roomService.findReservedRoomsAtSpecificTime(date1, date2)).thenReturn(reservedRooms);
 
         freeRoomsInHotel = hotelService.findFreeRoomInRange(hotel1, date1, date2);
@@ -194,7 +194,7 @@ public class HotelServiceTest extends AbstractJUnit4SpringContextTests{
         calendar.set(Calendar.DATE, 25);
         date2 = calendar.getTime();
 
-        when(roomService.findByHotel(hotel1)).thenReturn(rooms);
+        when(roomService.findByHotel(hotel1.getId())).thenReturn(rooms);
         when(roomService.findFreeRoomsAtSpecificTime(date1, date2)).thenReturn(freeRooms);
 
         reservedRoomsInHotel = hotelService.findBookedRoomInRange(hotel1, date1, date2);

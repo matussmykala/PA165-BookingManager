@@ -14,18 +14,22 @@
 
             <div style="margin-top:10px;"><label for="hotelid">Hotel name</label>
                 <select class="form-control" id="hotelid" name="hotelId">
-                <c:forEach items="${hotels}" var="hotel">
-                    <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
-                </c:forEach>
+            <c:forEach items="${hotels}" var="hotel">
+                <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+            </c:forEach>
                 </select>
             </div>
+             
+        
+        
             <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
             <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
             <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Show free Rooms</button></div>
     </form:form>
         </div>
         <div class="col-sm-4">
-    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" cssClass="form-horizontal">
+    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" 
+               cssClass="form-horizontal">
 
 
             <div style="margin-top:10px;"><label for="filterBy">Filter By</label>

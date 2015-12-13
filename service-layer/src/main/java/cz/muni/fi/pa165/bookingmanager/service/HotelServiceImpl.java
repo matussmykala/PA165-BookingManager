@@ -96,7 +96,7 @@ public class HotelServiceImpl implements HotelService {
         List<Room> roomsInHotel = new ArrayList<Room>();
 
         bookedRooms.addAll(roomService.findReservedRoomsAtSpecificTime(start, end));
-        roomsInHotel.addAll(roomService.findByHotel(hotel));
+        roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
         roomsInHotel.removeAll(bookedRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }
@@ -107,7 +107,7 @@ public class HotelServiceImpl implements HotelService {
         List<Room> roomsInHotel = new ArrayList<Room>();
 
         freeRooms.addAll(roomService.findFreeRoomsAtSpecificTime(start, end));
-        roomsInHotel.addAll(roomService.findByHotel(hotel));
+        roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
         roomsInHotel.removeAll(freeRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }

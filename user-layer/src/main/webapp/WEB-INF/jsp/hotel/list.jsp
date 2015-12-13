@@ -42,6 +42,10 @@
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
                 </td>
+                <td>
+                    <my:a href="/room/free-rooms?hotelId=${hotel.id}&startDate=${startDate}&endDate=${endDate}" class="btn btn-primary">Free rooms</my:a>
+                </td>
+                
             </tr>
         </c:forEach>
         </tbody>
