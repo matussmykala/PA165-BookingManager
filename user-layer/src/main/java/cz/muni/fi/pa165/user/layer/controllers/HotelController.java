@@ -121,10 +121,12 @@ public class HotelController {
     public String search(@RequestParam int filter,@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
         if(startDate==null || endDate==null){
             if(filter==1){
+                try{
                 HotelDTO hotel = hotelFacade.findByName(goal);
                 Long id = hotel.getId();
                 model.addAttribute("hotels", hotel);
                 return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
+                }catch(Exception ex){ model.addAttribute("alert_info", "No data found");}
             }
             else {
             model.addAttribute("hotels",hotelFacade.findByAddress(goal));

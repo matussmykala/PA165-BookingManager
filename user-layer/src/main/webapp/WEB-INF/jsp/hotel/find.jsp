@@ -30,20 +30,7 @@
 
     </form:form>
         </div>
-        <div class="col-sm-4">
-    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" cssClass="form-horizontal">
-
-
-            <div style="margin-top:10px;"><label for="filterBy">Filter By</label>
-                <select class="form-control" id="filterBy" name="filterType">
-                    <option value="numberOfBeds">Number Of Beds</option>
-                    <option value="price">Price</option>
-                </select>
-            </div>
-            <div style="margin-top:10px;"><label for="valueOffilter">Value of filter</label><input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/></div>            
-            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Filter Rooms</button></div>
-    </form:form>  
-        </div>
+    
     </div>   
         
  
