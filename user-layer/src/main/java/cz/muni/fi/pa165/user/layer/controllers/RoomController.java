@@ -45,6 +45,12 @@ public class RoomController {
         return "room/list";
     }
     
+    @RequestMapping(value = "/hotelList/{id}", method = RequestMethod.GET)
+    public String findByHotel(@PathVariable("id") long id, Model model){
+        model.addAttribute("room",roomFacade.findByHotel(id));
+        return "room/list";
+    }
+    
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(Model model){
        model.addAttribute("hotels", hotelFacade.getAllHotels()); 

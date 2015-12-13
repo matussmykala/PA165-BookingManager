@@ -264,9 +264,9 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         List<Room> list = new ArrayList<>();
         list.add(room1);
         Hotel hotel = new Hotel();
-        when(roomDao.findByHotel(any(Hotel.class))).thenReturn(list);
-        assertEquals((roomService.findByHotel(hotel)).size(), 1);
-        verify(roomDao).findByHotel(any(Hotel.class));
+        when(roomDao.findByHotel(any(Long.class))).thenReturn(list);
+        assertEquals((roomService.findByHotel(hotel.getId())).size(), 1);
+        verify(roomDao).findByHotel(any(Long.class));
     }
 
     /**

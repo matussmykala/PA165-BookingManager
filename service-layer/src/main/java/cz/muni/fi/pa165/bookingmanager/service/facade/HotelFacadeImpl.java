@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
@@ -124,6 +125,24 @@ public class HotelFacadeImpl implements HotelFacade{
         Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
 
         return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
+    }
+    
+    public List<HotelDTO> findHotelWithFreeRoomInRange(String address, Date start, Date end){
+        List<HotelDTO> hotels = new ArrayList<>();
+        List<HotelDTO> forRemove = new ArrayList<>();
+        List<RoomDTO> rooms = new ArrayList<>();
+        hotels = this.findByAddress(address);
+        
+        for(HotelDTO hotel:hotels){
+            rooms = this.findFreeRoomInRange(hotel, start, end);
+            if(rooms.size()==0){
+                forRemove.add(hotel);
+            }
+            rooms.removeAll(rooms);
+        }
+        hotels.removeAll(forRemove);
+        return hotels;
+        
     }
     
    

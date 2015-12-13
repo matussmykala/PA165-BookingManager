@@ -1,9 +1,11 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
+import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,6 +27,9 @@ public class RoomFacadeImpl implements RoomFacade{
 
     @Inject
     private RoomService roomService;
+    
+    @Inject 
+    private HotelService hotelService;
     
 
     @Inject
@@ -123,4 +128,8 @@ public class RoomFacadeImpl implements RoomFacade{
     public void setBeanMappingService(BeanMappingService beanMappingService) {
         this.beanMappingService = beanMappingService;
     }
+    
+     public List<RoomDTO> findByHotel(Long id){
+         return beanMappingService.mapTo(roomService.findByHotel(id), RoomDTO.class);
+     }
 }
