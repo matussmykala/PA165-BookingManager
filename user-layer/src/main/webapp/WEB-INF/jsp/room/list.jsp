@@ -16,7 +16,7 @@
         <div class="col-sm-4">    
             
     <form:form method="get" action="${pageContext.request.contextPath}/room/filter" 
-                cssClass="form-horizontal">
+                modelAttribute="rooms" cssClass="form-horizontal">
 
 
             <div style="margin-top:10px;"><label for="filterBy">Filter By</label>

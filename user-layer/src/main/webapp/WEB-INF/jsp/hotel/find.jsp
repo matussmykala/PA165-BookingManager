@@ -9,7 +9,7 @@
     <jsp:attribute name="body">
         
        <div class="row">  
-        <div class="col-sm-4" style="border-right: solid 1px #c1c1c1;">
+        <div class="col-sm-4">
          <form:form method="get" action="${pageContext.request.contextPath}/hotel/search"
                     cssClass="form-horizontal">
              
