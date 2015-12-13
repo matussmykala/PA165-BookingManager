@@ -79,5 +79,5 @@ public interface RoomDao {
      * @param name 
      * @return rooms in hotel
      */
-    public List<Room> findByHotel(Hotel hotel);
+    public List<Room> findByHotel(Long id);
 }

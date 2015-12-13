@@ -77,4 +77,12 @@ public interface RoomFacade {
      * @return List<RoomDTO> - list of rooms with specific numberof beds
      */
     public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds);
+    
+     /**
+     * Find rooms by specific hotel
+     *
+     * @param hotel
+     * @return rooms of specific hotel
+     */
+    public List<RoomDTO> findByHotel(Long id);
 }

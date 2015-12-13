@@ -14,19 +14,12 @@
 
             <div style="margin-top:10px;"><label for="hotelid">Hotel name</label>
                 <select class="form-control" id="hotelid" name="hotelId">
-                <c:forEach items="${hotels}" var="hotel">
-                    <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
-                </c:forEach>
+            <c:forEach items="${hotels}" var="hotel">
+                <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+            </c:forEach>
                 </select>
             </div>
-        
-        <div style="margin-top:10px;"><label for="filterBy">Filter By</label>
-                <select class="form-control" id="filterBy" name="filterType">
-                    <option value="numberOfBeds">Number Of Beds</option>
-                    <option value="price">Price</option>
-                </select>
-            </div>
-        
+             
         
         
             <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
