@@ -12,8 +12,8 @@
     <form:form method="get" action="${pageContext.request.contextPath}/room/free-rooms" cssClass="form-horizontal">
         
 
-            <div style="margin-top:10px;"><label for="hotelid">Hotel ID</label>
-                <select class="form-control" id="hotelid" name="hotelid">
+            <div style="margin-top:10px;"><label for="hotelid">Hotel name</label>
+                <select class="form-control" id="hotelid" name="hotelId">
                 <c:forEach items="${hotels}" var="hotel">
                     <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
                 </c:forEach>
