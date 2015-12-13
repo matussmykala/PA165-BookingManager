@@ -5,44 +5,41 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Rooms">
+<my:pagetemplate title="Search rooms">
 <jsp:attribute name="body">
-    <my:a href="/room/new" class="btn btn-primary">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        New room
-    </my:a>
-    
+    <div class="row">  
+        <div class="col-sm-4" style="border-right: solid 1px #c1c1c1;">
+    <form:form method="get" action="${pageContext.request.contextPath}/room/free-rooms" cssClass="form-horizontal">
+        
+
+            <div style="margin-top:10px;"><label for="hotelid">Hotel ID</label>
+                <select class="form-control" id="hotelid" name="hotelid">
+                <c:forEach items="${hotels}" var="hotel">
+                    <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                </c:forEach>
+                </select>
+            </div>
+            <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
+            <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
+            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Show free Rooms</button></div>
+    </form:form>
+        </div>
+        <div class="col-sm-4">
+    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" cssClass="form-horizontal">
+
+
+            <div style="margin-top:10px;"><label for="filterBy">Filter By</label>
+                <select class="form-control" id="filterBy" name="filterType">
+                    <option value="numberOfBeds">Number Of Beds</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+            <div style="margin-top:10px;"><label for="valueOffilter">Value of filter</label><input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/></div>            
+            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Filter Rooms</button></div>
+    </form:form>  
+        </div>
+    </div>
             
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Number Of beds</th>
-            <th>Price</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${rooms}" var="room">
-            <tr>
-                <td>${room.id}</td>
-                <td><c:out value="${room.name}"/></td>
-                <td><c:out value="${room.numberOfBeds}"/></td>
-                <td><c:out value="${room.price}"/></td>
-                
-                <td>
-                    <my:a href="/room/view/${room.id}" class="btn btn-primary">View</my:a>
-                </td>
-                <td>
-                    <my:a href="/room/edit/${room.id}" class="btn btn-primary">Edit</my:a>
-                </td>
-                <td>
-                    <my:a href="/room/delete/${room.id}" class="btn btn-primary">Delete</my:a>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
 
 </jsp:attribute>
 </my:pagetemplate>

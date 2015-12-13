@@ -1,16 +1,22 @@
 package cz.muni.fi.pa165.user.layer.controllers;
 
 
+import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 import cz.muni.fi.pa165.bookingmanager.service.facade.RoomFacadeImpl;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,10 +35,28 @@ public class RoomController {
 
     @Autowired
     private RoomFacade roomFacade;// = new RoomFacadeImpl();
+    
+    @Autowired
+    private HotelFacade hotelFacade;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("rooms", roomFacade.getAllRooms());
+        return "room/list";
+    }
+    
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String search(Model model){
+       model.addAttribute("hotels", hotelFacade.getAllHotels()); 
+       return "room/search";
+    }
+    
+    @RequestMapping(value = "/free-rooms", method = RequestMethod.GET)
+    //@RequestMapping(value = "/free-rooms/?hotelId={hotelId}&startDate={startDate}&endDate={endDate}", method = RequestMethod.GET)
+    public String listOfFreeRoomsOfHotel(@RequestParam long hotelId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+        HotelDTO hotelDTO = hotelFacade.getHotelById(hotelId);
+        //log.info("Hotel id: "+hotelDTO.getId());
+        model.addAttribute("rooms", hotelFacade.findFreeRoomInRange(hotelDTO, startDate, endDate));
         return "room/list";
     }
 
@@ -107,21 +131,26 @@ public class RoomController {
         return "redirect:" + uriBuilder.path("/room/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
     
-    @RequestMapping(value = "/search/{filterType}/{filter}", method = RequestMethod.GET)
-    public String numberOfBedsFilter(@PathVariable("filterType") String filterType, @PathVariable("filter") int filter, Model model, UriComponentsBuilder uriBuilder) {
+    @RequestMapping(value = "/filter", method = RequestMethod.GET)
+    public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model, UriComponentsBuilder uriBuilder) {
                
         List<RoomDTO> rooms;
         switch (filterType) {
             case "numberOfBeds":
-                rooms = roomFacade.getRoomsByNumberOfBeds(filter);
-                if(rooms.size()<1){
-                    model.addAttribute("alert_info", "No data found");
-                }
+                int numberOfBeds = Integer.parseInt(filter);
+                rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+                break;
+            case "price":
+                BigDecimal price = new BigDecimal(filter);
+                rooms = roomFacade.getRoomsByPrice(price);
                 break;
             default:
                 rooms = new ArrayList<>();
                 model.addAttribute("alert_danger", "Unknown filter " + filterType);
-        }      
+        }    
+        if(rooms.size()<1){
+            model.addAttribute("alert_info", "No data found");
+        }
         model.addAttribute("rooms", rooms);
         return "room/list";
     }
