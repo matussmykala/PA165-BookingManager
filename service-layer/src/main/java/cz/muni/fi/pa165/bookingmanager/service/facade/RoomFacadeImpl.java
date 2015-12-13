@@ -25,6 +25,7 @@ public class RoomFacadeImpl implements RoomFacade{
 
     @Inject
     private RoomService roomService;
+    
 
     @Inject
     private BeanMappingService beanMappingService;
