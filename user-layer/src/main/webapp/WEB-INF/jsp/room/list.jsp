@@ -12,7 +12,7 @@
         New room
     </my:a>
     
-            
+                   
     <table class="table">
         <thead>
         <tr>
