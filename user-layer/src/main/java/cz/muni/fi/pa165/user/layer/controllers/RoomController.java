@@ -142,19 +142,27 @@ public class RoomController {
                
         List<RoomDTO> rooms;
         switch (filterType) {
-            case "numberOfBeds":
-                int numberOfBeds = Integer.parseInt(filter);
-                rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+            case "numberOfBeds":                
+                try{
+                    int numberOfBeds = Integer.parseInt(filter);
+                    rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+                }catch (Exception e){
+                    rooms = null;
+                }
                 break;
-            case "price":
-                BigDecimal price = new BigDecimal(filter);
-                rooms = roomFacade.getRoomsByPrice(price);
+            case "price":                
+                try{
+                    BigDecimal price = new BigDecimal(filter);
+                    rooms = roomFacade.getRoomsByPrice(price);
+                }catch (Exception e){
+                    rooms = null;
+                }
                 break;
             default:
                 rooms = new ArrayList<>();
                 model.addAttribute("alert_danger", "Unknown filter " + filterType);
         }    
-        if(rooms.size()<1){
+        if(rooms==null || rooms.size()<1){
             model.addAttribute("alert_info", "No data found");
         }
         model.addAttribute("rooms", rooms);

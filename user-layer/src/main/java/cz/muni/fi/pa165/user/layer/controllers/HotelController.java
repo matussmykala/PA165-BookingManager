@@ -118,47 +118,40 @@ public class HotelController {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam int filter,@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
+    public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
+        List<HotelDTO> freeHotels = new ArrayList<>();
         if(startDate==null || endDate==null){
-            if(filter==1){
-                try{
-                HotelDTO hotel = hotelFacade.findByName(goal);
-                Long id = hotel.getId();
-                model.addAttribute("hotels", hotel);
-                return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
-                }catch(Exception ex){ model.addAttribute("alert_info", "No data found");}
+            model.addAttribute("alert_info", "No data found");
+            model.addAttribute("hotels", freeHotels);
+        }else{
+            HotelDTO hotel = new HotelDTO();
+            try{
+                hotel = hotelFacade.findByName(goal);
+            }catch (Exception e){
+                hotel = null;
             }
-            else {
-            model.addAttribute("hotels",hotelFacade.findByAddress(goal));
-            return "hotel/list";
+            
+            List<HotelDTO> hotelList = hotelFacade.findByAddress(goal);
+            
+            if(hotel!=null && !hotelList.contains(hotel)){
+                hotelList.add(hotel);
             }
-        }else
-            if(filter==1){
-                HotelDTO hotel = hotelFacade.findByName(goal);
-                List<RoomDTO> rooms = new ArrayList<>();
-                rooms= hotelFacade.findFreeRoomInRange(hotel, startDate, endDate);
-                if(rooms.size()!=0){
-                    model.addAttribute("hotels",hotel);
-                    Long id = hotel.getId();
-                    return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
-                }else{ 
-                    model.addAttribute("alert_info", "No data found");
+      
+            for (HotelDTO hotel_tmp : hotelList) {
+                if(hotelFacade.findHotelWithFreeRoomInRange(hotel_tmp.getAddress(),startDate,endDate)!=null){
+                    freeHotels.add(hotel_tmp);
                 }
-                    
-             }else{
-                List<HotelDTO> hotels = new ArrayList<>();
-                hotels = hotelFacade.findHotelWithFreeRoomInRange(goal,startDate,endDate);
-                if(hotels.size()!=0){
-                    model.addAttribute("hotels", hotels);
-                    return "hotel/list";
-                }else {
-                    model.addAttribute("alert_info", "No data found");}
-                    
-                }
-        
-        return "hotel/list";
-                
- }
+            }
+            
+            if(freeHotels.size()<1){
+                model.addAttribute("alert_info", "No data found");
+            }else{
+                model.addAttribute("hotels", freeHotels);
+                return "hotel/list";    
+            }         
+        }   
+        return "hotel/list";                
+    }
    
     
     /*
