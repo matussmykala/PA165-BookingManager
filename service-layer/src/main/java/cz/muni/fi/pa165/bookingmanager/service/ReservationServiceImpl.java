@@ -30,8 +30,12 @@ public class ReservationServiceImpl implements ReservationService
     @Override
     public void createReservation(Reservation reservation)
     {
-        customerDao.create(reservation.getCustomer());
-        roomDao.create(reservation.getRoom());
+        if (!customerDao.findAll().contains(reservation.getCustomer())){
+            customerDao.create(reservation.getCustomer());
+        }
+        if (!roomDao.findAll().contains(reservation.getRoom())) {
+            roomDao.create(reservation.getRoom());
+        }
         reservationDao.create(reservation);
     }
 

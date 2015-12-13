@@ -11,11 +11,11 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         New room
     </my:a>
-     
-       <div class="row">  
-        <div class="col-sm-4">    
-            
-    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" 
+
+       <div class="row">
+        <div class="col-sm-4">
+
+    <form:form method="get" action="${pageContext.request.contextPath}/room/filter"
                 modelAttribute="rooms" cssClass="form-horizontal">
 
 
@@ -24,13 +24,13 @@
                     <option value="numberOfBeds">Number Of Beds</option>
                     <option value="price">Price</option>
                 </select>
-                <div style="margin-top:10px;"><label for="valueOffilter">Value of filter</label><input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/></div>            
+                <div style="margin-top:10px;"><label for="valueOffilter">Value of filter</label><input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/></div>
             <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Filter Rooms</button></div>
-    </form:form>  
+    </form:form>
         </div>
        </div>
-    
-                   
+
+
     <table class="table">
         <thead>
         <tr>
@@ -47,7 +47,7 @@
                 <td><c:out value="${room.name}"/></td>
                 <td><c:out value="${room.numberOfBeds}"/></td>
                 <td><c:out value="${room.price}"/></td>
-                
+
                 <td>
                     <my:a href="/room/view/${room.id}" class="btn btn-primary">View</my:a>
                 </td>
@@ -56,6 +56,9 @@
                 </td>
                 <td>
                     <my:a href="/room/delete/${room.id}" class="btn btn-primary">Delete</my:a>
+                </td>
+                <td>
+                    <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary">Book</my:a>
                 </td>
             </tr>
         </c:forEach>

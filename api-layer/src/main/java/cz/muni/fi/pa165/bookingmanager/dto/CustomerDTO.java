@@ -118,4 +118,18 @@ public class CustomerDTO {
         result = 31 * result + (getUsername() != null ? getUsername().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "CustomerDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 }

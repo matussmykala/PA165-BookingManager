@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bookingmanager.facade;
 import java.util.Date;
 import java.util.List;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 
 /**
@@ -39,7 +40,7 @@ public interface ReservationFacade
      *
      * @param reservation    reservation to create
      */
-    public void createReservation(ReservationDTO reservation);
+    public void createReservation(ReservationCreateDTO reservation);
 
     /**
      * Updates the reservation with id according to parameters.
