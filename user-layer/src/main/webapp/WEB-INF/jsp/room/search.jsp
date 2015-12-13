@@ -5,7 +5,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Search rooms">
+<my:pagetemplate title="Find the best accomodation">
 <jsp:attribute name="body">
     <div class="row">  
         <div class="col-sm-4" style="border-right: solid 1px #c1c1c1;">
@@ -19,6 +19,16 @@
                 </c:forEach>
                 </select>
             </div>
+        
+        <div style="margin-top:10px;"><label for="filterBy">Filter By</label>
+                <select class="form-control" id="filterBy" name="filterType">
+                    <option value="numberOfBeds">Number Of Beds</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+        
+        
+        
             <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
             <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
             <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Show free Rooms</button></div>

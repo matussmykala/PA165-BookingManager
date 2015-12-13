@@ -8,23 +8,43 @@
 <my:pagetemplate title="Find your hotel">
     <jsp:attribute name="body">
         
+       <div class="row">  
+        <div class="col-sm-4" style="border-right: solid 1px #c1c1c1;">
          <form:form method="get" action="${pageContext.request.contextPath}/hotel/search/${filter}"
                     cssClass="form-horizontal">
              
-                   
-                    <form name="form">
-                        <select name="filter">
-                        <option selected>Filter
-                        <option value=1>Name</option>
-                        <option value=2>Destination</option>
-                    </select>   
-                  
-                   <div class="col-sm-10">
-                        <input class="form-control" name="goal" value="<c:out value='${filter}'/>" placeholder="Search" type="text"/>
-                   </div>
-                   <button class="btn btn-primary" type="submit">Confirm</button>
-     
-         </form:form>
+         <div style="margin-top:10px;"><label for="hotelid">Hotel/Destination</label>
+                <select class="form-control" id="hotelid" name="filter">
+                    <option value="1">Name</option>
+                    <option value="2">Destination</option>
+                </select>
+                <input class="form-control" name="goal" value="<c:out value='${filter}'/>" placeholder="Search" type="text"/>
+         </div>
+        
+          
+            
+            <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
+            <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
+            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Show free Rooms</button></div>
+    </form:form>
+        </div>
+        <div class="col-sm-4">
+    <form:form method="get" action="${pageContext.request.contextPath}/room/filter" cssClass="form-horizontal">
+
+
+            <div style="margin-top:10px;"><label for="filterBy">Filter By</label>
+                <select class="form-control" id="filterBy" name="filterType">
+                    <option value="numberOfBeds">Number Of Beds</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+            <div style="margin-top:10px;"><label for="valueOffilter">Value of filter</label><input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/></div>            
+            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Filter Rooms</button></div>
+    </form:form>  
+        </div>
+    </div>   
+        
+ 
 
     
     
