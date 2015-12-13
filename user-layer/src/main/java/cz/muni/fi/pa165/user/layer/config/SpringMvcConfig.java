@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import javax.validation.Validator;
 
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
+import sampleData.SampleDataConfiguration;
 
 
 /**
@@ -24,7 +25,7 @@ import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
  */
 @EnableWebMvc
 @Configuration
-@Import({ServiceConfiguration.class})
+@Import({ServiceConfiguration.class,SampleDataConfiguration.class})
 @ComponentScan(basePackages = "cz.muni.fi.pa165.user.layer.controllers")
 public class SpringMvcConfig extends WebMvcConfigurerAdapter {
 
