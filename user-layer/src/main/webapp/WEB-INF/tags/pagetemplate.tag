@@ -114,7 +114,7 @@
 
     <!-- footer -->
     <footer class="footer">
-        <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;Masaryk University</p>
+        <p>&copy;&nbsp;<%=java.time.Year.now().toString()%>&nbsp;Team05</p>
     </footer>
 </div>
 <!-- javascripts placed at the end of the document so the pages load faster -->

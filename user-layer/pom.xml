@@ -28,7 +28,6 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -40,6 +39,12 @@
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>BookingManagerService-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>BookingManagerService-web-sample-data</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>

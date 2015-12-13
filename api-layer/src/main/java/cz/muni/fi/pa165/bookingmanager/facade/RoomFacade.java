@@ -16,6 +16,13 @@ public interface RoomFacade {
      * @param roomCreateDTO - room which will be created
      */
     public void createRoom(RoomDTO roomCreateDTO);
+    
+    /**
+     * Update Room
+     *
+     * @param roomDTO - room which will be updated
+     */
+    public void updateRoom(RoomDTO roomDTO);
 
     /**
      * Change price of room

@@ -56,8 +56,9 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Hotel hotel = new Hotel();
         hotel.setName(name);
         hotel.setAddress(address);
-        hotel.setImage(readImage(imageFile));
-        hotel.setImageMimeType(mimeType);
+        hotel.setDescription(description);
+      //  hotel.setImage(readImage(imageFile));
+      //  hotel.setImageMimeType(mimeType);
         hotel.setLastUpdateDay(date);
         hotelService.createHotel(hotel);
         return hotel;

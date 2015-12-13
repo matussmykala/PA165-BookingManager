@@ -36,6 +36,18 @@ public class RoomFacadeImpl implements RoomFacade{
         }
         roomService.deleteRoom(roomService.findById(RoomId));
     }
+    
+    @Override
+    public void updateRoom(RoomDTO roomDTO) {
+        if (roomDTO == null) {
+            throw new IllegalArgumentException("Room Id is null");
+        }
+        if (roomService.findById(roomDTO.getId()) == null) {
+           throw new IllegalArgumentException("Room does not exist");
+        }
+        Room mappedRoom = beanMappingService.mapTo(roomDTO, Room.class);
+        roomService.updateRoom(mappedRoom);
+    }
 
     @Override
     public void createRoom(RoomDTO roomCreateDTO) {

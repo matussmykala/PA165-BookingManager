@@ -125,7 +125,8 @@ public class HotelFacadeImpl implements HotelFacade{
 
         return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
     }
-
+    
+   
     public HotelFacadeImpl(HotelService hotelService, BeanMappingService beanMappingService){
         this.hotelService=hotelService;
         this.beanMappingService=beanMappingService;
@@ -133,4 +134,6 @@ public class HotelFacadeImpl implements HotelFacade{
     public HotelFacadeImpl(){
 
     }
+
+    
   }
