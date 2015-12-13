@@ -5,9 +5,13 @@
  */
 package cz.muni.fi.pa165.user.layer.controllers;
 
+import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
+import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,6 +41,10 @@ public class DataController {
   Date date;
   @Autowired
   RoomService roomService;
+  @Autowired
+  ReservationService reservationService;
+  @Autowired
+  CustomerService customerService;
     
   @RequestMapping(value = "/data", method = RequestMethod.GET)
   public String Add(){
@@ -57,10 +65,29 @@ public class DataController {
         Room room3 = room("Izba-3",3,new BigDecimal("25.3"), arkadia );
         Room room4 = room("Izba-4",4,new BigDecimal("25.4"), ira );
         
+        Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", "pass1", Boolean.FALSE);
+        Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", "pass2", Boolean.FALSE);
+        Customer customer3 = customer("zuzka", "adamkova", "adamek", "adamkova@seznam.cz", "pass3", Boolean.TRUE);
+        Customer customer4 = customer("anicka", "kubova", "kuba", "kubova@seznam.cz", "pass4", Boolean.TRUE);
+        
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015, 11, 1);
+        Date startDate1 = calendar.getTime();
+        calendar.set(2015, 12, 1);
+        Date endDate1 = calendar.getTime();
+        calendar.set(2014, 11, 1);
+        Date startDate2 = calendar.getTime();
+        calendar.set(2014, 12, 1);
+        Date endDate2 = calendar.getTime();
+        
+        Reservation reservation1 = reservation(startDate1, endDate1, customer1, room4);
+        Reservation reservation2 = reservation(startDate2, endDate2, customer2, room3);
+        
         return "/home";
   }
     
-      private void createDate(){
+      private Date createDate(){
         Random rand = new Random();
         int  d = rand.nextInt(30) + 1;
         int  m = rand.nextInt(12) + 1;
@@ -68,6 +95,8 @@ public class DataController {
         calendar.add(Calendar.MONTH, m);
         calendar.set(Calendar.DATE, d);
         this.date = calendar.getTime();
+        return calendar.getTime();
+        
     }
    
     private Hotel hotel(String name, String address, String description, Date date) {
@@ -90,6 +119,28 @@ public class DataController {
         room.setHotel(hotel); 
         roomService.createRoom(room);
         return room;
+    }
+    
+    private Reservation reservation(Date startReservation, Date endReservation, Customer customer, Room room){
+        Reservation reservation = new Reservation();
+        reservation.setCustomer(customer);
+        reservation.setStartOfReservation(startReservation);
+        reservation.setEndOfReservation(endReservation);
+        reservation.setRoom(room);
+        reservationService.createReservation(reservation);
+        return reservation;
+    }
+    
+    private Customer customer(String name, String Surname, String username, String email, String password, Boolean isAdmin){
+        Customer customer = new Customer();
+        customer.setEmail(email);
+        customer.setName(name);
+        customer.setPassword(password);
+        customer.setSurname(Surname);
+        customer.setPassword(password);
+        customer.isAdmin();
+        customerService.registerCustomer(customer, password);
+        return  customer;
     }
 }
     
