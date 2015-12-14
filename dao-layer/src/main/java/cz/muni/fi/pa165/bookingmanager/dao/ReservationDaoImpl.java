@@ -68,6 +68,13 @@ public class ReservationDaoImpl implements ReservationDao{
         query.setParameter("customerid", customer);
         return Collections.unmodifiableList(query.getResultList());
     }
+    
+    @Override
+    public List<Reservation> findAllReservationsOfRoom(Long id){
+        TypedQuery<Reservation> query = em.createQuery("SELECT r FROM Reservation r WHERE r.room.id = :roomId",Reservation.class);
+        query.setParameter("roomId",id);
+        return Collections.unmodifiableList(query.getResultList());
+    }
 
     @Override
     public List<Reservation> findReservationsOfTime(Date from, Date to)
@@ -80,6 +87,7 @@ public class ReservationDaoImpl implements ReservationDao{
         return Collections.unmodifiableList(query.getResultList());
     }
     
+    @Override
     public List<Reservation> findReservationOfRoom(Long id, Date from, Date to){
         {
         TypedQuery<Reservation> query = em.createQuery(
@@ -91,8 +99,8 @@ public class ReservationDaoImpl implements ReservationDao{
         return Collections.unmodifiableList(query.getResultList());
     }
     }
-
-    /**
+    
+      /**
      * Update specified reservation
      *
      * @param reservation

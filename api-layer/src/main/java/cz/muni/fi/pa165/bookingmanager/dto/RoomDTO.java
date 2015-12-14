@@ -40,7 +40,7 @@ public class RoomDTO {
     /**
      * Hotel which room belongs to
      */
-    private HotelDTO hotel;
+    private HotelDTO hotel = new HotelDTO();
 
     public HotelDTO getHotel() {
         return hotel;

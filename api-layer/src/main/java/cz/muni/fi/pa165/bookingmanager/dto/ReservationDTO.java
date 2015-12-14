@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Data Transfer Object for Reservation entity.

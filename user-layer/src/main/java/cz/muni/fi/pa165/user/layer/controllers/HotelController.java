@@ -71,9 +71,14 @@ public class HotelController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         HotelDTO hotel = hotelFacade.getHotelById(id);
+        if(!(hotelFacade.findRoomsWithReservation(id).isEmpty())){
+             redirectAttributes.addFlashAttribute("alert_info", "Hotel \"" + hotel.getName() + "\" has rooms with reservations - it can not be deleted");
+             return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
+        }
         hotelFacade.deleteHotel(id);
         redirectAttributes.addFlashAttribute("alert_success", "Hotel \"" + hotel.getName() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
+        
     }
     
     /**
@@ -120,9 +125,13 @@ public class HotelController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
         List<HotelDTO> freeHotels = new ArrayList<>();
+        if(goal==""){
+            model.addAttribute("alert_info", "Name/Destination is empty");
+            return "hotel/find"; 
+        }
         if(startDate==null || endDate==null){
-            model.addAttribute("alert_info", "No data found");
-            model.addAttribute("hotels", freeHotels);
+            model.addAttribute("alert_info", "Date is empty");
+            return "hotel/find";
         }else{
             HotelDTO hotel = new HotelDTO();
             try{
