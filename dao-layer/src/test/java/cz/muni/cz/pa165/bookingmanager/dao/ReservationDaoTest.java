@@ -60,6 +60,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     
     private Reservation r1;
     private Reservation r2;
+    private Reservation r3;
     private Room room;
     private Room room2;
     private Hotel hotel;
@@ -67,6 +68,8 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     private Customer customer2;
     private Date date1;
     private Date date2;
+    private Date date3;
+    private Date date4;
             
     /**
      * Create tested objects
@@ -75,6 +78,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void createTestData(){
         r1 = new Reservation();
         r2 = new Reservation();
+        r3 = new Reservation();
         
         
         room = new Room();
@@ -117,6 +121,14 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         cal2.set(2015, 11, 29);
 	date2 = cal2.getTime();
         
+        Calendar cal3 = Calendar.getInstance();
+	cal3.set(2015, 10, 27);
+	date3 = cal3.getTime();
+        
+        Calendar cal4 = Calendar.getInstance();
+        cal4.set(2015, 11, 28);
+	date4 = cal4.getTime();
+        
         r1.setCustomer(customer);
         r1.setRoom(room);
         r1.setStartOfReservation(date1);
@@ -127,11 +139,18 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         r2.setStartOfReservation(date1);
         r2.setEndOfReservation(date2); 
         
+        r3.setCustomer(customer);
+        r3.setRoom(room2);
+        r3.setStartOfReservation(date3);
+        r3.setEndOfReservation(date4);  
+        
         roomDao.create(room);
+        roomDao.create(room2);
         hotelDao.create(hotel);
         customerDao.create(customer);       
         reservationDao.create(r1);
         reservationDao.create(r2);
+        reservationDao.create(r3);
         
     }
         
@@ -149,7 +168,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     @Test
     public void testFindAll(){
         List<Reservation> found = reservationDao.findAll();
-        Assert.assertEquals(found.size(), 2);
+        Assert.assertEquals(found.size(), 3);
     }
     
     /**
@@ -254,5 +273,13 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     public void testWrongEndOfReservationAttribute(){
         r1.setEndOfReservation(date1);
         reservationDao.create(r1);
+    }
+    
+    @Test
+    public void testFindReservationOfTime(){
+        List<Reservation> reservations = reservationDao.findReservationsOfTime(date3, date4);
+        //System.out.println(reservations.get(0).getRoom().getName().toString());
+        //System.out.println(reservations.get(1).getRoom().getName().toString());
+        Assert.assertEquals(1,reservations.size());
     }
 }

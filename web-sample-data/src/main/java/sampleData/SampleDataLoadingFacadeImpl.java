@@ -56,7 +56,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Hotel transylvania = hotel("Transylvania", "Brno", "Hotel priseriek", date);
         
         Room room1 = room("Izba-1",1,new BigDecimal("25.1"), voronez );
-        Room room2 = room("Izba-2",2,new BigDecimal("25.2"), park );
+        Room room2 = room("Izba-2",2,new BigDecimal("25.2"), ira );
         Room room3 = room("Izba-3",3,new BigDecimal("25.3"), arkadia );
         Room room4 = room("Izba-4",4,new BigDecimal("25.4"), ira );
         

@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
+import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -110,8 +111,12 @@ public class HotelFacadeImpl implements HotelFacade{
             throw new IllegalArgumentException("Hotel does not exist");
         }
         Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
-
-        return beanMappingService.mapTo(hotelService.findFreeRoomInRange(hotel, start, end), RoomDTO.class);
+        
+        List<RoomDTO> rooms = beanMappingService.mapTo(hotelService.findFreeRoomInRange(hotel, start, end), RoomDTO.class);
+        for (RoomDTO room : rooms){
+            System.out.println("FACADE Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        }
+        return  rooms;
     }
 
     @Override

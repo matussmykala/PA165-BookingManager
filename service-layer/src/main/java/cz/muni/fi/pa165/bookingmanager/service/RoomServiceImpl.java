@@ -110,9 +110,14 @@ public class RoomServiceImpl implements RoomService{
         List<Reservation> reservations = new ArrayList<>();
 
         reservations.addAll(reservationService.getReservationsOfTime(from, to));
-
+        for (Reservation reservation : reservations){
+            System.out.println("Reserved Rooms: id: "+reservation.getRoom().getId()+" Booked Room name:"+reservation.getRoom().getName());
+        }
         for (final Reservation reservation : reservations) {
           rooms.add(reservation.getRoom());
+        }
+        for (Room room : rooms){
+            System.out.println("Reserved Rooms: id: "+room.getId()+" Booked Room name:"+room.getName()+" Start:"+from.toString()+" end:"+to.toString());
         }
         return Collections.unmodifiableList(rooms);
     }
