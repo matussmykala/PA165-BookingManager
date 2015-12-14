@@ -11,9 +11,9 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         New room
     </my:a>
-     
- 
-    <div class="form-horizontal" style="margin-top:20px;">            
+
+
+    <div class="form-horizontal" style="margin-top:20px;">
         <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
             <div class="form-group">
                 <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label">Filter By</label>
@@ -27,16 +27,16 @@
                 <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label">Value of filter</label>
                 <div class="col-md-2">
                     <input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/>
-                </div>            
+                </div>
 
                 <div class="col-md-2">
                     <button class="btn btn-primary" type="submit" >Filter Rooms</button>
                 </div>
             </div>
-        </form:form>  
+        </form:form>
     </div>
-    
-                   
+
+
     <table class="table">
         <thead>
         <tr>
@@ -55,7 +55,7 @@
                 <td style="vertical-align: middle;"><c:out value="${room.hotel.name}"/></td>
                 <td style="vertical-align: middle;"><c:out value="${room.numberOfBeds}"/></td>
                 <td style="vertical-align: middle;"><c:out value="${room.price}"/> €</span></td>
-                
+
                 <td style="width:45px;">
                     <my:a href="/room/view/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" style="height:20px;" aria-hidden="true"></span></my:a>
                 </td>
@@ -64,6 +64,9 @@
                 </td>
                 <td style="width:45px;">
                     <my:a href="/room/delete/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+                </td>
+                <td>
+                    <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary">Book</my:a>
                 </td>
             </tr>
         </c:forEach>

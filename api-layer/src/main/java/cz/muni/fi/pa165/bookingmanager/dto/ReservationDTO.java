@@ -25,12 +25,12 @@ public class ReservationDTO
     /**
      * Customer who books the room.
      */
-    private CustomerDTO customer;
+    private CustomerDTO customer = new CustomerDTO();
 
     /**
      * Booked room.
      */
-    private RoomDTO room;
+    private RoomDTO room = new RoomDTO();
 
     public Long getId()
     {
