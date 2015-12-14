@@ -98,28 +98,20 @@ public class ReservationController
     }
 
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
-    public String editReservation(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {
+    public String editReservation(@PathVariable("id") long id, Model model) {
         model.addAttribute("reservation",reservationFacade.getReservationById(id));
         return "reservation/edit";
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String updateReservation(@PathVariable("id") long id, @ModelAttribute("reservation") ReservationDTO updatedReservation, BindingResult bindingResult,
-                             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
-
-        if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
-            }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }
-            logger.error("CHYBA DO PICEEEEEEEEEE");
-            return "reservation/edit/{id}";
-        }
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
+    public String updateReservation(@PathVariable("id") long id,
+                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+                                    RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
 
         ReservationDTO reservation = reservationFacade.getReservationById(id);
         reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
-                updatedReservation.getStartOfReservation(), updatedReservation.getEndOfReservation());
+                startDate, endDate);
 
         redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
         return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();

@@ -8,7 +8,7 @@
 <my:pagetemplate title="Edit reservation">
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/reservation/update/${reservation.id}"
+    <form:form method="get" action="${pageContext.request.contextPath}/reservation/update/${reservation.id}"
                modelAttribute="reservation" cssClass="form-horizontal">
 
         <div class="form-group ${name_error?'has-error':''}">
@@ -29,7 +29,7 @@
                 <!--<c:out value="${reservation.room.name}"/>-->
             </div>
         </div>
-
+        <!--
         <div style="margin-top:10px;">
             <label for="startDate">Start date</label>
             <form:input path="startOfReservation" class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${reservation.startOfReservation}'/>"/>
@@ -41,6 +41,10 @@
             <form:input path="endOfReservation" class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${reservation.endOfReservation}'/>"/>
             <form:errors path="endOfReservation" cssClass="help-block"/>
         </div>
+        -->
+        <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
+        <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>
+
 
         <button class="btn btn-primary" type="submit">Confirm</button>
     </form:form>
