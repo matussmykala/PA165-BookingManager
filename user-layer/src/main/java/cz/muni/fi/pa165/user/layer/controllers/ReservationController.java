@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 
@@ -94,5 +95,33 @@ public class ReservationController
                 "\" of customer \"" + reservationDTO.getCustomer().getName() + " " +
                 reservationDTO.getCustomer().getSurname() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+    }
+
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String editReservation(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {
+        model.addAttribute("reservation",reservationFacade.getReservationById(id));
+        return "reservation/edit";
+    }
+
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String updateReservation(@PathVariable("id") long id, @ModelAttribute("reservation") ReservationDTO updatedReservation, BindingResult bindingResult,
+                             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
+
+        if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+            }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+            }
+            logger.error("CHYBA DO PICEEEEEEEEEE");
+            return "reservation/edit/{id}";
+        }
+
+        ReservationDTO reservation = reservationFacade.getReservationById(id);
+        reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
+                updatedReservation.getStartOfReservation(), updatedReservation.getEndOfReservation());
+
+        redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
+        return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 }
