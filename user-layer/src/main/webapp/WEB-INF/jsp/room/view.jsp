@@ -22,6 +22,10 @@
                 <td><c:out value="${room.name}"/></td>
             </tr>
             <tr>
+                <td>Hotel name</td>
+                <td><c:out value="${room.hotel.name}"/></td>
+            </tr>
+            <tr>
                 <td>Number of beds</td>
                 <td><c:out value="${room.numberOfBeds}"/></td>
             </tr>
