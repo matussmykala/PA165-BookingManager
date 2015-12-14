@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
+import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.facade.RoomFacadeImpl;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -84,11 +85,12 @@ public class RoomController {
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newRoom(Model model){
         model.addAttribute("roomCreate", new RoomDTO());
+        model.addAttribute("hotels", hotelFacade.getAllHotels());
         return "room/new";
     }
     
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-     public String create(@Valid @ModelAttribute("roomCreate") RoomDTO formBean, BindingResult bindingResult,
+     public String create(@Valid @ModelAttribute("roomCreate") RoomDTO formBean,@RequestParam long hotelId, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
         //in case of validation error forward back to the the form
         if (bindingResult.hasErrors()) {
@@ -100,6 +102,8 @@ public class RoomController {
             return "room/new";
         }
         //create room
+        HotelDTO hotel = hotelFacade.getHotelById(hotelId);
+        formBean.setHotel(hotel);
         roomFacade.createRoom(formBean);
         //report success
         redirectAttributes.addFlashAttribute("alert_success", "room " + formBean.getName() + " was created");
@@ -109,11 +113,12 @@ public class RoomController {
      @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
     public String editRoom(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {
         model.addAttribute("room",roomFacade.getRoomById(id));
+        model.addAttribute("hotels", hotelFacade.getAllHotels());
         return "room/edit";
     }
     
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-    public String updateRoom(@PathVariable("id") long id, @Valid @ModelAttribute("room") RoomDTO updatedRoom, BindingResult bindingResult,
+    public String updateRoom(@PathVariable("id") long id, @RequestParam long hotelId, @Valid @ModelAttribute("room") RoomDTO updatedRoom, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
         
          if (bindingResult.hasErrors()) {
@@ -127,7 +132,9 @@ public class RoomController {
          
         
         RoomDTO room = roomFacade.getRoomById(id);
+        HotelDTO hotel = hotelFacade.getHotelById(hotelId);
         room.setName(updatedRoom.getName());
+        room.setHotel(hotel);
         room.setNumberOfBeds(updatedRoom.getNumberOfBeds());
         room.setPrice(updatedRoom.getPrice());
         roomFacade.updateRoom(room);
@@ -142,19 +149,27 @@ public class RoomController {
                
         List<RoomDTO> rooms;
         switch (filterType) {
-            case "numberOfBeds":
-                int numberOfBeds = Integer.parseInt(filter);
-                rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+            case "numberOfBeds":                
+                try{
+                    int numberOfBeds = Integer.parseInt(filter);
+                    rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+                }catch (Exception e){
+                    rooms = null;
+                }
                 break;
-            case "price":
-                BigDecimal price = new BigDecimal(filter);
-                rooms = roomFacade.getRoomsByPrice(price);
+            case "price":                
+                try{
+                    BigDecimal price = new BigDecimal(filter);
+                    rooms = roomFacade.getRoomsByPrice(price);
+                }catch (Exception e){
+                    rooms = null;
+                }
                 break;
             default:
                 rooms = new ArrayList<>();
                 model.addAttribute("alert_danger", "Unknown filter " + filterType);
         }    
-        if(rooms.size()<1){
+        if(rooms==null || rooms.size()<1){
             model.addAttribute("alert_info", "No data found");
         }
         model.addAttribute("rooms", rooms);

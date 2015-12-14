@@ -20,6 +20,17 @@
             </div>
         </div>
             
+        <div class="form-group ${hotel_error?'has-error':''}">
+            <form:label path="hotel" cssClass="col-sm-2 control-label">Hotel</form:label>
+            <div class="col-sm-10">
+            <select class="form-control" id="hotelid" name="hotelId">
+            <c:forEach items="${hotels}" var="hotel">
+                <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+            </c:forEach>
+            </select>
+            </div>
+        </div>
+                
         <div class="form-group ${address_error?'has-error':''}">
             <form:label path="numberOfBeds" cssClass="col-sm-2 control-label">Number Of Beds</form:label>
             <div class="col-sm-10">
