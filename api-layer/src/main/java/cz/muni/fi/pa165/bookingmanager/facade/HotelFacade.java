@@ -96,5 +96,14 @@ public interface HotelFacade {
      */
     public List<HotelDTO> findHotelWithFreeRoomInRange(String address, Date start, Date end);
     
+    /**
+     * Find all rooms which have reservation in hotel 
+     *
+     * @hotel of which you want to know booked rooms in range of time
+     * 
+     * @return free rooms in hotel
+     */
+    public List<RoomDTO> findRoomsWithReservation(Long id);
+    
 
 }

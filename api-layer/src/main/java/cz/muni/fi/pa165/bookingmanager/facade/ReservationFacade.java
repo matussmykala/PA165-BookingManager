@@ -3,6 +3,7 @@ import java.util.Date;
 import java.util.List;
 
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 
 /**
  * Facade layer interface.
@@ -73,4 +74,12 @@ public interface ReservationFacade
      * @return list of reservation which starts next month
      */
     public List<ReservationDTO> getNextMonthReservations();
+    
+     /**
+     * Returns all reservations of room 
+     *
+     * @param room    room
+     * @return  list of all of room
+     */
+    List<ReservationDTO> getAllReservationsOfRoom(Long id);
 }
