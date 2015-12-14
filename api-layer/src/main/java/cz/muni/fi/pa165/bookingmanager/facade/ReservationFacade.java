@@ -40,7 +40,7 @@ public interface ReservationFacade
      *
      * @param reservation    reservation to create
      */
-    public void createReservation(ReservationCreateDTO reservation);
+    public boolean createReservation(ReservationCreateDTO reservation);
 
     /**
      * Updates the reservation with id according to parameters.

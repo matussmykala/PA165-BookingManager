@@ -76,7 +76,7 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public void createReservation(ReservationCreateDTO reservation)
+    public boolean createReservation(ReservationCreateDTO reservation)
     {
         //Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
         Reservation r = new Reservation();
@@ -84,7 +84,7 @@ public class ReservationFacadeImpl implements ReservationFacade
         r.setEndOfReservation(reservation.getEndOfReservation());
         r.setRoom(roomService.findById(reservation.getRoomId()));
         r.setCustomer(customerService.findCustomerById(reservation.getCustomerId()));
-        reservationService.createReservation(r);
+        return reservationService.createReservation(r);
     }
 
     @Override

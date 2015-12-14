@@ -16,7 +16,7 @@ public interface ReservationService
      *
      * @param reservation   reservation to be created.
      */
-    void createReservation(Reservation reservation);
+    boolean createReservation(Reservation reservation);
 
     /**
      * Returns all the reservations.

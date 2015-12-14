@@ -74,14 +74,19 @@ public class ReservationController
         reservationCreateDTO.setCustomerId((long) 1);//customerId);
         reservationCreateDTO.setStartOfReservation(startDate);
         reservationCreateDTO.setEndOfReservation(endDate);
-        reservationFacade.createReservation(reservationCreateDTO);
-
-        redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
-                "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" was created.");
-        return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+        if (reservationFacade.createReservation(reservationCreateDTO)) {
+            redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
+                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" was created.");
+            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+        } else{
+            redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
+                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. The room is not free " +
+                    "in picked time range.");
+            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+        }
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         ReservationDTO reservationDTO = reservationFacade.getReservationById(id);
         reservationFacade.cancelReservation(id);
