@@ -75,7 +75,16 @@ public class ReservationController
         reservationCreateDTO.setCustomerId((long) 1);//customerId);
         reservationCreateDTO.setStartOfReservation(startDate);
         reservationCreateDTO.setEndOfReservation(endDate);
-        if (reservationFacade.createReservation(reservationCreateDTO)) {
+        boolean success = false;
+        try{
+            success = reservationFacade.createReservation(reservationCreateDTO);
+        }
+        catch (IllegalArgumentException e){
+            redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
+                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. Wrong dates were picked.");
+            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+        }
+        if (success) {
             redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" was created.");
             return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
