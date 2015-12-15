@@ -111,8 +111,16 @@ public class ReservationController
 
         ReservationDTO reservation = reservationFacade.getReservationById(id);
 
-        if (reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
-                startDate, endDate)){
+        boolean success = false;
+        try{
+            success = reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
+                    startDate, endDate);
+        }
+        catch (IllegalArgumentException e){
+            redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Incorrect dates were picked.");
+            return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
+        }
+        if (success){
             redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
             return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();
         }
