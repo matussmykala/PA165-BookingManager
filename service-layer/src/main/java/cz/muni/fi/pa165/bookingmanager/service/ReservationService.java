@@ -58,7 +58,7 @@ public interface ReservationService
      * @param from        beggining of the reservation
      * @param to          end of the reservation
      */
-    void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to);
+    boolean updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to);
 
     /**
      * Cancel reservation with id.

@@ -110,10 +110,15 @@ public class ReservationController
                                     RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
 
         ReservationDTO reservation = reservationFacade.getReservationById(id);
-        reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
-                startDate, endDate);
 
-        redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
-        return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();
+        if (reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
+                startDate, endDate)){
+            redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
+            return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();
+        }
+        else{
+            redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Room is not free in this time range.");
+            return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
+        }
     }
 }

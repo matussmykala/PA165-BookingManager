@@ -88,12 +88,12 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
+    public boolean updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
     {
         Customer customer = customerService.findCustomerById(customerId);
         Room room = roomService.findById(roomId);
         Reservation reservation = reservationService.getReservationById(id);
-        reservationService.updateReservation(reservation, customer, room, from, to);
+        return reservationService.updateReservation(reservation, customer, room, from, to);
     }
 
     @Override

@@ -42,12 +42,9 @@ public class ReservationServiceImpl implements ReservationService
         }
         if (reservationDao.findReservationOfRoom(reservation.getRoom().getId(), reservation.getStartOfReservation(),
                 reservation.getEndOfReservation()).isEmpty()){
-        //if (reservationDao)
             reservationDao.create(reservation);
-            logger.error("IZBA JE REZERVOVANA");
             return true;
         }
-        logger.error("IZBA JE OBSADENA");
         return false;
     }
 
@@ -80,7 +77,7 @@ public class ReservationServiceImpl implements ReservationService
     }
 
     @Override
-    public void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
+    public boolean updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
     {
         if (reservation.getCustomer() != null && reservation.getCustomer() != customer) {
             reservation.getCustomer().getReservations().remove(reservation);
@@ -98,7 +95,13 @@ public class ReservationServiceImpl implements ReservationService
         reservation.setRoom(room);
         reservation.setStartOfReservation(from);
         reservation.setEndOfReservation(to);
-        reservationDao.update(reservation);
+        List<Reservation> list = reservationDao.findReservationOfRoom(reservation.getRoom().getId(),
+                reservation.getStartOfReservation(), reservation.getEndOfReservation());
+        if (list.isEmpty() || (list.size() == 1 && list.get(0).getCustomer().equals(reservation.getCustomer()))) {
+            reservationDao.update(reservation);
+            return true;
+        }
+        return false;
     }
 
     @Override
