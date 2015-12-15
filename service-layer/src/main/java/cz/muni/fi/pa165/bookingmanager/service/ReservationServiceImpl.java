@@ -123,6 +123,8 @@ public class ReservationServiceImpl implements ReservationService
         }
         return retList;
     }
+    
+   
 
     @Override
     public List<Reservation> getNextMonthReservations()
@@ -136,4 +138,11 @@ public class ReservationServiceImpl implements ReservationService
 
         return reservationDao.findReservationsOfTime(nextMonthFirstDay, nextMonthLastDay);
     }
+
+    @Override
+    public List<Reservation> getAllReservationsOfRoom(Long id) {
+        
+        return reservationDao.findAllReservationsOfRoom(id);
+    }    
+  
 }

@@ -26,14 +26,7 @@ public class HotelDTO {
      */
     private String description;
 
-    /**
-     * Picture of hotel
-     */
-
-    private byte[] image;
-
-    private String imageMimeType;
-
+    
     /**
      * Date of creating or last updating hotel
      */
@@ -70,22 +63,6 @@ public class HotelDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImageMimeType() {
-        return imageMimeType;
-    }
-
-    public void setImageMimeType(String imageMimeType) {
-        this.imageMimeType = imageMimeType;
     }
 
     public Date getLastUpdateDay() {
