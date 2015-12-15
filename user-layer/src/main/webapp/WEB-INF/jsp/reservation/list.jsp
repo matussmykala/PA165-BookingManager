@@ -8,8 +8,6 @@
 <my:pagetemplate title="Reservations">
 <jsp:attribute name="body">
 
-    <my:a href="/reservation/new" class="btn btn-primary">New</my:a>
-
     <table class="table">
       <thead>
       <tr>
