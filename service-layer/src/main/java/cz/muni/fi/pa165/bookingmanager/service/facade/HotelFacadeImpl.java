@@ -111,6 +111,7 @@ public class HotelFacadeImpl implements HotelFacade{
             return beanMappingService.mapTo(hotelService.findByAdress(address), HotelDTO.class);
     }
 
+    //nefunkcna
     @Override
     public List<RoomDTO> findFreeRoomInRange(HotelDTO hotelDTO, Date start, Date end) {
         if (hotelDTO == null) {
@@ -128,14 +129,11 @@ public class HotelFacadeImpl implements HotelFacade{
         return  rooms;
     }
     
-    //Skuska
+    //funkcna
     @Override
     public List<RoomDTO> findFreeRoomInRangeChanged(HotelDTO hotelDTO, Date start, Date end){
         if (hotelDTO == null) {
-            throw new IllegalArgumentException("HotelId is null");
-        }
-        if (hotelDTO.getId() == null) {
-            throw new IllegalArgumentException("Hotel does not exist");
+            throw new IllegalArgumentException("Hotel is null");
         }
         Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
 
@@ -143,8 +141,6 @@ public class HotelFacadeImpl implements HotelFacade{
         List<RoomDTO> BookedRooms = beanMappingService.mapTo(roomService.findReservedRoomsAtSpecificTime(start, end), RoomDTO.class);
         
         Allrooms.removeAll(BookedRooms);
-        
-              
         return Allrooms;
     }
 

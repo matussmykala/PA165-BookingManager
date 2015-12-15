@@ -59,7 +59,7 @@ public class Customer {
     /**
      * If set to true, then this user has administrator rights in the system.
      */
-    private boolean isAdmin = false;
+    private boolean isAdmin = true;
 
     public Long getId() {
         return id;

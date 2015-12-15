@@ -103,11 +103,4 @@ public class RoomDaoImpl implements RoomDao {
                     .setParameter("numberOfBeds", numberOfBeds);
         return Collections.unmodifiableList(tq.getResultList());
     }
-
-    @Override
-    public List<Room> findRoomByPriceCurrency(Currency currency) {
-        TypedQuery<Room> tq = em.createQuery("Select r from Room r where r.currency = :currency", Room.class)
-                    .setParameter("currency", currency);
-        return Collections.unmodifiableList(tq.getResultList());
-    }
 }

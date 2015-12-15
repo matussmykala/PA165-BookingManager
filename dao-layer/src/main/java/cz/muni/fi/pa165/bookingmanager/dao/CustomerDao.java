@@ -26,6 +26,8 @@ public interface CustomerDao {
      */
     public Customer findById(Long id);
     
+    public Customer findByEmail(String email);
+    
     /**
      * Find customer by given name
      * 

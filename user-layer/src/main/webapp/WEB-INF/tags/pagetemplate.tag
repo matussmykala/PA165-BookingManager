@@ -86,7 +86,7 @@
         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <c:out value="${authenticatedUser.givenName} ${authenticatedUser.surname}"/>
+                    <c:out value="${authenticatedUser.name} ${authenticatedUser.surname}"/>
                 </div>
             </div>
         </div>

@@ -79,6 +79,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Reservation reservation1 = reservation(startDate1, endDate1, customer1, room4);
         Reservation reservation2 = reservation(startDate2, endDate2, customer2, room3);
         
+        room4.setReservation(reservation1);
+        room3.setReservation(reservation2);
+        roomService.updateRoom(room4);
+        roomService.updateRoom(room3);
+        
    }
     
     private Date createDate(){
@@ -98,6 +103,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         hotel.setName(name);
         hotel.setAddress(address);
         hotel.setDescription(description);
+        
       //  hotel.setImage(readImage(imageFile));
       //  hotel.setImageMimeType(mimeType);
         hotel.setLastUpdateDay(date);
@@ -132,7 +138,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         customer.setPassword(password);
         customer.setSurname(Surname);
         customer.setPassword(password);
-        customer.isAdmin();
+        customer.setIsAdmin(isAdmin);
         customerService.registerCustomer(customer, password);
         return  customer;
     }

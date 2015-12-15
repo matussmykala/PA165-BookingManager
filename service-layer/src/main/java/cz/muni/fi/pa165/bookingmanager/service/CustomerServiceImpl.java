@@ -118,4 +118,22 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customers;
     }
+
+    @Override
+    public boolean authenticated(Customer customer, String password) {
+        return validatePassword(password, customer.getPassword());
+    }
+    
+    public static boolean validatePassword(String pass, String customerPass){
+        if(pass.equals(customerPass)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public Customer findCustomerByEmail(String email) {
+        return customerDao.findByEmail(email);
+    }
 }

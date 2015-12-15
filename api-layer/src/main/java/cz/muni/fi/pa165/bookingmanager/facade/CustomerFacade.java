@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.bookingmanager.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
 
 import java.util.Collection;
 
@@ -66,4 +67,13 @@ public interface CustomerFacade {
      * @return customers with reservation
      */
     Collection<CustomerDTO> getCustomersWithReservation();
+    
+    /**
+     * If user is authenticated returns true else false
+     *
+     * @return boolean
+     */
+    boolean authenticate(UserAuthenticateDTO u);
+    
+    CustomerDTO findCustomerByEmail(String email);
 }
