@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.bookingmanager.dao.CustomerDao;
 import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.dao.RoomDao;
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
@@ -109,12 +110,12 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
 
         assertNotEquals(reservation1.getId(), new Long("1"));
 
-        ReservationDTO reservationDTO = new ReservationDTO();
-        reservationDTO.setId(reservation1.getId());
+        ReservationCreateDTO reservationDTO = new ReservationCreateDTO();
+        //reservationDTO.setId(reservation1.getId());
         reservationDTO.setStartOfReservation(reservation1.getStartOfReservation());
         reservationDTO.setEndOfReservation(reservation1.getEndOfReservation());
-        reservationDTO.setCustomer(new CustomerDTO());
-        reservationDTO.setRoom(new RoomDTO());
+        reservationDTO.setCustomerId((long) 1);
+        reservationDTO.setRoomId((long) 1);
 
         reservationFacade.createReservation(reservationDTO);
         verify(reservationService).createReservation(any(Reservation.class));

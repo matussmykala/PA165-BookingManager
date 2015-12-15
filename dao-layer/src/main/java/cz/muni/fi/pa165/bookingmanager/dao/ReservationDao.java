@@ -75,4 +75,11 @@ public interface ReservationDao {
      * @return 
      */
     public List<Reservation> findReservationOfRoom(Long id, Date from, Date to);
+    
+     /**
+     * Find all reservations of room 
+     * @param id
+     * @return 
+     */
+    public List<Reservation> findAllReservationsOfRoom(Long id);
 }

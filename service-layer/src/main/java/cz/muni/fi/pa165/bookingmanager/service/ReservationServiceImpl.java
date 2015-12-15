@@ -30,8 +30,12 @@ public class ReservationServiceImpl implements ReservationService
     @Override
     public void createReservation(Reservation reservation)
     {
-        customerDao.create(reservation.getCustomer());
-        roomDao.create(reservation.getRoom());
+        if (!customerDao.findAll().contains(reservation.getCustomer())){
+            customerDao.create(reservation.getCustomer());
+        }
+        if (!roomDao.findAll().contains(reservation.getRoom())) {
+            roomDao.create(reservation.getRoom());
+        }
         reservationDao.create(reservation);
     }
 
@@ -104,6 +108,8 @@ public class ReservationServiceImpl implements ReservationService
         }
         return retList;
     }
+    
+   
 
     @Override
     public List<Reservation> getNextMonthReservations()
@@ -117,4 +123,11 @@ public class ReservationServiceImpl implements ReservationService
 
         return reservationDao.findReservationsOfTime(nextMonthFirstDay, nextMonthLastDay);
     }
+
+    @Override
+    public List<Reservation> getAllReservationsOfRoom(Long id) {
+        
+        return reservationDao.findAllReservationsOfRoom(id);
+    }    
+  
 }

@@ -159,5 +159,10 @@ public class HotelFacadeImpl implements HotelFacade{
 
     }
 
+    @Override
+    public List<RoomDTO> findRoomsWithReservation(Long id) {
+        return beanMappingService.mapTo(hotelService.findRoomsWithReservation(id), RoomDTO.class);
+    }
+
     
   }

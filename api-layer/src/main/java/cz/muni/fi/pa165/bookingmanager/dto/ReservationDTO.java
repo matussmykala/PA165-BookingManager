@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Data Transfer Object for Reservation entity.
@@ -25,12 +26,12 @@ public class ReservationDTO
     /**
      * Customer who books the room.
      */
-    private CustomerDTO customer;
+    private CustomerDTO customer = new CustomerDTO();
 
     /**
      * Booked room.
      */
-    private RoomDTO room;
+    private RoomDTO room = new RoomDTO();
 
     public Long getId()
     {

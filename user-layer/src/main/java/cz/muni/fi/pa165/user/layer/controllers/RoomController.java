@@ -2,8 +2,10 @@ package cz.muni.fi.pa165.user.layer.controllers;
 
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
+import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.facade.RoomFacadeImpl;
@@ -39,6 +41,9 @@ public class RoomController {
     
     @Autowired
     private HotelFacade hotelFacade;
+    
+    @Autowired
+    private ReservationFacade reservationFacade;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
@@ -71,8 +76,14 @@ public class RoomController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         RoomDTO room = roomFacade.getRoomById(id);
+        List<ReservationDTO> reservations = new ArrayList<>();
+        reservations = reservationFacade.getAllReservationsOfRoom(id);
+        if(reservations.size()>0){
+             redirectAttributes.addFlashAttribute("alert_info", "Room \"" + room.getName() + "\" has reservations - it can not be deleted");
+             return "redirect:" + uriBuilder.path("/room/list").toUriString();
+        }
         roomFacade.deleteRoom(id);
         redirectAttributes.addFlashAttribute("alert_success", "Room \"" + room.getName() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/room/list").toUriString();

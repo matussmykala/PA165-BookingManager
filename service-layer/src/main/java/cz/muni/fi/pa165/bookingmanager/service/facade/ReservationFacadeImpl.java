@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 import java.util.Date;
 import java.util.List;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
@@ -75,9 +77,14 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public void createReservation(ReservationDTO reservation)
+    public void createReservation(ReservationCreateDTO reservation)
     {
-        Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
+        //Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
+        Reservation r = new Reservation();
+        r.setStartOfReservation(reservation.getStartOfReservation());
+        r.setEndOfReservation(reservation.getEndOfReservation());
+        r.setRoom(roomService.findById(reservation.getRoomId()));
+        r.setCustomer(customerService.findCustomerById(reservation.getCustomerId()));
         reservationService.createReservation(r);
     }
 
@@ -112,5 +119,10 @@ public class ReservationFacadeImpl implements ReservationFacade
         return beanMappingService.mapTo(
                 reservationService.getNextMonthReservations(), ReservationDTO.class
         );
+    }
+
+    @Override
+    public List<ReservationDTO> getAllReservationsOfRoom(Long id) {
+        return beanMappingService.mapTo(reservationService.getAllReservationsOfRoom(id), ReservationDTO.class);
     }
 }

@@ -8,39 +8,39 @@ import java.util.Set;
 
 /**
  * Room DTO implementation
- * 
+ *
  * @author Martin Cuchran
  */
 public class RoomDTO {
-    
+
     /**
      * id of room
      */
-    private Long id;    
+    private Long id;
     /**
      * Name of room
      */
     private String name;
-    
+
     /**
      * number of beds in the room
      */
-    private int numberOfBeds;   
-    
+    private int numberOfBeds;
+
     /**
      * Price of room
      */
     private BigDecimal price;
-    
+
     /**
      * Currency of room price
      */
     private Currency currency;
-    
+
     /**
      * Hotel which room belongs to
      */
-    private HotelDTO hotel;
+    private HotelDTO hotel = new HotelDTO();
 
     public HotelDTO getHotel() {
         return hotel;
@@ -57,15 +57,15 @@ public class RoomDTO {
     public void setReservations(Set<ReservationDTO> reservations) {
         this.reservations = reservations;
     }
-    
+
     /**
      * Reservations where room is used
      */
     private Set<ReservationDTO> reservations = new HashSet<ReservationDTO>();
-    
+
     /**
      *  Gets id
-     * 
+     *
      * @return id
      */
     public Long getId() {
@@ -74,7 +74,7 @@ public class RoomDTO {
 
     /**
      * Sets id
-     * 
+     *
      * @param id
      */
     public void setId(Long id) {
@@ -83,7 +83,7 @@ public class RoomDTO {
 
     /**
      * Gets name
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -92,16 +92,16 @@ public class RoomDTO {
 
     /**
      * Sets name
-     * 
+     *
      * @param name
      */
     public void setName(String name) {
         this.name = name;
-    }   
+    }
 
     /**
      * Gets numberofBeds
-     * 
+     *
      * @return numberOfBeds
      */
     public int getNumberOfBeds() {
@@ -110,7 +110,7 @@ public class RoomDTO {
 
     /**
      * Sets numberOfBeds
-     * 
+     *
      * @param numberOfBeds
      */
     public void setNumberOfBeds(int numberOfBeds) {
@@ -119,7 +119,7 @@ public class RoomDTO {
 
     /**
      * Gets price
-     * 
+     *
      * @return price
      */
     public BigDecimal getPrice() {
@@ -128,7 +128,7 @@ public class RoomDTO {
 
     /**
      * Sets price
-     * 
+     *
      * @param price
      */
     public void setPrice(BigDecimal price) {
@@ -137,7 +137,7 @@ public class RoomDTO {
 
     /**
      * Gets currency
-     * 
+     *
      * @return currency
      */
     public Currency getCurrency() {
@@ -146,7 +146,7 @@ public class RoomDTO {
 
     /**
      * Sets currency
-     * 
+     *
      * @param currency
      */
     public void setCurrency(Currency currency) {
@@ -159,7 +159,7 @@ public class RoomDTO {
         hash = 11 * hash + Objects.hashCode(this.name);
         hash = 11 * hash + this.numberOfBeds;
         hash = 11 * hash + Objects.hashCode(this.price);
-        hash = 11 * hash + Objects.hashCode(this.currency);
+        //hash = 11 * hash + Objects.hashCode(this.currency);
         return hash;
     }
 
@@ -190,5 +190,5 @@ public class RoomDTO {
     @Override
     public String toString() {
         return "RoomDTO{" + "id=" + id + ", name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + ", currency=" + currency + '}';
-    }    
+    }
 }
