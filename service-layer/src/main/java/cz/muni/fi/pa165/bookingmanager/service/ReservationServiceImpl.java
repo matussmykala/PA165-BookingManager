@@ -11,6 +11,8 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,10 @@ public class ReservationServiceImpl implements ReservationService
     @Autowired
     private RoomDao roomDao;
 
+    final static Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
+
     @Override
-    public void createReservation(Reservation reservation)
+    public boolean createReservation(Reservation reservation)
     {
         if (!customerDao.findAll().contains(reservation.getCustomer())){
             customerDao.create(reservation.getCustomer());
@@ -36,7 +40,12 @@ public class ReservationServiceImpl implements ReservationService
         if (!roomDao.findAll().contains(reservation.getRoom())) {
             roomDao.create(reservation.getRoom());
         }
-        reservationDao.create(reservation);
+        if (reservationDao.findReservationOfRoom(reservation.getRoom().getId(), reservation.getStartOfReservation(),
+                reservation.getEndOfReservation()).isEmpty()){
+            reservationDao.create(reservation);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -68,7 +77,7 @@ public class ReservationServiceImpl implements ReservationService
     }
 
     @Override
-    public void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
+    public boolean updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to)
     {
         if (reservation.getCustomer() != null && reservation.getCustomer() != customer) {
             reservation.getCustomer().getReservations().remove(reservation);
@@ -86,7 +95,13 @@ public class ReservationServiceImpl implements ReservationService
         reservation.setRoom(room);
         reservation.setStartOfReservation(from);
         reservation.setEndOfReservation(to);
-        reservationDao.update(reservation);
+        List<Reservation> list = reservationDao.findReservationOfRoom(reservation.getRoom().getId(),
+                reservation.getStartOfReservation(), reservation.getEndOfReservation());
+        if (list.isEmpty() || (list.size() == 1 && list.get(0).getCustomer().equals(reservation.getCustomer()))) {
+            reservationDao.update(reservation);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -108,8 +123,8 @@ public class ReservationServiceImpl implements ReservationService
         }
         return retList;
     }
-    
-   
+
+
 
     @Override
     public List<Reservation> getNextMonthReservations()
@@ -126,8 +141,8 @@ public class ReservationServiceImpl implements ReservationService
 
     @Override
     public List<Reservation> getAllReservationsOfRoom(Long id) {
-        
+
         return reservationDao.findAllReservationsOfRoom(id);
-    }    
-  
+    }
+
 }

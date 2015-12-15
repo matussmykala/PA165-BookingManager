@@ -131,13 +131,13 @@ public class HotelFacadeImpl implements HotelFacade{
 
         return beanMappingService.mapTo(hotelService.findBookedRoomInRange(hotel, start, end), RoomDTO.class);
     }
-    
+
     public List<HotelDTO> findHotelWithFreeRoomInRange(String address, Date start, Date end){
         List<HotelDTO> hotels = new ArrayList<>();
         List<HotelDTO> forRemove = new ArrayList<>();
         List<RoomDTO> rooms = new ArrayList<>();
         hotels = this.findByAddress(address);
-        
+
         for(HotelDTO hotel:hotels){
             rooms = this.findFreeRoomInRange(hotel, start, end);
             if(rooms.size()==0){
@@ -147,10 +147,10 @@ public class HotelFacadeImpl implements HotelFacade{
         }
         hotels.removeAll(forRemove);
         return hotels;
-        
+
     }
-    
-   
+
+
     public HotelFacadeImpl(HotelService hotelService, BeanMappingService beanMappingService){
         this.hotelService=hotelService;
         this.beanMappingService=beanMappingService;
@@ -164,5 +164,5 @@ public class HotelFacadeImpl implements HotelFacade{
         return beanMappingService.mapTo(hotelService.findRoomsWithReservation(id), RoomDTO.class);
     }
 
-    
+
   }

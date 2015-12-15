@@ -77,7 +77,7 @@ public class ReservationFacadeImpl implements ReservationFacade
     }
 
     @Override
-    public void createReservation(ReservationCreateDTO reservation)
+    public boolean createReservation(ReservationCreateDTO reservation)
     {
         //Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
         Reservation r = new Reservation();
@@ -85,16 +85,16 @@ public class ReservationFacadeImpl implements ReservationFacade
         r.setEndOfReservation(reservation.getEndOfReservation());
         r.setRoom(roomService.findById(reservation.getRoomId()));
         r.setCustomer(customerService.findCustomerById(reservation.getCustomerId()));
-        reservationService.createReservation(r);
+        return reservationService.createReservation(r);
     }
 
     @Override
-    public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
+    public boolean updateReservation(Long id, Long customerId, Long roomId, Date from, Date to)
     {
         Customer customer = customerService.findCustomerById(customerId);
         Room room = roomService.findById(roomId);
         Reservation reservation = reservationService.getReservationById(id);
-        reservationService.updateReservation(reservation, customer, room, from, to);
+        return reservationService.updateReservation(reservation, customer, room, from, to);
     }
 
     @Override

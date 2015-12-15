@@ -16,7 +16,7 @@ public interface ReservationService
      *
      * @param reservation   reservation to be created.
      */
-    void createReservation(Reservation reservation);
+    boolean createReservation(Reservation reservation);
 
     /**
      * Returns all the reservations.
@@ -32,9 +32,9 @@ public interface ReservationService
      * @return  list of reservations taken by the customer
      */
     List<Reservation> getReservationsByCustomer(Customer customer);
-     
+
     /**
-     * Returns all reservations of room 
+     * Returns all reservations of room
      *
      * @param id    id of room
      * @return  list of all of room
@@ -66,7 +66,7 @@ public interface ReservationService
      * @param from        beggining of the reservation
      * @param to          end of the reservation
      */
-    void updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to);
+    boolean updateReservation(Reservation reservation, Customer customer, Room room, Date from, Date to);
 
     /**
      * Cancel reservation with id.

@@ -192,8 +192,8 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
 
     @Test
     public void updateReservationTest(){
-        doNothing().when(reservationService).updateReservation(any(Reservation.class), any(Customer.class),
-                any(Room.class), any(Date.class), any(Date.class));
+        when(reservationService.updateReservation(any(Reservation.class), any(Customer.class),
+                any(Room.class), any(Date.class), any(Date.class))).thenReturn(true);
         reservationFacade.updateReservation((long) 1, (long) 1, (long) 1, nextMonthFirstDay, nextMonthLastDay);
         verify(reservationService).updateReservation(any(Reservation.class), any(Customer.class),
                 any(Room.class), any(Date.class), any(Date.class));

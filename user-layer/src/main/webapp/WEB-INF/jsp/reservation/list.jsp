@@ -8,8 +8,6 @@
 <my:pagetemplate title="Reservations">
 <jsp:attribute name="body">
 
-    <my:a href="/reservation/new" class="btn btn-primary">New</my:a>
-
     <table class="table">
       <thead>
       <tr>
@@ -24,17 +22,18 @@
       <c:forEach items="${reservations}" var="reservation">
         <tr>
           <td>${reservation.id}</td>
-          <td><c:out value="${reservation.customer}"/></td>
-          <td><c:out value="${reservation.room}"/></td>
+          <td><c:out value="${reservation.customer.name} ${reservation.customer.surname}"/></td>
+          <td><c:out value="${reservation.room.name}"/></td>
           <td><c:out value="${reservation.startOfReservation}"/></td>
           <td><c:out value="${reservation.endOfReservation}"/></td>
           <td>
-            <my:a href="/reservation/view/${reservation.id}" class="btn btn-primary">View</my:a>
+            <my:a href="/reservation/view/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" style="height:20px;" aria-hidden="true"></span></my:a>
+          </td>
+          <td style="width:45px;">
+            <my:a href="/reservation/edit/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></my:a>
           </td>
           <td>
-            <form method="post" action="${pageContext.request.contextPath}/reservation/delete/${reservation.id}">
-              <button type="submit" class="btn btn-primary">Delete</button>
-            </form>
+              <my:a href="/reservation/delete/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
           </td>
         </tr>
       </c:forEach>

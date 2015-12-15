@@ -41,7 +41,7 @@ public interface ReservationFacade
      *
      * @param reservation    reservation to create
      */
-    public void createReservation(ReservationCreateDTO reservation);
+    public boolean createReservation(ReservationCreateDTO reservation);
 
     /**
      * Updates the reservation with id according to parameters.
@@ -52,7 +52,7 @@ public interface ReservationFacade
      * @param from          beggining of the reservation
      * @param to            end of the reservation
      */
-    public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to);
+    public boolean updateReservation(Long id, Long customerId, Long roomId, Date from, Date to);
 
     /**
      * Cancel reservation with id.
