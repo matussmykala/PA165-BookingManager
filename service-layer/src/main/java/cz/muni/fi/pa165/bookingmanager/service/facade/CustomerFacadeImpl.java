@@ -110,7 +110,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
             throw new IllegalArgumentException("No such customer exists");
         }
 
-        customerService.updateCustomer(customer);
+        customerService.updateCustomer(beanMappingService.mapTo(customerDTO, Customer.class));
     }
 
     /**

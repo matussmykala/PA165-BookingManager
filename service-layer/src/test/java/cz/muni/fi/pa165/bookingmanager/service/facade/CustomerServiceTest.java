@@ -154,4 +154,12 @@ public class CustomerServiceTest extends AbstractJUnit4SpringContextTests {
         assertTrue(customers.contains(customer1));
         assertTrue(customers.contains(customer2));
     }
+
+    @Test
+    public void authenticateCustomerTest() {
+        Customer customer = new Customer();
+        customer.setPassword("5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8");
+
+        assertTrue(customerService.authenticateCustomer(customer, "password"));
+    }
 }
