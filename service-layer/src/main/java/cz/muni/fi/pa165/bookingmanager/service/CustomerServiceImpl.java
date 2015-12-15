@@ -7,6 +7,10 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -36,8 +40,23 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void registerCustomer(Customer customer, String unencryptedPassword) {
-        customer.setPassword(unencryptedPassword);
+        customer.setPassword(sha256Hash(unencryptedPassword));
         customerDao.create(customer);
+    }
+
+    /**
+     * Checks if provided password equals customers hashed password stored in database.
+     *
+     * @param customer            customer that is authenticating
+     * @param unencryptedPassword customer's password
+     * @return true if the passwords match, false if not
+     */
+    @Override
+    public boolean authenticateCustomer(Customer customer, String unencryptedPassword) {
+        if (customer == null) {
+            return false;
+        }
+        return customer.getPassword().equals(sha256Hash(unencryptedPassword));
     }
 
     /**
@@ -117,5 +136,17 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         return customers;
+    }
+
+    private String sha256Hash(String password) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        digest.update(password.getBytes(StandardCharsets.UTF_8));
+        String str = new BigInteger(1, digest.digest()).toString(16);
+        return str;
     }
 }

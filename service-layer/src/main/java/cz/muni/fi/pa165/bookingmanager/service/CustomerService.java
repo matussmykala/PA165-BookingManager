@@ -25,6 +25,15 @@ public interface CustomerService {
     void registerCustomer(Customer customer, String unencryptedPassword);
 
     /**
+     * Checks if provided password equals customers hashed password stored in database.
+     *
+     * @param customer            customer that is authenticating
+     * @param unencryptedPassword customer's password
+     * @return true if the passwords match, false if not
+     */
+    boolean authenticateCustomer(Customer customer, String unencryptedPassword);
+
+    /**
      * Fetches all registered customers.
      *
      * @return all customers

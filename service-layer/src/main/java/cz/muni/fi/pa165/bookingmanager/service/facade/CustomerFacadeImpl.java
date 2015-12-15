@@ -5,7 +5,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
@@ -18,7 +18,7 @@ import java.util.Collection;
  *
  * @author Vladimir Caniga
  */
-@Service
+@Component
 @Transactional
 public class CustomerFacadeImpl implements CustomerFacade {
 
@@ -46,6 +46,18 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
         customerService.registerCustomer(beanMappingService.mapTo(customer, Customer.class),
                 unencryptedPassword);
+    }
+
+    /**
+     * Checks if the provided password matches password for the customer stored in database.
+     *
+     * @param customer customer that is trying to authenticate
+     * @return true if the passwords match, false if not
+     */
+    @Override
+    public boolean authenticateCustomer(CustomerDTO customer) {
+
+        return customerService.authenticateCustomer(customerService.findCustomerById(customer.getId()), customer.getPassword());
     }
 
     /**
@@ -110,7 +122,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
             throw new IllegalArgumentException("No such customer exists");
         }
 
-        customerService.updateCustomer(customer);
+        customerService.updateCustomer(beanMappingService.mapTo(customerDTO, Customer.class));
     }
 
     /**

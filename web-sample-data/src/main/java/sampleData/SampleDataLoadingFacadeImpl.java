@@ -1,4 +1,5 @@
 package sampleData;
+
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
@@ -7,17 +8,15 @@ import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
 import cz.muni.fi.pa165.bookingmanager.service.RoomService;
-import java.io.ByteArrayOutputStream;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author matus
@@ -132,7 +131,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         customer.setPassword(password);
         customer.setSurname(Surname);
         customer.setPassword(password);
-        customer.isAdmin();
+        customer.setIsAdmin(isAdmin);
+        customer.setUsername(username);
         customerService.registerCustomer(customer, password);
         return  customer;
     }
