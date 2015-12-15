@@ -49,6 +49,18 @@ public class CustomerFacadeImpl implements CustomerFacade {
     }
 
     /**
+     * Checks if the provided password matches password for the customer stored in database.
+     *
+     * @param customer customer that is trying to authenticate
+     * @return true if the passwords match, false if not
+     */
+    @Override
+    public boolean authenticateCustomer(CustomerDTO customer) {
+
+        return customerService.authenticateCustomer(customerService.findCustomerById(customer.getId()), customer.getPassword());
+    }
+
+    /**
      * Fetches all registered customers.
      *
      * @return all customers

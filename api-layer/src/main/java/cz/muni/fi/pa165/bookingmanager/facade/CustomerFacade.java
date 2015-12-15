@@ -23,6 +23,14 @@ public interface CustomerFacade {
     void registerCustomer(CustomerDTO customer, String unencryptedPassword);
 
     /**
+     * Checks if the provided password matches password for the customer stored in database.
+     *
+     * @param customer customer that is trying to authenticate
+     * @return true if the passwords match, false if not
+     */
+    boolean authenticateCustomer(CustomerDTO customer);
+
+    /**
      * Fetches all registered customers.
      *
      * @return all customers
