@@ -80,10 +80,10 @@ public class ReservationDaoImpl implements ReservationDao{
     public List<Reservation> findReservationsOfTime(Date from, Date to)
     {
         TypedQuery<Reservation> query = em.createQuery(
-                "SELECT r FROM Reservation r WHERE r.startOfReservation >= :startDate",
+                "SELECT r FROM Reservation r WHERE r.startOfReservation >= :startDate AND  r.startOfReservation <= :endDate AND  r.endOfReservation >= :startDate AND  r.endOfReservation <= :endDate",
                 Reservation.class);
         query.setParameter("startDate", from);
-        //query.setParameter("endDate", to);
+        query.setParameter("endDate", to);
         return Collections.unmodifiableList(query.getResultList());
     }
     

@@ -179,6 +179,14 @@ public class RoomController {
                     rooms = null;
                 }
                 break;
+            case "hotelName":                
+                try{
+                    HotelDTO hotel = hotelFacade.findByName(filter);
+                    rooms = roomFacade.findByHotel(hotel.getId());
+                }catch (Exception e){
+                    rooms = null;
+                }
+                break;                
             default:
                 rooms = new ArrayList<>();
                 model.addAttribute("alert_danger", "Unknown filter " + filterType);

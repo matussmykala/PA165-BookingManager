@@ -88,5 +88,5 @@ public interface ReservationService
      *
      * @return list of reservation which starts next month
      */
-    public List<Reservation> getNextMonthReservations();
+    public List<Reservation> getNextMonthReservations();        
 }
