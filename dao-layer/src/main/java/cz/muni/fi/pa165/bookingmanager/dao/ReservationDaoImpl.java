@@ -96,6 +96,16 @@ public class ReservationDaoImpl implements ReservationDao{
     }
     }
 
+    @Override
+    public List<Reservation> findAllReservationsOfRoom(Long id)
+    {
+        TypedQuery<Reservation> query = em.createQuery(
+                "SELECT r FROM Reservation r WHERE r.room = :roomid",
+                Reservation.class);
+        query.setParameter("roomid", id);
+        return Collections.unmodifiableList(query.getResultList());
+    }
+
     /**
      * Update specified reservation
      *

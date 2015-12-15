@@ -32,9 +32,9 @@ public interface ReservationService
      * @return  list of reservations taken by the customer
      */
     List<Reservation> getReservationsByCustomer(Customer customer);
-     
+
     /**
-     * Returns all reservations of room 
+     * Returns all reservations of room
      *
      * @param id    id of room
      * @return  list of all of room

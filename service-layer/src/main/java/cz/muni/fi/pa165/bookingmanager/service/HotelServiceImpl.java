@@ -24,7 +24,7 @@ public class HotelServiceImpl implements HotelService {
 
     @Autowired
     private HotelDao hotelDao;
-    
+
     @Autowired
     private ReservationDao reservationDao;
 
@@ -134,11 +134,11 @@ public class HotelServiceImpl implements HotelService {
                 forRemoveRooms.add(r);
             }
             reservations.removeAll(rooms);
-            
+
         }
         rooms.removeAll(forRemoveRooms);
         return Collections.unmodifiableList(rooms);
-        
+
     }
-  
+
 }
