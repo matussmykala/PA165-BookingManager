@@ -100,7 +100,7 @@ public class ReservationDaoImpl implements ReservationDao{
     public List<Reservation> findAllReservationsOfRoom(Long id)
     {
         TypedQuery<Reservation> query = em.createQuery(
-                "SELECT r FROM Reservation r WHERE r.room = :roomid",
+                "SELECT r FROM Reservation r WHERE r.room.id = :roomid",
                 Reservation.class);
         query.setParameter("roomid", id);
         return Collections.unmodifiableList(query.getResultList());

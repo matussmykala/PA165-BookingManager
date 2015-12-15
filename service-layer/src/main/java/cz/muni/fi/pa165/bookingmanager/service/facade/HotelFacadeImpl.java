@@ -2,12 +2,15 @@ package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
+import cz.muni.fi.pa165.bookingmanager.service.RoomService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +32,13 @@ public class HotelFacadeImpl implements HotelFacade{
     private HotelService hotelService;
 
     @Inject
+    private RoomService roomService;
+    
+    @Inject
     private BeanMappingService beanMappingService;
+    
+    @Inject
+    private ReservationService reservationService;
 
     @Override
     public Long createHotel(HotelCreateDTO hotelCreateDTO) {
@@ -117,6 +126,26 @@ public class HotelFacadeImpl implements HotelFacade{
             System.out.println("FACADE Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
         }
         return  rooms;
+    }
+    
+    //Skuska
+    @Override
+    public List<RoomDTO> findFreeRoomInRangeChanged(HotelDTO hotelDTO, Date start, Date end){
+        if (hotelDTO == null) {
+            throw new IllegalArgumentException("HotelId is null");
+        }
+        if (hotelDTO.getId() == null) {
+            throw new IllegalArgumentException("Hotel does not exist");
+        }
+        Hotel hotel = beanMappingService.mapTo(hotelDTO,Hotel.class);
+
+        List<RoomDTO> Allrooms = beanMappingService.mapTo(roomService.findByHotel(hotel.getId()), RoomDTO.class);
+        List<RoomDTO> BookedRooms = beanMappingService.mapTo(roomService.findReservedRoomsAtSpecificTime(start, end), RoomDTO.class);
+        
+        Allrooms.removeAll(BookedRooms);
+        
+              
+        return Allrooms;
     }
 
     @Override
