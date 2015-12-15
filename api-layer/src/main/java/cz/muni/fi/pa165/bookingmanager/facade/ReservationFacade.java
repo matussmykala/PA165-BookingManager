@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.bookingmanager.facade;
 import java.util.Date;
 import java.util.List;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 
 /**
  * Facade layer interface.
@@ -39,7 +41,7 @@ public interface ReservationFacade
      *
      * @param reservation    reservation to create
      */
-    public void createReservation(ReservationDTO reservation);
+    public boolean createReservation(ReservationCreateDTO reservation);
 
     /**
      * Updates the reservation with id according to parameters.
@@ -50,7 +52,7 @@ public interface ReservationFacade
      * @param from          beggining of the reservation
      * @param to            end of the reservation
      */
-    public void updateReservation(Long id, Long customerId, Long roomId, Date from, Date to);
+    public boolean updateReservation(Long id, Long customerId, Long roomId, Date from, Date to);
 
     /**
      * Cancel reservation with id.
@@ -73,4 +75,12 @@ public interface ReservationFacade
      * @return list of reservation which starts next month
      */
     public List<ReservationDTO> getNextMonthReservations();
+    
+     /**
+     * Returns all reservations of room 
+     *
+     * @param room    room
+     * @return  list of all of room
+     */
+    List<ReservationDTO> getAllReservationsOfRoom(Long id);
 }

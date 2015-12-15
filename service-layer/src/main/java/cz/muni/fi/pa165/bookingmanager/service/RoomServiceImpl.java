@@ -118,10 +118,10 @@ public class RoomServiceImpl implements RoomService{
     }
 
     @Override
-    public List<Room> findByHotel(Hotel hotel) throws DataAccessException {
+    public List<Room> findByHotel(Long id) throws DataAccessException {
         List<Room> rooms = new ArrayList<>();
         try{
-            rooms.addAll(roomDao.findByHotel(hotel));
+            rooms.addAll(roomDao.findByHotel(id));
         }catch(DataAccessException ex){};
         return Collections.unmodifiableList(rooms);
     }

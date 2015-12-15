@@ -87,14 +87,14 @@ public interface HotelService {
      * @return free rooms in hotel
      */
     public List<Room> findBookedRoomInRange(Hotel hotel, Date start, Date end);
-    
+
     /**
-     * Find all hotels in destination which have free room in specific range of time
-     * 
-     * @param destination 
-     * @param start
-     * @param end
-     * @return hotels of destination with free rooms
+     * Find all rooms which have reservation in hotel
+     *
+     * @hotel of which you want to know booked rooms in range of time
+     *
+     * @return free rooms in hotel
      */
-    
+    public List<Room> findRoomsWithReservation(Long id);
+
 }

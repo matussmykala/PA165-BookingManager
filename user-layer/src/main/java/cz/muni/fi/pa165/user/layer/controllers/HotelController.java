@@ -7,7 +7,14 @@ package cz.muni.fi.pa165.user.layer.controllers;
 
 import cz.muni.fi.pa165.bookingmanager.dto.HotelCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
+import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
+import cz.muni.fi.pa165.bookingmanager.service.RoomService;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
+import org.springframework.format.annotation.DateTimeFormat;
 //pridat logy
 
 /**
@@ -31,6 +39,9 @@ public class HotelController {
     
     @Autowired
     private HotelFacade hotelFacade;
+    
+    @Autowired
+    private RoomFacade roomFacade;
     
     
 
@@ -47,6 +58,8 @@ public class HotelController {
         return "hotel/list";
     }
     
+    
+    
     /**
      * Delete hotel
      * 
@@ -58,9 +71,14 @@ public class HotelController {
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         HotelDTO hotel = hotelFacade.getHotelById(id);
+        if(!(hotelFacade.findRoomsWithReservation(id).isEmpty())){
+             redirectAttributes.addFlashAttribute("alert_info", "Hotel \"" + hotel.getName() + "\" has rooms with reservations - it can not be deleted");
+             return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
+        }
         hotelFacade.deleteHotel(id);
         redirectAttributes.addFlashAttribute("alert_success", "Hotel \"" + hotel.getName() + "\" was deleted.");
         return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
+        
     }
     
     /**
@@ -105,18 +123,45 @@ public class HotelController {
     }
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam int filter,@RequestParam String goal, Model model, UriComponentsBuilder uriBuilder){
-        if(filter==1){
-            HotelDTO hotel = hotelFacade.findByName(goal);
-            Long id = hotel.getId();
-            model.addAttribute("hotels", hotel);
-            return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
+    public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
+        List<HotelDTO> freeHotels = new ArrayList<>();
+        if(goal==""){
+            model.addAttribute("alert_info", "Name/Destination is empty");
+            return "hotel/find"; 
         }
-        else {
-        model.addAttribute("hotels",hotelFacade.findByAddress(goal));
-        return "hotel/list";
-        }
-    } 
+        if(startDate==null || endDate==null){
+            model.addAttribute("alert_info", "Date is empty");
+            return "hotel/find";
+        }else{
+            HotelDTO hotel = new HotelDTO();
+            try{
+                hotel = hotelFacade.findByName(goal);
+            }catch (Exception e){
+                hotel = null;
+            }
+            
+            List<HotelDTO> hotelList = hotelFacade.findByAddress(goal);
+            
+            if(hotel!=null && !hotelList.contains(hotel)){
+                hotelList.add(hotel);
+            }
+      
+            for (HotelDTO hotel_tmp : hotelList) {
+                if(hotelFacade.findHotelWithFreeRoomInRange(hotel_tmp.getAddress(),startDate,endDate)!=null){
+                    freeHotels.add(hotel_tmp);
+                }
+            }
+            
+            if(freeHotels.size()<1){
+                model.addAttribute("alert_info", "No data found");
+            }else{
+                model.addAttribute("hotels", freeHotels);
+                return "hotel/list";    
+            }         
+        }   
+        return "hotel/list";                
+    }
+   
     
     /*
         @RequestMapping(value = "/find/{address}", method = RequestMethod.GET)
@@ -152,6 +197,7 @@ public class HotelController {
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
      
+       
        
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
     public String editHotel(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {

@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.bookingmanager.service;
 
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.dao.HotelDao;
+import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
+import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +26,9 @@ public class HotelServiceImpl implements HotelService {
     private HotelDao hotelDao;
 
     @Autowired
+    private ReservationDao reservationDao;
+
+    @Autowired
     private RoomService roomService;
 
     @Override
@@ -44,7 +49,12 @@ public class HotelServiceImpl implements HotelService {
 
     @Override
     public void deleteHotel(Hotel hotel) throws DataAccessException {
+        List<Room> roomsOfHotel = new ArrayList<>();
+        roomsOfHotel.addAll(roomService.findByHotel(hotel.getId()));
         try {
+            for(Room r:roomsOfHotel){
+            roomService.deleteRoom(r);
+            }
             hotelDao.delete(hotel);
         } catch (DataAccessException dae) {
         };
@@ -96,7 +106,7 @@ public class HotelServiceImpl implements HotelService {
         List<Room> roomsInHotel = new ArrayList<Room>();
 
         bookedRooms.addAll(roomService.findReservedRoomsAtSpecificTime(start, end));
-        roomsInHotel.addAll(roomService.findByHotel(hotel));
+        roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
         roomsInHotel.removeAll(bookedRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }
@@ -107,9 +117,28 @@ public class HotelServiceImpl implements HotelService {
         List<Room> roomsInHotel = new ArrayList<Room>();
 
         freeRooms.addAll(roomService.findFreeRoomsAtSpecificTime(start, end));
-        roomsInHotel.addAll(roomService.findByHotel(hotel));
+        roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
         roomsInHotel.removeAll(freeRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }
-  
+    
+    @Override
+    public List<Room> findRoomsWithReservation(Long id){
+        List<Room> rooms = new ArrayList<Room>();
+        List<Room> forRemoveRooms = new ArrayList<Room>();
+        List<Reservation> reservations = new ArrayList<>();
+        rooms.addAll(roomService.findByHotel(id));
+        for(Room r:rooms){
+            reservations.addAll(reservationDao.findAllReservationsOfRoom(r.getId()));
+            if(reservations.isEmpty()){
+                forRemoveRooms.add(r);
+            }
+            reservations.removeAll(rooms);
+
+        }
+        rooms.removeAll(forRemoveRooms);
+        return Collections.unmodifiableList(rooms);
+
+    }
+
 }
