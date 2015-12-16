@@ -13,14 +13,6 @@
         <h2><f:message key="access.denied"/></h2>
         <h3><f:message key="access.denied.text"/></h3>        
     </div>
-              
-              
-              
-    
-   
-
-
-   
-
+        
 </jsp:attribute>
 </my:pagetemplate>
