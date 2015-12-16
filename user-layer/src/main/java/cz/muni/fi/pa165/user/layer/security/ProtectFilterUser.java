@@ -25,10 +25,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author Martin Kuba makub@ics.muni.cz
  */
-@WebFilter(urlPatterns = {"/room/*", "/customer/*", "/reservation/*", "/hotel/*"})
-public class ProtectFilter implements Filter {
+@WebFilter(urlPatterns = {"/room/new/*", "/room/edit/*", "/room/delete/*", 
+                            "/hotel/new/*", "/hotel/edit/*", "/hotel/delete/*", 
+                            "/customer/new/*", "/customer/edit/*", "/customer/delete/*",
+                            "/reservation/edit/*", "/reservation/delete/*"})
+public class ProtectFilterUser implements Filter {
 
-    final static Logger log = LoggerFactory.getLogger(ProtectFilter.class);
+    final static Logger log = LoggerFactory.getLogger(ProtectFilterUser.class);
 
 
     @Override
@@ -39,8 +42,6 @@ public class ProtectFilter implements Filter {
             CustomerFacade userFacade = WebApplicationContextUtils.getWebApplicationContext(r.getServletContext()).getBean(CustomerFacade.class);
   
             HttpSession session = request.getSession();
-            String logname = request.getParameter("username");
-            String password = request.getParameter("password");
                 
             CustomerDTO auth = (CustomerDTO) session.getAttribute("authenticatedUser");
             CustomerDTO tmp = new CustomerDTO();
@@ -52,50 +53,25 @@ public class ProtectFilter implements Filter {
             
             
             if(tmp==null){
-                if(logname==null){
-                    response.sendRedirect(request.getContextPath()+"/auth/login-required");
+                
+                response.sendRedirect(request.getContextPath()+"/auth/login-required");
                 return;
-                }   
+            }   
                 
-                CustomerDTO matchingUser = new CustomerDTO();
 
-                try{
-                    matchingUser = userFacade.findCustomerByEmail(logname);
-                }catch (IllegalArgumentException e){
-                        matchingUser = null;
-                    }
-                
-                //log.info("User auth: "+matchingUser.toString());
-                //log.info("username: "+logname);
-                //log.info("password:"+password);
 
-                if(matchingUser==null) {
-                    log.info("no user with id {}", logname);
+                if(auth==null) {
                     response.sendRedirect(request.getContextPath()+"/auth/login-error");
                     return;
                 }
-                UserAuthenticateDTO userAuthenticateDTO = new UserAuthenticateDTO();
-                userAuthenticateDTO.setUserId(matchingUser.getId());
-                userAuthenticateDTO.setPassword(password);
 
-                log.info("User auth: "+matchingUser.toString());
-                log.info("User authDTO: "+userAuthenticateDTO.getUserId().toString()+" pass:"+userAuthenticateDTO.getPassword().toString());
-                /*    
-                if (!userFacade.isAdmin(matchingUser)) {
-                    log.info("user not admin {}", matchingUser);
+                if (!userFacade.isAdmin(auth)) {
+                    log.info("user not admin {}", auth);
                     response.sendRedirect(request.getContextPath()+"/auth/login-noadmin");
                     return;
-                }*/
-                if (!userFacade.authenticateCustomer(userAuthenticateDTO)) {
-                    log.info("wrong credentials: user={} password={}", logname, password);
-                    response.sendRedirect(request.getContextPath()+"/auth/login-error");
-                    return;
                 }
-                auth = matchingUser;
-            }
-
-            session.setAttribute("authenticatedUser", auth);
-            request.setAttribute("authenticatedUser", auth);
+                
+            
 
             chain.doFilter(request, response);
     }

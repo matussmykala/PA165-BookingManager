@@ -4,25 +4,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <my:pagetemplate title="Room ${room.id} detail">
 <jsp:attribute name="body">
 
 
         <table class="table">
-            <caption>Room</caption>
+            <caption><f:message key="room.list.room"/></caption>
             <thead>
             <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Number Of Beds</th>
-                <th>Price</th>
+                <th>ID</th>
+                <th><f:message key="room.list.name"/></th>
+                <th><f:message key="room.list.hotel"/></th>
+                <th><f:message key="room.list.numberOfBeds"/></th>
+                <th><f:message key="room.list.price"/></th>
             </tr>
             </thead>
             <tbody>
             <tr>
                 <td>${room.id}</td>
                 <td><c:out value="${room.name}"/></td>
+                <td><c:out value="${room.hotel.name}"/></td>
                 <td><c:out value="${room.numberOfBeds}"/></td>
                 <td><c:out value="${room.price}"/></td>
             </tr>

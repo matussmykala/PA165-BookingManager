@@ -29,7 +29,7 @@ public interface CustomerFacade {
      * @param customer customer that is trying to authenticate
      * @return true if the passwords match, false if not
      */
-    boolean authenticateCustomer(CustomerDTO customer);
+    boolean authenticateCustomer(UserAuthenticateDTO customer);
 
     /**
      * Fetches all registered customers.

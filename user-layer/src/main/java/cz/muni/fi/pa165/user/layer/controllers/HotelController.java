@@ -133,33 +133,33 @@ public class HotelController {
             model.addAttribute("alert_info", "Date is empty");
             return "hotel/find";
         }else{
-            HotelDTO hotel = new HotelDTO();
+            
+            HotelDTO hotelDTO = new HotelDTO();
             try{
-                hotel = hotelFacade.findByName(goal);
+                hotelDTO = hotelFacade.findByName(goal);
             }catch (Exception e){
-                hotel = null;
+                hotelDTO = null;
             }
             
-            List<HotelDTO> hotelList = hotelFacade.findByAddress(goal);
-            
-            if(hotel!=null && !hotelList.contains(hotel)){
-                hotelList.add(hotel);
-            }
-      
-            for (HotelDTO hotel_tmp : hotelList) {
-                if(hotelFacade.findHotelWithFreeRoomInRange(hotel_tmp.getAddress(),startDate,endDate)!=null){
-                    freeHotels.add(hotel_tmp);
-                }
-            }
-            
-            if(freeHotels.size()<1){
+            List<HotelDTO> hotels = hotelFacade.findByAddress(goal);
+            if(hotels.size()<1 && hotelDTO==null){
                 model.addAttribute("alert_info", "No data found");
+                return "room/list";
             }else{
-                model.addAttribute("hotels", freeHotels);
-                return "hotel/list";    
-            }         
-        }   
-        return "hotel/list";                
+                
+                if(!hotels.contains(hotelDTO)){
+                    hotels.add(hotelDTO);
+                }
+                List<RoomDTO> rooms = new ArrayList<>();
+
+                for(HotelDTO hotel : hotels){
+                    rooms.addAll(hotelFacade.findFreeRoomInRangeChanged(hotel, startDate, endDate));
+                }
+                model.addAttribute("rooms", rooms);           
+                return "room/list";
+                
+            }    
+        }                 
     }
    
     

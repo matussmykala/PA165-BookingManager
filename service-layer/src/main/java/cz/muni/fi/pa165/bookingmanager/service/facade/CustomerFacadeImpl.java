@@ -56,9 +56,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
      * @return true if the passwords match, false if not
      */
     @Override
-    public boolean authenticateCustomer(CustomerDTO customer) {
+    public boolean authenticateCustomer(UserAuthenticateDTO  customer) {
 
-        return customerService.authenticateCustomer(customerService.findCustomerById(customer.getId()), customer.getPassword());
+        return customerService.authenticateCustomer(customerService.findCustomerById(customer.getUserId()), customer.getPassword());
     }
 
     /**
