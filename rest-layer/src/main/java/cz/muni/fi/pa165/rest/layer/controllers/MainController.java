@@ -21,12 +21,7 @@ public class MainController {
     public final Map<String, String> getResources() {
 
         Map<String,String> resourcesMap = new HashMap<>();
-        
-        resourcesMap.put("rooms_uri", ApiUris.ROOT_URI_ROOMS);
-        resourcesMap.put("reservations_uri", ApiUris.ROOT_URI_RESERVATIONS);
-        resourcesMap.put("customers_uri", ApiUris.ROOT_URI_CUSTOMERS);
-        resourcesMap.put("hotels_uri", ApiUris.ROOT_URI_HOTELS);
-        
+        resourcesMap.put("rooms_uri", "/room");
         return Collections.unmodifiableMap(resourcesMap);
         
     }
