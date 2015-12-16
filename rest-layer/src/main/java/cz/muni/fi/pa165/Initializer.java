@@ -1,6 +1,9 @@
-
-package cz.muni.fi.pa165.rest.layer.config;
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cz.muni.fi.pa165;
 
 import javax.servlet.Filter;
 import org.springframework.web.context.request.RequestContextListener;
