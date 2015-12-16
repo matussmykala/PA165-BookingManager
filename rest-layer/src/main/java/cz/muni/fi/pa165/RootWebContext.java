@@ -1,10 +1,16 @@
-package cz.muni.fi.pa165.rest.layer.config;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package cz.muni.fi.pa165;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import cz.muni.fi.pa165.rest.layer.mixin.CustomerDTOMixin;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,7 +31,7 @@ import sampleData.SampleDataConfiguration;
 
 @EnableWebMvc
 @Configuration
-@Import({ServiceConfiguration.class,SampleDataConfiguration.class})
+@Import({SampleDataConfiguration.class})
 @ComponentScan(basePackages = {"cz.muni.fi.pa165.rest.layer.controllers"})
 public class RootWebContext extends WebMvcConfigurerAdapter {
 
@@ -48,8 +54,8 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH));
         
-
-        objectMapper.addMixIn(CustomerDTO.class, CustomerDTOMixin.class);
+        
+        
         
         objectMapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
    
