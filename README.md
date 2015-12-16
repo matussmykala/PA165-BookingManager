@@ -10,7 +10,7 @@ Project for pa165.
 - Framework - Spring
 - Bootstrap
 - Apache Tomcat
-- Google Chrome web browser
+- Google Chrome web browser (Check of browser is provided by web interface)
 
  
 ## Modules
@@ -24,7 +24,7 @@ Project for pa165.
 
 ## Installation and run
 
-Use maven and startup-bat.bat script for Windows and startup-sh.sh script for Linux
+Use maven and startup-web.sh script for web interface and startup-rest.sh script for REST interface
 
 mvn clean install
 
@@ -34,6 +34,10 @@ mvn tomcat7:run
 ## Web interface using
 
  http://localhost:8080/pa165
+ 
+## REST interface using
+
+ http://localhost:8080/pa165/rest
 
 ## Repository
 
