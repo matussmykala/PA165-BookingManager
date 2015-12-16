@@ -16,5 +16,7 @@
         <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/find"
               role="button"><f:message key="home.button"/></a>
     </div>
-</jsp:attribute>
+              
+    
+</jsp:attribute>    
 </my:pagetemplate>
