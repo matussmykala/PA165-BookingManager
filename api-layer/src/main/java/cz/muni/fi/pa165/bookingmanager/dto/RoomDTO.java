@@ -5,6 +5,9 @@ import java.util.Currency;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Room DTO implementation
@@ -31,11 +34,6 @@ public class RoomDTO {
      * Price of room
      */
     private BigDecimal price;
-
-    /**
-     * Currency of room price
-     */
-    private Currency currency;
 
     /**
      * Hotel which room belongs to
@@ -135,31 +133,12 @@ public class RoomDTO {
         this.price = price;
     }
 
-    /**
-     * Gets currency
-     *
-     * @return currency
-     */
-    public Currency getCurrency() {
-        return currency;
-    }
-
-    /**
-     * Sets currency
-     *
-     * @param currency
-     */
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 11 * hash + Objects.hashCode(this.name);
         hash = 11 * hash + this.numberOfBeds;
         hash = 11 * hash + Objects.hashCode(this.price);
-        //hash = 11 * hash + Objects.hashCode(this.currency);
         return hash;
     }
 
@@ -181,14 +160,11 @@ public class RoomDTO {
         if (!Objects.equals(this.price, other.price)) {
             return false;
         }
-        if (!Objects.equals(this.currency, other.currency)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "RoomDTO{" + "id=" + id + ", name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + ", currency=" + currency + '}';
+        return "RoomDTO{" + "id=" + id + ", name=" + name + ", numberOfBeds=" + numberOfBeds + ", price=" + price + '}';
     }
 }
