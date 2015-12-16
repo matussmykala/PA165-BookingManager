@@ -102,7 +102,16 @@
         </div>
     </div>
     </c:if>
-
+    
+    
+    <%
+    String ua = request.getHeader("user-agent");
+    boolean isChrome = (ua != null && ua.indexOf("Chrome/") != -1);
+    if (!isChrome) {
+      out.println("<div class=\"alert alert-info\" role=\"alert\">Your browser is not supported<br/>Please use last version of Google Chrome browser<br/></div>");
+    }
+    %>
+    
     <!-- alerts -->
     <c:if test="${not empty alert_danger}">
         <div class="alert alert-danger" role="alert">
