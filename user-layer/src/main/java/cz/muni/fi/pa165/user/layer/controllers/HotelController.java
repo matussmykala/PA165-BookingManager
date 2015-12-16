@@ -124,7 +124,7 @@ public class HotelController {
     
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder){
-        List<HotelDTO> freeHotels = new ArrayList<>();
+
         if(goal==""){
             model.addAttribute("alert_info", "Name/Destination is empty");
             return "hotel/find"; 
@@ -147,6 +147,7 @@ public class HotelController {
                 return "room/list";
             }else{
                 
+                
                 if(!hotels.contains(hotelDTO)){
                     hotels.add(hotelDTO);
                 }
@@ -155,8 +156,15 @@ public class HotelController {
                 for(HotelDTO hotel : hotels){
                     rooms.addAll(hotelFacade.findFreeRoomInRangeChanged(hotel, startDate, endDate));
                 }
-                model.addAttribute("rooms", rooms);           
-                return "room/list";
+                
+                if(rooms.size()<1){
+                    model.addAttribute("rooms", rooms);
+                    model.addAttribute("alert_info", "No available rooms in this date range");
+                    return "room/list";
+                }else{
+                    model.addAttribute("rooms", rooms);           
+                    return "room/list";
+                }
                 
             }    
         }                 

@@ -66,7 +66,7 @@
                     </ul>
                 </li>
                 <c:if test="${not empty authenticatedUser}">
-                <li class="dropdown" style="witdh:300px;">
+                <li class="dropdown">
                     <a class="dropdown-toggle" href="${pageContext.request.contextPath}/customer/view/${authenticatedUser.id}"><c:out value="${authenticatedUser.name} ${authenticatedUser.surname} "/></a>               
                 </li>
                 <li class="dropdown">

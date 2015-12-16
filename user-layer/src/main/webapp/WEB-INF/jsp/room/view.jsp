@@ -34,9 +34,11 @@
                 <td><f:message key="room.list.price"/></td>
                 <td><c:out value="${room.price}"/></td>
             </tr>
+            
             <tr>
                 <td colspan="2">
                     <div class="row"> 
+                        <c:if test="${authenticatedUser.admin == true}">
                         <div class="col-xs-1">
                             <form action="${pageContext.request.contextPath}/room/edit/${room.id}">
                                 <button class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
@@ -45,6 +47,7 @@
                         <div class="col-xs-1">
                             <my:a href="/room/delete/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
                         </div>
+                        </c:if>
                         <div class="col-xs-1">
                             <my:a href="/room/list" class="btn btn-primary"><f:message key="room.list.showAll"/></my:a>
                         </div>
