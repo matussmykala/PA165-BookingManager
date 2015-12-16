@@ -64,10 +64,7 @@ public class ProtectFilter implements Filter {
                 }catch (IllegalArgumentException e){
                         matchingUser = null;
                     }
-                
-                //log.info("User auth: "+matchingUser.toString());
-                //log.info("username: "+logname);
-                //log.info("password:"+password);
+
 
                 if(matchingUser==null) {
                     log.info("no user with id {}", logname);
@@ -78,25 +75,20 @@ public class ProtectFilter implements Filter {
                 userAuthenticateDTO.setUserId(matchingUser.getId());
                 userAuthenticateDTO.setPassword(password);
 
-                log.info("User auth: "+matchingUser.toString());
-                log.info("User authDTO: "+userAuthenticateDTO.getUserId().toString()+" pass:"+userAuthenticateDTO.getPassword().toString());
-                /*    
-                if (!userFacade.isAdmin(matchingUser)) {
-                    log.info("user not admin {}", matchingUser);
-                    response.sendRedirect(request.getContextPath()+"/auth/login-noadmin");
-                    return;
-                }*/
+
                 if (!userFacade.authenticateCustomer(userAuthenticateDTO)) {
                     log.info("wrong credentials: user={} password={}", logname, password);
                     response.sendRedirect(request.getContextPath()+"/auth/login-error");
                     return;
                 }
                 auth = matchingUser;
+                response.sendRedirect(request.getContextPath()+"/auth/login-success");
             }
 
             session.setAttribute("authenticatedUser", auth);
             request.setAttribute("authenticatedUser", auth);
-
+            
+                       
             chain.doFilter(request, response);
     }
 

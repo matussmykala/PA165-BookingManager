@@ -1,4 +1,5 @@
 package cz.muni.fi.pa165.user.layer.controllers;
+import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import java.util.Date;
 
 import javax.validation.Valid;
@@ -7,14 +8,19 @@ import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
+import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -69,10 +75,16 @@ public class ReservationController
                              //@RequestParam long customerId,
                              @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
                              @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
-                             UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+                             UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, ServletRequest r) {
         ReservationCreateDTO reservationCreateDTO = new ReservationCreateDTO();
         reservationCreateDTO.setRoomId(this.roomId);
-        reservationCreateDTO.setCustomerId((long) 1);//customerId);
+        
+        HttpServletRequest request = (HttpServletRequest) r;
+        HttpSession session = request.getSession();
+       
+        CustomerDTO auth = (CustomerDTO) session.getAttribute("authenticatedUser");
+        
+        reservationCreateDTO.setCustomerId(auth.getId());//customerId);
         reservationCreateDTO.setStartOfReservation(startDate);
         reservationCreateDTO.setEndOfReservation(endDate);
         boolean success = false;

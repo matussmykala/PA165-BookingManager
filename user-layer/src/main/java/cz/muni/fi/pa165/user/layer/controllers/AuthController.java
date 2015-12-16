@@ -26,24 +26,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AuthController {
 
     final static Logger log = LoggerFactory.getLogger(AuthController.class);
-    /*
-    @RequestMapping(value = "/check", method = RequestMethod.GET)
-    public String checkLogin(@RequestParam String username,
-                             @RequestParam String password,
-                             UriComponentsBuilder uriBuilder,
-                             RedirectAttributes redirectAttributes,
-                             ServletRequest r,
-                             ServletResponse s,
-                             FilterChain chain) {
 
-        return "pa165";
-    }
-    */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loadLogin(){
+    public String loadLogin(){       
         return "auth/login";
     }
 
+    @RequestMapping(value = "/login-success", method = RequestMethod.GET)
+    public String loginSuccess(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+        
+        redirectAttributes.addFlashAttribute("alert_info", "Login successful");
+        
+        return "redirect:"+ uriBuilder.path("").toUriString();
+    }
+    
     @RequestMapping(value = "/login-required", method = RequestMethod.GET)
     public String loadLoginFailed(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("alert_info", "This page is authorized, please log in");
@@ -65,7 +61,7 @@ public class AuthController {
     @RequestMapping(value = "/login-noadmin", method = RequestMethod.GET)
     public String loginNoAdmin(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         redirectAttributes.addFlashAttribute("alert_info", "You are not administrator");
-        return "redirect:" + uriBuilder.path("/auth/login").toUriString();
+        return "access-denied";
     }
     
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -77,7 +73,6 @@ public class AuthController {
         session.setAttribute("authenticatedUser", null);
         request.setAttribute("authenticatedUser", null);
         
-        redirectAttributes.addFlashAttribute("alert_info", "You were logged out");
         return "redirect:" + uriBuilder.path("/auth/login").toUriString();
     }
 }
