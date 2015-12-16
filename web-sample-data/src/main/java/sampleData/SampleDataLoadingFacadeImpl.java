@@ -1,9 +1,13 @@
 package sampleData;
 
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
+import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
+import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import cz.muni.fi.pa165.bookingmanager.service.ReservationService;
@@ -38,6 +42,8 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
     @Autowired
     ReservationService reservationService;
     @Autowired
+    ReservationFacade reservationFacade;
+    @Autowired
     CustomerService customerService;
 
     @Override
@@ -62,12 +68,16 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Room room2 = room("Izba-2",2,new BigDecimal("25.2"), park );
         Room room3 = room("Izba-3",3,new BigDecimal("25.3"), arkadia );
         Room room4 = room("Izba-4",4,new BigDecimal("25.4"), ira );
+        Room room5 = room("Izba-5",5,new BigDecimal("25.5"), ira );
         
         Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", sha256Hash("pass1"), Boolean.FALSE);
         Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", sha256Hash("pass2"), Boolean.FALSE);
         Customer customer3 = customer("zuzka", "adamkova", "adamek", "adamkova@seznam.cz", sha256Hash("pass3"), Boolean.TRUE);
         Customer customer4 = customer("anicka", "kubova", "kuba", "kubova@seznam.cz", sha256Hash("pass4"), Boolean.TRUE);
+                   
         
+        
+        // reservation example
         
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, 11, 1);
@@ -79,8 +89,19 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         calendar.set(2014, 12, 1);
         Date endDate2 = calendar.getTime();
         
-        Reservation reservation1 = reservation(startDate1, endDate1, customer1, room4);
-        Reservation reservation2 = reservation(startDate2, endDate2, customer2, room3);
+        ReservationCreateDTO reservationDTO1 = new ReservationCreateDTO();
+        reservationDTO1.setCustomerId(customer1.getId());
+        reservationDTO1.setStartOfReservation(startDate1);
+        reservationDTO1.setEndOfReservation(endDate1);
+        reservationDTO1.setRoomId(room4.getId());        
+        reservationFacade.createReservation(reservationDTO1);
+        
+        ReservationCreateDTO reservationDTO2 = new ReservationCreateDTO();
+        reservationDTO2.setCustomerId(customer2.getId());
+        reservationDTO2.setStartOfReservation(startDate2);
+        reservationDTO2.setEndOfReservation(endDate2);
+        reservationDTO2.setRoomId(room3.getId());        
+        reservationFacade.createReservation(reservationDTO2);
         
    }
     

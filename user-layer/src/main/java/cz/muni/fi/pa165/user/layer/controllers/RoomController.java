@@ -160,13 +160,17 @@ public class RoomController {
     
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
     public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model, UriComponentsBuilder uriBuilder) {
-               
+         
+        
         List<RoomDTO> rooms;
+
         switch (filterType) {
             case "numberOfBeds":                
                 try{
-                    int numberOfBeds = Integer.parseInt(filter);
+                    int numberOfBeds = Integer.parseInt(filter);                    
+
                     rooms = roomFacade.getRoomsByNumberOfBeds(numberOfBeds);
+
                 }catch (Exception e){
                     rooms = null;
                 }

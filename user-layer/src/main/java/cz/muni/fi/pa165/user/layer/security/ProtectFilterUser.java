@@ -27,8 +27,8 @@ import javax.servlet.http.HttpSession;
  */
 @WebFilter(urlPatterns = {"/room/new/*", "/room/edit/*", "/room/delete/*", 
                             "/hotel/new/*", "/hotel/edit/*", "/hotel/delete/*", 
-                            "/customer/new/*", "/customer/edit/*", "/customer/delete/*",
-                            "/reservation/edit/*", "/reservation/delete/*"})
+                            "/customer/new/*", "/customer/edit/*", "/customer/delete/*", "/customer/list/*",
+                            "/reservation/edit/*", "/reservation/list/*", "/reservation/delete/*"})
 public class ProtectFilterUser implements Filter {
 
     final static Logger log = LoggerFactory.getLogger(ProtectFilterUser.class);

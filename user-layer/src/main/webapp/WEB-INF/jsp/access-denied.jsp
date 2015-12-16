@@ -4,13 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <my:pagetemplate>
 <jsp:attribute name="body">
 
     <div class="jumbotron">
-        <h2>Access denied</h2>
-        <h3>You have no administrator rights</h3>        
+        <h2><f:message key="access.denied"/></h2>
+        <h3><f:message key="access.denied.text"/></h3>        
     </div>
               
               

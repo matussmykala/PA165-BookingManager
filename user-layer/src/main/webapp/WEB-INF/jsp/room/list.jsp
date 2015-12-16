@@ -5,15 +5,18 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <my:pagetemplate title="Rooms">
 <jsp:attribute name="body">
-    <my:a href="/room/new" class="btn btn-primary">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        <f:message key="room.list.newRoom"/>
-    </my:a>
+    <c:if test="${authenticatedUser.admin == true}">
+        <my:a href="/room/new" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <f:message key="room.list.newRoom"/>
+        </my:a>
+    </c:if>
 
-
+    <c:if test="${not fn:containsIgnoreCase(pageContext.request.getQueryString(),'goal')}">
     <div class="form-horizontal" style="margin-top:20px;">
         <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
             <div class="form-group">
@@ -29,14 +32,16 @@
                 <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.valueOfFilter"/></label>
                 <div class="col-md-2">
                     <input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/>
+                     
                 </div>
-
                 <div class="col-md-2">
                     <button class="btn btn-primary" type="submit" ><f:message key="room.list.filterRooms"/></button>
                 </div>
             </div>
+                
         </form:form>
     </div>
+    </c:if>
 
 
     <table class="table">
@@ -61,12 +66,17 @@
                 <td style="width:45px;">
                     <my:a href="/room/view/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" style="height:20px;" aria-hidden="true"></span></my:a>
                 </td>
-                <td style="width:45px;">
-                    <my:a href="/room/edit/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></my:a>
-                </td>
-                <td style="width:45px;">
-                    <my:a href="/room/delete/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
-                </td>
+                
+                <c:if test="${authenticatedUser.admin == true}">
+                    <td style="width:45px;">
+                        <my:a href="/room/edit/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></my:a>
+                    </td>
+
+                    <td style="width:45px;">
+                        <my:a href="/room/delete/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+                    </td>
+                </c:if>
+                    
                 <td>
                     <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
                 </td>

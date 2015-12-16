@@ -94,17 +94,17 @@ public class ReservationController
         catch (IllegalArgumentException e){
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. Wrong dates were picked.");
-            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
         }
         if (success) {
             redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" was created.");
-            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+            return "redirect:" + uriBuilder.path("/customer/view/{id}").buildAndExpand(auth.getId()).encode().toUriString();
         } else{
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. The room is not free " +
                     "in picked time range.");
-            return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
+            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
         }
     }
 
