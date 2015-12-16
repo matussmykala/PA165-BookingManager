@@ -102,7 +102,7 @@ public class AuthController {
         
         session.setAttribute("authenticatedUser", null);
         request.setAttribute("authenticatedUser", null);
-        
-        return "redirect:" + uriBuilder.path("/auth/login").toUriString();
+        redirectAttributes.addFlashAttribute("alert_info", "You were logged out");
+        return "redirect:" + uriBuilder.path("").toUriString();
     }
 }
