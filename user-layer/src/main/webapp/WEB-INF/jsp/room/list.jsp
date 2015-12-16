@@ -4,34 +4,35 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <my:pagetemplate title="Rooms">
 <jsp:attribute name="body">
     <my:a href="/room/new" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        New room
+        <f:message key="room.list.newRoom"/>
     </my:a>
 
 
     <div class="form-horizontal" style="margin-top:20px;">
         <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
             <div class="form-group">
-                <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label">Filter By</label>
+                <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.filterBy"/></label>
                 <div class="col-md-2">
                     <select class="form-control" id="filterBy" name="filterType">
-                        <option value="numberOfBeds">Number Of Beds</option>
-                        <option value="price">Price</option>
-                        <option value="hotelName">Hotel name</option>
+                        <option value="numberOfBeds"><f:message key="room.list.numberOfBeds"/></option>
+                        <option value="price"><f:message key="room.list.price"/></option>
+                        <option value="hotelName"><f:message key="room.list.hotel"/></option>
                     </select>
                 </div>
 
-                <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label">Value of filter</label>
+                <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.valueOfFilter"/></label>
                 <div class="col-md-2">
                     <input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/>
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-primary" type="submit" >Filter Rooms</button>
+                    <button class="btn btn-primary" type="submit" ><f:message key="room.list.filterRooms"/></button>
                 </div>
             </div>
         </form:form>
@@ -41,11 +42,11 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Hotel</th>
-            <th>Number Of beds</th>
-            <th>Price</th>
+            <th><f:message key="room.list.id"/></th>
+            <th><f:message key="room.list.name"/></th>
+            <th><f:message key="room.list.hotel"/></th>
+            <th><f:message key="room.list.numberOfBeds"/></th>
+            <th><f:message key="room.list.price"/></th>
         </tr>
         </thead>
         <tbody>
@@ -67,7 +68,7 @@
                     <my:a href="/room/delete/${room.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
                 </td>
                 <td>
-                    <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary">Book</my:a>
+                    <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
                 </td>
             </tr>
         </c:forEach>

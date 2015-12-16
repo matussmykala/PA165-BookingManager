@@ -65,8 +65,17 @@
                         <li><a href="https://maven.apache.org/">Maven</a></li>
                     </ul>
                 </li>
+                <c:if test="${not empty authenticatedUser}">
+                <li class="dropdown" style="witdh:300px;">
+                    <a class="dropdown-toggle" href="${pageContext.request.contextPath}/customer/view/${authenticatedUser.id}"><c:out value="${authenticatedUser.name} ${authenticatedUser.surname} "/></a>               
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="${pageContext.request.contextPath}/auth/logout"><f:message key="logout"/></a>
+                </li>
+                </c:if>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+            <!--/.nav-collapse -->
     </div>
 </nav>
 
@@ -86,7 +95,8 @@
         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <c:out value="${authenticatedUser.name} ${authenticatedUser.surname}"/>
+                    <c:out value="${authenticatedUser.name} ${authenticatedUser.surname} "/>
+                    <a href="${pageContext.request.contextPath}/auth/logout"><f:message key="logout"/></a>
                 </div>
             </div>
         </div>

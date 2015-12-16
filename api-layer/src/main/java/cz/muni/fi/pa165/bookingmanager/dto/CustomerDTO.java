@@ -99,6 +99,14 @@ public class CustomerDTO {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+    
+    public boolean getIsAdmin(boolean admin) {
+        return isAdmin;
+    }
+    
+    public void setIsAdmin(boolean admin) {
+        this.isAdmin = admin;
+    }
 
     @Override
     public boolean equals(Object o) {

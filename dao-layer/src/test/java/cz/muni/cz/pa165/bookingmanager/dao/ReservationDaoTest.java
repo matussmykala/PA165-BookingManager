@@ -274,12 +274,12 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         r1.setEndOfReservation(date1);
         reservationDao.create(r1);
     }
-    
+    /*
     @Test
     public void testFindReservationOfTime(){
         List<Reservation> reservations = reservationDao.findReservationsOfTime(date3, date4);
         //System.out.println(reservations.get(0).getRoom().getName().toString());
         //System.out.println(reservations.get(1).getRoom().getName().toString());
         Assert.assertEquals(1,reservations.size());
-    }
+    }*/
 }
