@@ -23,9 +23,10 @@
 
     <!-- list of logger prefixes with non-default logging levels -->
     <logger name="org" level="info"/>
-    <logger name="cz.muni.fi.pa165" level="trace"/>
-    <logger name="cz.muni.fi.pa165.user.layer" level="trace"/>
+    <logger name="cz.muni.fi.pa165" level="info"/>
+    <logger name="cz.muni.fi.pa165.user.layer" level="info"/>
     <logger name="cz.muni.fi.pa165.bookingmanager.service" level="info"/>
+    <logger name="cz.muni.fi.pa165.bookingmanager.facade" level="info"/>
     <logger name="org.hibernate.tool.hbm2ddl.SchemaExport" level="off"/>
     <logger name="org.hibernate.engine.jdbc.spi.SqlExceptionHelper" level="off" />
     <logger name="org.hibernate" level="error"/>
