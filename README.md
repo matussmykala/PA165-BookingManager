@@ -20,6 +20,7 @@ Project for pa165.
 - service-layer - Service layer
 - rest-layer - REST service
 - user-layer - User web interface
+- web-sample-data - Sample Data 
 
 ## Installation and run
 
@@ -27,6 +28,13 @@ Use maven.
 
 mvn clean install
 
+mvn tomcat7:run
+
+## Web interface using
+
+ http://localhost:8080/pa165
+
 ## Repository
 
 git clone https://github.com/matussmykala/PA165-BookingManager.git
+
