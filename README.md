@@ -24,11 +24,12 @@ Project for pa165.
 
 ## Installation and run
 
-Use maven.
+Use maven and startup-bat.bat script for Windows and startup-sh.sh script for Linux
 
 mvn clean install
 
 mvn tomcat7:run
+
 
 ## Web interface using
 
