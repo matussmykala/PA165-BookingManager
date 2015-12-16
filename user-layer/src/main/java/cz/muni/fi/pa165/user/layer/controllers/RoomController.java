@@ -7,14 +7,11 @@ import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
-import cz.muni.fi.pa165.bookingmanager.service.HotelService;
-import cz.muni.fi.pa165.bookingmanager.service.facade.RoomFacadeImpl;
+//import cz.muni.fi.pa165.bookingmanager.service.HotelService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.inject.Inject;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +26,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
-
+/**
+* Spring MVC controller for administrating rooms
+*
+* @author Martin Cuchran
+*/
 @Controller
 @RequestMapping("/room")
 public class RoomController {
@@ -45,36 +46,45 @@ public class RoomController {
     @Autowired
     private ReservationFacade reservationFacade;
 
+    /**
+     * Shows a list of rooms with the ability to add, view, delete or edit.
+     *
+     * @param model data to display
+     * @return JSP page name
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("rooms", roomFacade.getAllRooms());
         return "room/list";
     }
-    
+    /*
     @RequestMapping(value = "/hotelList/{id}", method = RequestMethod.GET)
     public String findByHotel(@PathVariable("id") long id, Model model){
         model.addAttribute("room",roomFacade.findByHotel(id));
         return "room/list";
     }
+    */
     
-    @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(Model model){
-       model.addAttribute("hotels", hotelFacade.getAllHotels()); 
-       return "room/search";
-    }
-    
+    /**
+     * Shows a list of rooms by filter
+     *
+     * @param hotelId, startDate, endDate, model
+     * @return JSP page name
+     */
     @RequestMapping(value = "/free-rooms", method = RequestMethod.GET)
-    //@RequestMapping(value = "/free-rooms/?hotelId={hotelId}&startDate={startDate}&endDate={endDate}", method = RequestMethod.GET)
-    public String listOfFreeRoomsOfHotel(@RequestParam long hotelId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    public String listOfFreeRoomsOfHotel(@RequestParam long hotelId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model) {
         HotelDTO hotelDTO = hotelFacade.getHotelById(hotelId);
-        List<RoomDTO> rooms = hotelFacade.findFreeRoomInRangeChanged(hotelDTO, startDate, endDate);
-        for (RoomDTO room : rooms){
-            log.info("Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+startDate.toString()+" end:"+endDate.toString());
-        }        
+        List<RoomDTO> rooms = hotelFacade.findFreeRoomInRangeChanged(hotelDTO, startDate, endDate);     
         model.addAttribute("rooms", rooms);
         return "room/list";
     }
 
+    /**
+     * Removes room with specific ID
+     *
+     * @param id, model, uriBuilder, redirectAttributes
+     * @return redirect to JSP
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         RoomDTO room = roomFacade.getRoomById(id);
@@ -89,6 +99,12 @@ public class RoomController {
         return "redirect:" + uriBuilder.path("/room/list").toUriString();
     }
 
+    /*
+     * Shows room with specific ID
+     *
+     * @param id, model
+     * @return JSP page name
+     */
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         log.debug("view({})", id);
@@ -96,6 +112,12 @@ public class RoomController {
         return "room/view";
     }
 
+    /**
+     * Prepares an empty form.
+     *
+     * @param model data to be displayed
+     * @return JSP page
+     */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newRoom(Model model){
         model.addAttribute("roomCreate", new RoomDTO());
@@ -103,10 +125,16 @@ public class RoomController {
         return "room/new";
     }
     
+    /**
+     * Creates room
+     *
+     * @param ModelAttribute, hotelId, bindingResult, model, redirectAttributes, uriBuilder
+     * @return JSP page
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-     public String create(@Valid @ModelAttribute("roomCreate") RoomDTO formBean,@RequestParam long hotelId, BindingResult bindingResult,
+     public String create(@Valid @ModelAttribute("roomCreate") RoomDTO room,@RequestParam long hotelId, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-        //in case of validation error forward back to the the form
+
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
             }
@@ -115,22 +143,34 @@ public class RoomController {
             }  
             return "room/new";
         }
-        //create room
+
         HotelDTO hotel = hotelFacade.getHotelById(hotelId);
-        formBean.setHotel(hotel);
-        roomFacade.createRoom(formBean);
-        //report success
-        redirectAttributes.addFlashAttribute("alert_success", "room " + formBean.getName() + " was created");
+        room.setHotel(hotel);
+        roomFacade.createRoom(room);
+
+        redirectAttributes.addFlashAttribute("alert_success", "room " + room.getName() + " was created");
         return "redirect:" + uriBuilder.path("/room/list").toUriString();
     } 
      
-     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
-    public String editRoom(@PathVariable("id") long id, Model model,UriComponentsBuilder uriBuilder) {
+    /*
+     * Prepares edit form.
+     *
+     * @param id, model
+     * @return JSP page name
+     */
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String editRoom(@PathVariable("id") long id, Model model) {
         model.addAttribute("room",roomFacade.getRoomById(id));
         model.addAttribute("hotels", hotelFacade.getAllHotels());
         return "room/edit";
     }
     
+    /**
+     * Updates room
+     *
+     * @param id, hotelId, modelAttribute, bindingResult, model, redirectAttributes, uriBuilder
+     * @return JSP page
+     */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public String updateRoom(@PathVariable("id") long id, @RequestParam long hotelId, @Valid @ModelAttribute("room") RoomDTO updatedRoom, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
@@ -158,8 +198,15 @@ public class RoomController {
         return "redirect:" + uriBuilder.path("/room/view/{id}").buildAndExpand(id).encode().toUriString();
     } 
     
+    
+    /**
+     * Filters list of room. Filter is specified by name of attribute and value of attribute. Data are filtrated based on these attributes.
+     *
+     * @param filterType, filter, model
+     * @return JSP page
+     */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model, UriComponentsBuilder uriBuilder) {
+    public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model) {
          
         
         List<RoomDTO> rooms;

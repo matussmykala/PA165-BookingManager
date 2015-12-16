@@ -4,24 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <my:pagetemplate>
 <jsp:attribute name="body">
 
     <div class="jumbotron">
-        <h2>Welcome to PA165 project Booking Manager !</h2>
-        <h3>Find your best accommodation!</h3>
+        <h2><f:message key="home.h2"/></h2>
+        <h3><f:message key="home.h3"/></h3>
+        <br>
         <a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/hotel/find"
-              role="button">Make reservation</a>
+              role="button"><f:message key="home.button"/></a>
     </div>
-              
-              
-              
-    
-   
-
-
-   
-
 </jsp:attribute>
 </my:pagetemplate>

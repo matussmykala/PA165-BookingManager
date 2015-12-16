@@ -12,9 +12,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
 import javax.validation.Validator;
-
 import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
 import sampleData.SampleDataConfiguration;
 
@@ -34,7 +32,7 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
     public static final String TEXTS = "Texts";
 
     /**
-     * Maps the main page to a specific view.
+     * Maps the main page to home view.
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
