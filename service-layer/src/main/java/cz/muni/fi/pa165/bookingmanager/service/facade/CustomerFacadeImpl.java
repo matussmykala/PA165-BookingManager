@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
 
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.service.BeanMappingService;
@@ -89,6 +90,20 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
         return beanMappingService.mapTo(customer, CustomerDTO.class);
     }
+    
+    @Override
+    public CustomerDTO findCustomerByEmail(String email) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email is null");
+        }
+
+        Customer customer = customerService.findCustomerByEmail(email);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer with email " + email + " does not exist");
+        }
+
+        return beanMappingService.mapTo(customer, CustomerDTO.class);
+    }
 
     /**
      * Checks if the specified user has admin role.
@@ -155,5 +170,10 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
     public void setBeanMappingService(BeanMappingService beanMappingService) {
         this.beanMappingService = beanMappingService;
+    }
+    
+    @Override
+    public boolean authenticate(UserAuthenticateDTO u) {
+        return customerService.authenticated(customerService.findCustomerById(u.getUserId()), u.getPassword());
     }
 }

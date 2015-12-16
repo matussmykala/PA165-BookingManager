@@ -21,6 +21,7 @@
                     <select class="form-control" id="filterBy" name="filterType">
                         <option value="numberOfBeds">Number Of Beds</option>
                         <option value="price">Price</option>
+                        <option value="hotelName">Hotel name</option>
                     </select>
                 </div>
 

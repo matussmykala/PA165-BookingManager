@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,6 +84,16 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public void delete(Customer customer) {
         em.remove(customer);
+    }
+
+    @Override
+    public Customer findByEmail(String email) {
+        try {
+            return em.createQuery("SELECT c FROM Customer c WHERE c.email = :email ",Customer.class)
+                    .setParameter("email", email).getSingleResult();
+        } catch (NoResultException nrf) {
+            return null;
+        }
     }
 
 }

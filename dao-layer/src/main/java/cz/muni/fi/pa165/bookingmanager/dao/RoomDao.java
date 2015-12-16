@@ -49,14 +49,7 @@ public interface RoomDao {
      * @return list of rooms with specific price
      */
     public List<Room> findRoomByNumberOfBeds(int numberOfBeds);
-    
-    /**
-     * Return list of rooms with specific price currency
-     *
-     * @currency currency of room price
-     * @return list of rooms with specific price
-     */
-    public List<Room> findRoomByPriceCurrency(Currency currency);   
+      
     
     
     /**

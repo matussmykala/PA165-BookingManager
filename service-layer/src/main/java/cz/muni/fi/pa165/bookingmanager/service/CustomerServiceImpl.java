@@ -7,10 +7,6 @@ import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -40,7 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void registerCustomer(Customer customer, String unencryptedPassword) {
-        customer.setPassword(sha256Hash(unencryptedPassword));
+        customer.setPassword(unencryptedPassword);
         customerDao.create(customer);
     }
 
@@ -148,5 +144,23 @@ public class CustomerServiceImpl implements CustomerService {
         digest.update(password.getBytes(StandardCharsets.UTF_8));
         String str = new BigInteger(1, digest.digest()).toString(16);
         return str;
+    }
+
+    @Override
+    public boolean authenticated(Customer customer, String password) {
+        return validatePassword(password, customer.getPassword());
+    }
+
+    public static boolean validatePassword(String pass, String customerPass){
+        if(pass.equals(customerPass)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public Customer findCustomerByEmail(String email) {
+        return customerDao.findByEmail(email);
     }
 }

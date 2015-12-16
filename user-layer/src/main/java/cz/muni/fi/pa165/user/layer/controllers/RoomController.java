@@ -67,8 +67,11 @@ public class RoomController {
     //@RequestMapping(value = "/free-rooms/?hotelId={hotelId}&startDate={startDate}&endDate={endDate}", method = RequestMethod.GET)
     public String listOfFreeRoomsOfHotel(@RequestParam long hotelId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         HotelDTO hotelDTO = hotelFacade.getHotelById(hotelId);
-        //log.info("Hotel id: "+hotelDTO.getId());
-        model.addAttribute("rooms", hotelFacade.findFreeRoomInRange(hotelDTO, startDate, endDate));
+        List<RoomDTO> rooms = hotelFacade.findFreeRoomInRangeChanged(hotelDTO, startDate, endDate);
+        for (RoomDTO room : rooms){
+            log.info("Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+startDate.toString()+" end:"+endDate.toString());
+        }        
+        model.addAttribute("rooms", rooms);
         return "room/list";
     }
 
@@ -176,6 +179,14 @@ public class RoomController {
                     rooms = null;
                 }
                 break;
+            case "hotelName":                
+                try{
+                    HotelDTO hotel = hotelFacade.findByName(filter);
+                    rooms = roomFacade.findByHotel(hotel.getId());
+                }catch (Exception e){
+                    rooms = null;
+                }
+                break;                
             default:
                 rooms = new ArrayList<>();
                 model.addAttribute("alert_danger", "Unknown filter " + filterType);

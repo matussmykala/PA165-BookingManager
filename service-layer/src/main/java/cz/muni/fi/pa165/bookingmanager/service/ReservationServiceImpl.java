@@ -64,9 +64,9 @@ public class ReservationServiceImpl implements ReservationService
     public List<Reservation> getReservationsOfTime(Date from, Date to)
     {
         List<Reservation> reservations = new ArrayList<>();
-        for(Reservation reservation : reservationDao.findReservationsOfTime(from, to)){
-            reservations.add(reservation);
-        }
+        
+        reservations = reservationDao.findReservationsOfTime(from, to);
+        
         return reservations;
     }
 

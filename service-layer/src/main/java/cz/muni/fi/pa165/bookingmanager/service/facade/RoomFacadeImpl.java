@@ -119,7 +119,7 @@ public class RoomFacadeImpl implements RoomFacade{
             throw new IllegalArgumentException("numberOfBeds is less than 0");
         }
         return beanMappingService.mapTo(roomService.findByNumberOfBeds(numberOfBeds), RoomDTO.class);
-    }
+    }        
 
     public void setRoomService(RoomService roomService) {
         this.roomService = roomService;

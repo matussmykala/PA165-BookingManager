@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HotelServiceImpl implements HotelService {
-
+    final static Logger log = LoggerFactory.getLogger(HotelServiceImpl.class);
     @Autowired
     private HotelDao hotelDao;
 
@@ -104,10 +104,19 @@ public class HotelServiceImpl implements HotelService {
     public List<Room> findFreeRoomInRange(Hotel hotel, Date start, Date end) {
         List<Room> bookedRooms = new ArrayList<Room>();
         List<Room> roomsInHotel = new ArrayList<Room>();
-
+        
         bookedRooms.addAll(roomService.findReservedRoomsAtSpecificTime(start, end));
         roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
+        for (Room room : bookedRooms){
+            System.out.println("Booked Room id: "+room.getId()+" Booked Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        }
+        for (Room room : roomsInHotel){
+            System.out.println("All Room id: "+room.getId()+" All Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        }
         roomsInHotel.removeAll(bookedRooms);
+        for (Room room : roomsInHotel){
+            System.out.println("Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        }
         return Collections.unmodifiableList(roomsInHotel);
     }
 
