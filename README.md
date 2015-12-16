@@ -8,12 +8,18 @@ Project for pa165.
 ## Requirements
 
 - Framework - Spring
+- Bootstrap
+- Apache Tomcat
+- Google Chrome web browser
+
  
 ## Modules
 
 - api-layer	- API for whole app
 - dao-layer	- Data layer
 - service-layer - Service layer
+- rest-layer - REST service
+- user-layer - User web interface
 
 ## Installation and run
 
