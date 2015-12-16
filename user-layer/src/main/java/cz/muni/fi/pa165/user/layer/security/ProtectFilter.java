@@ -21,9 +21,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
- * Protects administrative part of application.
+ * Protects part of application where user login is required
  *
- * @author Martin Kuba makub@ics.muni.cz
+ * @author Martin Cuchran
  */
 @WebFilter(urlPatterns = {"/room/*", "/customer/*", "/reservation/*", "/hotel/*"})
 public class ProtectFilter implements Filter {
@@ -108,6 +108,12 @@ public class ProtectFilter implements Filter {
 
     }
 
+    /**
+    * Creates hash of password
+    *
+    * @param password plain text
+    * @return hash of password
+    */
     private String sha256Hash(String password) {
         MessageDigest digest = null;
         try {

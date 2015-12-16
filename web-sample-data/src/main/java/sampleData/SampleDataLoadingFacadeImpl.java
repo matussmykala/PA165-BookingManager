@@ -1,12 +1,9 @@
 package sampleData;
 
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
-import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Hotel;
-import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import cz.muni.fi.pa165.bookingmanager.entity.Room;
-import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import cz.muni.fi.pa165.bookingmanager.service.CustomerService;
 import cz.muni.fi.pa165.bookingmanager.service.HotelService;
@@ -27,10 +24,13 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * @author matus
+ * 
+ * Creates sample data for application testing
+ * 
+ * @author Martin Cuchran
  */
 @Component
-@Transactional //transactions are handled on facade layer
+@Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
 {
     
@@ -51,8 +51,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         this.Add();
     }
     
+    /**
+     * Adds sample data for WEB and REST layer
+     */
     public void Add(){
       
+        // hotel example
+        
         this.createDate();
         Hotel voronez = hotel("Voronez","Brno","Luxusny hotel v Brne",date);
         Hotel park = hotel("Park Hotel","Praha","Pekny hotel v Prahe", date);
@@ -64,11 +69,15 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Hotel ohlaHotel = hotel("Ohla Hotel", "Bratislava" , "Nejaky hotel", date);
         Hotel transylvania = hotel("Transylvania", "Brno", "Hotel priseriek", date);
         
+        // room example
+        
         Room room1 = room("Izba-1",1,new BigDecimal("25.1"), voronez );
         Room room2 = room("Izba-2",2,new BigDecimal("25.2"), park );
         Room room3 = room("Izba-3",3,new BigDecimal("25.3"), arkadia );
         Room room4 = room("Izba-4",4,new BigDecimal("25.4"), ira );
         Room room5 = room("Izba-5",5,new BigDecimal("25.5"), ira );
+        
+        // customer example
         
         Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", sha256Hash("pass1"), Boolean.FALSE);
         Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", sha256Hash("pass2"), Boolean.FALSE);
@@ -77,7 +86,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
                    
         
         
-        // reservation example
+        // reservation example, required specific date, start before end
         
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, 11, 1);
@@ -105,6 +114,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         
    }
     
+    /**
+     * Generates random date
+     * 
+     * @return Date
+     */
     private Date createDate(){
         Random rand = new Random();
         int  d = rand.nextInt(30) + 1;
@@ -117,18 +131,26 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         
     }
    
+    /**
+     * auxiliary constructor
+     * 
+     * @return Hotel
+     */
     private Hotel hotel(String name, String address, String description, Date date) {
         Hotel hotel = new Hotel();
         hotel.setName(name);
         hotel.setAddress(address);
         hotel.setDescription(description);
-      //  hotel.setImage(readImage(imageFile));
-      //  hotel.setImageMimeType(mimeType);
         hotel.setLastUpdateDay(date);
         hotelService.createHotel(hotel);
         return hotel;
     }
     
+    /**
+     * auxiliary constructor
+     * 
+     * @return Room
+     */
     private Room room(String name,int numberOfBeds, BigDecimal price, Hotel hotel){
         Room room = new Room();
         room.setName(name);
@@ -137,18 +159,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         room.setHotel(hotel); 
         roomService.createRoom(room);
         return room;
-    }
+    }    
     
-    private Reservation reservation(Date startReservation, Date endReservation, Customer customer, Room room){
-        Reservation reservation = new Reservation();
-        reservation.setCustomer(customer);
-        reservation.setStartOfReservation(startReservation);
-        reservation.setEndOfReservation(endReservation);
-        reservation.setRoom(room);
-        reservationService.createReservation(reservation);
-        return reservation;
-    }
-    
+    /**
+     * auxiliary constructor
+     * 
+     * @return Customer
+     */
     private Customer customer(String name, String Surname, String username, String email, String password, Boolean isAdmin){
         Customer customer = new Customer();
         customer.setEmail(email);
@@ -162,6 +179,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         return  customer;
     }
     
+    /**
+     * Generates Hash for password
+     * 
+     * @return hash of password
+     */
     private String sha256Hash(String password) {
         MessageDigest digest = null;
         try {

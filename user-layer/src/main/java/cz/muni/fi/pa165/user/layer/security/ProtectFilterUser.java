@@ -1,12 +1,10 @@
 package cz.muni.fi.pa165.user.layer.security;
 
-import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +15,14 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
- * Protects administrative part of application.
+ * Protects administrative part of application and allows non administrative user functions.
  *
- * @author Martin Kuba makub@ics.muni.cz
+ * @author Martin Cuchran
  */
+
 @WebFilter(urlPatterns = {"/room/new/*", "/room/edit/*", "/room/delete/*", 
                             "/hotel/new/*", "/hotel/edit/*", "/hotel/delete/*", 
                             "/customer/new/*", "/customer/edit/*", "/customer/delete/*", "/customer/list/*",
@@ -91,7 +89,13 @@ public class ProtectFilterUser implements Filter {
     public void destroy() {
 
     }
-
+    
+    /**
+    * Creates hash of password
+    *
+    * @param password plain text
+    * @return hash of password
+    */
     private String sha256Hash(String password) {
         MessageDigest digest = null;
         try {
