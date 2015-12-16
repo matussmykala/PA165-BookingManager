@@ -60,7 +60,12 @@ public class RoomController {
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public final RoomDTO getRoom(@PathVariable("id") long id) throws Exception {
-        RoomDTO roomDTO = roomFacade.getRoomById(id);
+        RoomDTO roomDTO;
+        try{
+            roomDTO = roomFacade.getRoomById(id);
+        }catch(Exception ex){
+             throw new ResourceNotFoundException();
+        }
         if (roomDTO != null) {
             return roomDTO;
         } else {
@@ -98,14 +103,14 @@ public class RoomController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public final RoomDTO createRoom(@RequestBody RoomDTO roomDTO) throws Exception {
+    public final void createRoom(@RequestBody RoomDTO roomDTO) throws Exception {
 
         try {
             roomFacade.createRoom(roomDTO);
-            return roomFacade.getRoomById(roomDTO.getId());
         } catch (Exception ex) {
             throw new ResourceAlreadyExistingException();
-        }
+       }
+    
     }
 }
 
