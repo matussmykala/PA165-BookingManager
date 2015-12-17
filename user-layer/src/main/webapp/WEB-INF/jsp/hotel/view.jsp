@@ -9,7 +9,6 @@
 <my:pagetemplate title="Hotel Administration">
 <jsp:attribute name="body">
 
-
     <table class="table">
         <thead>
         <tr>
@@ -32,7 +31,6 @@
                         <button class="btn btn-primary">Edit</button>
          
                     </form>
-                    
                 </td>
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
@@ -42,16 +40,12 @@
             </tr>
         </tbody>
     </table>
-            
-
-            
+         
      <form method="get" action="${pageContext.request.contextPath}/hotel/list/">
          <p align="left">
             <button type="submit" class="btn btn-primary">Show all</button>
          </p>
      </form>
-
-
 
 </jsp:attribute>
 </my:pagetemplate>

@@ -3,7 +3,6 @@
 Project for pa165.
 
 ## Travis CI - Build status 
-
 [![Build Status](https://travis-ci.org/matussmykala/PA165-BookingManager.svg?branch=master)](https://travis-ci.org/matussmykala/PA165-BookingManager)
 
 ## Requirements
@@ -13,6 +12,7 @@ Project for pa165.
 - Apache Tomcat
 - Google Chrome web browser (Check of browser is provided by web interface)
 
+ 
 ## Modules
 
 - api-layer	- API for whole app
@@ -30,25 +30,10 @@ mvn clean install
 
 mvn tomcat7:run
 
+
 ## Web interface using
 
  http://localhost:8080/pa165
-
- No admin
-     Customer_1
- 	user name: hraska@seznam.cz
- 	pasword: pass1
-     Customer_2
-	user name: hraska2@seznam.cz
-	pasword: pass2
- 
- Admin
-     Customer_3
-	user name: adamkova@seznam.cz
-	pasword: pass3
-     Customer_4
-	user name: kubova@seznam.cz
-	pasword: pass4 
  
 ## REST interface using
 

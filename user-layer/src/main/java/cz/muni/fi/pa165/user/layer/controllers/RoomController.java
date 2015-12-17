@@ -57,14 +57,7 @@ public class RoomController {
         model.addAttribute("rooms", roomFacade.getAllRooms());
         return "room/list";
     }
-    /*
-    @RequestMapping(value = "/hotelList/{id}", method = RequestMethod.GET)
-    public String findByHotel(@PathVariable("id") long id, Model model){
-        model.addAttribute("room",roomFacade.findByHotel(id));
-        return "room/list";
-    }
-    */
-    
+       
     /**
      * Shows a list of rooms by filter
      *
@@ -74,7 +67,7 @@ public class RoomController {
     @RequestMapping(value = "/free-rooms", method = RequestMethod.GET)
     public String listOfFreeRoomsOfHotel(@RequestParam long hotelId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate, Model model) {
         HotelDTO hotelDTO = hotelFacade.getHotelById(hotelId);
-        List<RoomDTO> rooms = hotelFacade.findFreeRoomInRangeChanged(hotelDTO, startDate, endDate);     
+        List<RoomDTO> rooms = hotelFacade.findFreeRoomInRange(hotelDTO, startDate, endDate);     
         model.addAttribute("rooms", rooms);
         return "room/list";
     }

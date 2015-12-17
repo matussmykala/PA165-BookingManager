@@ -59,7 +59,6 @@ public interface HotelService {
      */
     public List<Hotel> findAll() throws DataAccessException;
 
-
     /**
      * Find all hotels in city
      *

@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
-import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
-import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
-import cz.muni.fi.pa165.bookingmanager.service.config.ServiceConfiguration;
-import cz.muni.fi.pa165.rest.layer.mixin.CustomerDTOMixin;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -37,14 +28,14 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AllowOriginInterceptor()); 
+        registry.addInterceptor(new AllowOriginInterceptor());
     }
-    
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
-    
+
     @Bean
     @Primary
     public MappingJackson2HttpMessageConverter customJackson2HttpMessageConverter() {
@@ -53,12 +44,7 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH));
-        
-        
-        
-        
         objectMapper.disable(MapperFeature.DEFAULT_VIEW_INCLUSION);
-   
         jsonConverter.setObjectMapper(objectMapper);
         return jsonConverter;
     }
@@ -67,5 +53,5 @@ public class RootWebContext extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(customJackson2HttpMessageConverter());
     }
-    
+
 }

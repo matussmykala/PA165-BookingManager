@@ -293,33 +293,6 @@ public class HotelFacadeImplTest extends AbstractTransactionalJUnit4SpringContex
     }
 
 
-
-    /**
-     * Test of findBookedRoomInRange method, of class HoteLFacadeImpl
-     */
-    @Test
-    public void testFindBookedRoomInRange(){
-        List<Room> freeRooms = new ArrayList<>();
-        freeRooms.add(room1);
-        freeRooms.add(room2);
-
-        Date start;
-        Date end;
-
-        calendar = Calendar.getInstance();
-        calendar.add(Calendar.MONTH, 1);
-        calendar.set(Calendar.DATE, 5);
-        start = calendar.getTime();
-        calendar.set(Calendar.DATE, 25);
-        end = calendar.getTime();
-
-        when(hotelService.findFreeRoomInRange(hotel1, start, end)).thenReturn(freeRooms);
-
-        List<RoomDTO> dtoList = hotelFacade.findFreeRoomInRange(hotelDTO1, start, end);
-        assertEquals(dtoList.size(), 2);
-    }
-
-
     @Test
     public void testCreateInvalidName() {
         hotelCreateDTO1.setName(null);

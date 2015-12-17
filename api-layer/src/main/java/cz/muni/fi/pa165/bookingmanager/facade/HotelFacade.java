@@ -75,7 +75,6 @@ public interface HotelFacade {
      * @return free rooms in hotel
      */
     public List<RoomDTO> findFreeRoomInRange(HotelDTO hotelDTO, Date start, Date end);
-    public List<RoomDTO> findFreeRoomInRangeChanged(HotelDTO hotelDTO, Date start, Date end);
 
     /**
      * Find all booked rooms in hotel in specific range of time
@@ -88,7 +87,8 @@ public interface HotelFacade {
     public List<RoomDTO> findBookedRoomInRange(HotelDTO hotelDTO, Date start, Date end);
 
     /**
-     * Find all hotels with free room in specific range of time according to address
+     * Find all hotels with free room in specific range of time according to
+     * address
      *
      * @address of hotel you want to know booked rooms in range of time
      * @param start
@@ -105,6 +105,5 @@ public interface HotelFacade {
      * @return free rooms in hotel
      */
     public List<RoomDTO> findRoomsWithReservation(Long id);
-
 
 }

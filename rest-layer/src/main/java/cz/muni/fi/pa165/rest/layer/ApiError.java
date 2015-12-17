@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.rest.layer;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlRootElement
 public class ApiError {
     

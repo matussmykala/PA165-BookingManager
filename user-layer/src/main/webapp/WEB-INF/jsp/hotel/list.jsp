@@ -27,7 +27,6 @@
         <c:forEach items="${hotels}" var="hotel">
             <tr>
                 <td>${hotel.id}</td>
-                
                 <td><c:out value="${hotel.name}"/></td>
                 <td><c:out value="${hotel.address}"/></td>
                 <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
@@ -43,14 +42,12 @@
                     </form>
                 </td>
                 <td>
-                    <my:a href="/room/free-rooms?hotelId=${hotel.id}&startDate=${startDate}&endDate=${endDate}" class="btn btn-primary">Free rooms</my:a>
+                    <my:a href="/room/free-rooms?hotelId=${hotel.id}&startDate=${startDate}&endDate=${endDate}" class="btn btn-primary">Rooms</my:a>
                 </td>
-                
             </tr>
         </c:forEach>
         </tbody>
     </table>
-
 
 </jsp:attribute>
 </my:pagetemplate>

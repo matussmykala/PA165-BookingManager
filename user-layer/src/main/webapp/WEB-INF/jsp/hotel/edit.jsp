@@ -36,8 +36,6 @@
             </div>
         </div>
        
-
-
         <button class="btn btn-primary" type="submit">Confirm</button>
     </form:form>
 

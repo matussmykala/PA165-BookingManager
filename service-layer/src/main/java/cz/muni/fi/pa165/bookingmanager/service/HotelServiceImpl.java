@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HotelServiceImpl implements HotelService {
+
     final static Logger log = LoggerFactory.getLogger(HotelServiceImpl.class);
     @Autowired
     private HotelDao hotelDao;
@@ -36,6 +37,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotelDao.create(hotel);
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
     }
 
@@ -44,6 +46,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotelDao.update(hotel);
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
     }
 
@@ -52,11 +55,12 @@ public class HotelServiceImpl implements HotelService {
         List<Room> roomsOfHotel = new ArrayList<>();
         roomsOfHotel.addAll(roomService.findByHotel(hotel.getId()));
         try {
-            for(Room r:roomsOfHotel){
-            roomService.deleteRoom(r);
+            for (Room r : roomsOfHotel) {
+                roomService.deleteRoom(r);
             }
             hotelDao.delete(hotel);
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
     }
 
@@ -66,6 +70,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotel = hotelDao.findById(id);
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
         return hotel;
     }
@@ -76,6 +81,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotel = hotelDao.findByName(name);
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
         return hotel;
     }
@@ -86,6 +92,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotels.addAll(hotelDao.findAll());
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
         return Collections.unmodifiableList(hotels);
     }
@@ -96,6 +103,7 @@ public class HotelServiceImpl implements HotelService {
         try {
             hotels.addAll(hotelDao.findByAdress(address));
         } catch (DataAccessException dae) {
+            System.err.println("Connection problem");
         };
         return Collections.unmodifiableList(hotels);
     }
@@ -104,18 +112,18 @@ public class HotelServiceImpl implements HotelService {
     public List<Room> findFreeRoomInRange(Hotel hotel, Date start, Date end) {
         List<Room> bookedRooms = new ArrayList<Room>();
         List<Room> roomsInHotel = new ArrayList<Room>();
-        
+
         bookedRooms.addAll(roomService.findReservedRoomsAtSpecificTime(start, end));
         roomsInHotel.addAll(roomService.findByHotel(hotel.getId()));
-        for (Room room : bookedRooms){
-            System.out.println("Booked Room id: "+room.getId()+" Booked Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        for (Room room : bookedRooms) {
+            System.out.println("Booked Room id: " + room.getId() + " Booked Room name:" + room.getName() + " Start:" + start.toString() + " end:" + end.toString());
         }
-        for (Room room : roomsInHotel){
-            System.out.println("All Room id: "+room.getId()+" All Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        for (Room room : roomsInHotel) {
+            System.out.println("All Room id: " + room.getId() + " All Room name:" + room.getName() + " Start:" + start.toString() + " end:" + end.toString());
         }
         roomsInHotel.removeAll(bookedRooms);
-        for (Room room : roomsInHotel){
-            System.out.println("Room id: "+room.getId()+" Room name:"+room.getName()+" Start:"+start.toString()+" end:"+end.toString());
+        for (Room room : roomsInHotel) {
+            System.out.println("Room id: " + room.getId() + " Room name:" + room.getName() + " Start:" + start.toString() + " end:" + end.toString());
         }
         return Collections.unmodifiableList(roomsInHotel);
     }
@@ -130,16 +138,16 @@ public class HotelServiceImpl implements HotelService {
         roomsInHotel.removeAll(freeRooms);
         return Collections.unmodifiableList(roomsInHotel);
     }
-    
+
     @Override
-    public List<Room> findRoomsWithReservation(Long id){
+    public List<Room> findRoomsWithReservation(Long id) {
         List<Room> rooms = new ArrayList<Room>();
         List<Room> forRemoveRooms = new ArrayList<Room>();
         List<Reservation> reservations = new ArrayList<>();
         rooms.addAll(roomService.findByHotel(id));
-        for(Room r:rooms){
+        for (Room r : rooms) {
             reservations.addAll(reservationDao.findAllReservationsOfRoom(r.getId()));
-            if(reservations.isEmpty()){
+            if (reservations.isEmpty()) {
                 forRemoveRooms.add(r);
             }
             reservations.removeAll(rooms);
@@ -147,7 +155,5 @@ public class HotelServiceImpl implements HotelService {
         }
         rooms.removeAll(forRemoveRooms);
         return Collections.unmodifiableList(rooms);
-
     }
-
 }

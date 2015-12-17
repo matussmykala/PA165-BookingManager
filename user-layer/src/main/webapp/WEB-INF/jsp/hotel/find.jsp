@@ -9,31 +9,21 @@
     <jsp:attribute name="body">
         
        <div class="row">  
-        <div class="col-sm-4">
-         <form:form method="get" action="${pageContext.request.contextPath}/hotel/search"
+            <div class="col-sm-4">
+            <form:form method="get" action="${pageContext.request.contextPath}/hotel/search"
                     cssClass="form-horizontal">
              
-         <div style="margin-top:10px;"><label for="filter">Hotel/Destination</label>
-                
-               <input class="form-control" name="goal" placeholder="Search" type="text"/>
-             
-         </div>
-        
-          
-            
-            <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
-            <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
-            <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Find hotel</button></div>
+                <div style="margin-top:10px;">
+                    <label for="filter">Hotel/Destination</label>
+                       <input class="form-control" name="goal" placeholder="Search" type="text"/>
+               </div>
+               <div style="margin-top:10px;"><label for="startDate">Start date</label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
+               <div style="margin-top:10px;"><label for="endDate">End Date</label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>            
+               <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" >Find hotel</button></div>
 
-    </form:form>
+            </form:form>
         </div>
-    
-    </div>   
-        
+      </div>   
  
-
-    
-    
-    
     </jsp:attribute>
 </my:pagetemplate>

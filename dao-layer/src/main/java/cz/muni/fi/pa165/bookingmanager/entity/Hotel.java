@@ -42,15 +42,7 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel")
     private List<Room> rooms = new ArrayList<>();
     
-    /**
-     * Picture of hotel
-     */
-  //  @Lob
-   // private byte[] image;
-
- //   private String imageMimeType;
-    
-    /**
+     /**
      * Date of creating or last updating hotel
      */
     @Temporal(TemporalType.DATE)
@@ -92,23 +84,6 @@ public class Hotel {
     public void addRoom(Room room){
         this.rooms.add(room);
     }
-/**
-    public byte[] getImage() {
-        return image;
-    }
-
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
-    public String getImageMimeType() {
-        return imageMimeType;
-    }
-
-    public void setImageMimeType(String imageMimeType) {
-        this.imageMimeType = imageMimeType;
-    }
-    */
 
     public Date getLastUpdateDay() {
         return lastUpdateDay;
@@ -125,8 +100,6 @@ public class Hotel {
     public void setDescription(String description) {
         this.description = description;
     }
-    
-    
     
     /**
      * Check if 2 hotels are equal according to name, address and rooms
