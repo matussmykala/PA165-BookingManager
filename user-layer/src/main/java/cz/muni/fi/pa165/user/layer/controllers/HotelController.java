@@ -141,16 +141,27 @@ public class HotelController {
                 hotelDTO = null;
             }
             
-            List<HotelDTO> hotels = hotelFacade.findByAddress(goal);
+            List<HotelDTO> hotels = new ArrayList<>();
+            try{
+                hotels = hotelFacade.findByAddress(goal);            
+            }catch (Exception e){
+                hotels=null;
+            }
             if(hotels.size()<1 && hotelDTO==null){
                 model.addAttribute("alert_info", "No data found");
                 return "room/list";
             }else{
                 
                 
-                if(!hotels.contains(hotelDTO)){
+                if(!hotels.contains(hotelDTO) && hotelDTO!=null){
                     hotels.add(hotelDTO);
                 }
+                
+                if(hotels==null){
+                    model.addAttribute("alert_info", "No data found");
+                    return "room/list";
+                }
+                
                 List<RoomDTO> rooms = new ArrayList<>();
 
                 for(HotelDTO hotel : hotels){
