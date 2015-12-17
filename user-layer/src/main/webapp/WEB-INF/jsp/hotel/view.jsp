@@ -26,18 +26,19 @@
                 <td><c:out value="${hotel.address}"/></td>
                 <td><c:out value="${hotel.description}"/></td>
                 <td><fmt:formatDate value="${hotel.lastUpdateDay}" pattern="yyyy-MM-dd"/></td>
-                <td>
-                     <form action="${pageContext.request.contextPath}/hotel/edit/${hotel.id}">
-                        <button class="btn btn-primary">Edit</button>
-         
-                    </form>
-                </td>
-                <td>
-                    <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-                </td>
-            </tr>
+                <c:if test="${authenticatedUser.admin == true}">
+                    <td>
+                        <form action="${pageContext.request.contextPath}/hotel/edit/${hotel.id}">
+                            <button class="btn btn-primary">Edit</button>
+                        </form>
+                   </td>
+                    <td>
+                        <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </form>
+                    </td>
+                </c:if>
+           </tr>
         </tbody>
     </table>
          

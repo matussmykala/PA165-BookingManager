@@ -9,10 +9,12 @@
 <my:pagetemplate title="Hotel">
 <jsp:attribute name="body">
 
-    <my:a href="/hotel/new" class="btn btn-primary">
-        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        New hotel
-    </my:a>
+    <c:if test="${authenticatedUser.admin == true}">
+        <my:a href="/hotel/new" class="btn btn-primary">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            New hotel
+        </my:a>
+    </c:if>
 
     <table class="table">
         <thead>
@@ -33,14 +35,16 @@
                 <td>
                     <my:a href="/hotel/view/${hotel.id}" class="btn btn-primary">View</my:a>
                 </td>
-                <td>
-                    <my:a href="/hotel/edit/${hotel.id}" class="btn btn-primary">Edit</my:a>
-                </td>
-                <td>
-                    <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
-                </td>
+                <c:if test="${authenticatedUser.admin == true}">
+                    <td>
+                        <my:a href="/hotel/edit/${hotel.id}" class="btn btn-primary">Edit</my:a>
+                    </td>
+                    <td>
+                        <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </form>
+                    </td>
+                </c:if>
                 <td>
                     <my:a href="/room/free-rooms?hotelId=${hotel.id}&startDate=${startDate}&endDate=${endDate}" class="btn btn-primary">Rooms</my:a>
                 </td>
