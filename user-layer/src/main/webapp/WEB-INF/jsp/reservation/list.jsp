@@ -29,12 +29,14 @@
           <td>
             <my:a href="/reservation/view/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-eye-open" style="height:20px;" aria-hidden="true"></span></my:a>
           </td>
-          <td style="width:45px;">
-            <my:a href="/reservation/edit/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></my:a>
-          </td>
-          <td>
-              <my:a href="/reservation/delete/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
-          </td>
+          <c:if test="${authenticatedUser.admin == true}">
+            <td style="width:45px;">
+              <my:a href="/reservation/edit/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></my:a>
+            </td>
+            <td>
+                <my:a href="/reservation/delete/${reservation.id}" class="btn btn-primary"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+            </td>
+          </c:if>
         </tr>
       </c:forEach>
       </tbody>
