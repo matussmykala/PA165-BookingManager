@@ -17,9 +17,8 @@
     </c:if>
 
     <c:if test="${not fn:containsIgnoreCase(pageContext.request.getQueryString(),'goal')}">
-    <div class="form-horizontal" style="margin-top:20px;">
-        <c:if test="${authenticatedUser.admin == true}">
-            <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
+        <div class="form-horizontal" style="margin-top:20px;">
+           <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
                 <div class="form-group">
                     <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.filterBy"/></label>
                     <div class="col-md-2">
@@ -38,8 +37,7 @@
                     </div>
                 </div>
             </form:form>
-        </c:if>
-    </div>
+      </div>
     </c:if>
 
     <table class="table">
