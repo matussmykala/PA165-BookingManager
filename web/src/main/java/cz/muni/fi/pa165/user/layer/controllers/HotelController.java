@@ -101,7 +101,7 @@ public class HotelController {
     }
 
     /**
-     * Find hotel according to name or address with free rooms in specific range
+     * Find free room according to name or address of hotel in specific range
      * of time
      *
      * @param goal name or address of hotel
