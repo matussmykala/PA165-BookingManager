@@ -118,12 +118,12 @@ public class HotelController {
             model.addAttribute("alert_info", "Name/Destination is empty");
             return "hotel/find";
         }
-        if (startDate.compareTo(endDate)>0){
-            model.addAttribute("alert_info", "Wrong data format");
-            return "hotel/find";
-        }
         if (startDate == null || endDate == null) {
             model.addAttribute("alert_info", "Date is empty");
+            return "hotel/find";
+        }
+        if (startDate.compareTo(endDate)>0){
+            model.addAttribute("alert_info", "Wrong data format");
             return "hotel/find";
         } else {
 
