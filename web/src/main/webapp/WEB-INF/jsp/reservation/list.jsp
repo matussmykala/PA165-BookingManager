@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <my:pagetemplate title="Reservations">
@@ -11,11 +12,11 @@
     <table class="table">
       <thead>
       <tr>
-        <th>Id</th>
-        <th>Customer</th>
-        <th>Room</th>
-        <th>From</th>
-        <th>To</th>
+        <th><f:message key="reservation.list.id"/></th>
+        <th><f:message key="reservation.list.customer"/></th>
+        <th><f:message key="reservation.list.room"/></th>
+        <th><f:message key="reservation.list.from"/></th>
+        <th><f:message key="reservation.list.to"/></th>
       </tr>
       </thead>
       <tbody>
