@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
+ * Spring MVC Controller for management of hotel reservations.
+ *
  * @author matus
  */
 @Controller
@@ -35,24 +37,54 @@ public class ReservationController
 
     private long roomId;
 
+    /**
+     * List of all reservations.
+     *
+     * @param model MVC model
+     * @return  view of all reservations
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("reservations", reservationFacade.getAllReservations());
         return "reservation/list";
     }
 
+    /**
+     * Displays details of one reservation.
+     *
+     * @param id    reservation id
+     * @param model MVC model
+     * @return  view containing details of the reservation
+     */
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String view(@PathVariable long id, Model model) {
         model.addAttribute("reservation", reservationFacade.getReservationById(id));
         return "reservation/view";
     }
 
+    /**
+     * Controller method to pick reservation dates.
+     *
+     * @param roomId    room id
+     * @param model MVC model
+     * @return  view containing fields to pick reservation dates
+     */
     @RequestMapping(value = "/pickdate/{roomId}")
     public String pickDate(@PathVariable long roomId, Model model){
         this.roomId = roomId;
         return "reservation/new";
     }
 
+    /**
+     * Controller method to create new reservation.
+     *
+     * @param startDate start date
+     * @param endDate   end date
+     * @param uriBuilder
+     * @param redirectAttributes
+     * @param r
+     * @return  view containing fields to pick reservation dates
+     */
     @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newProduct(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
                              @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
@@ -89,6 +121,14 @@ public class ReservationController
         }
     }
 
+    /**
+     * Controller method for deletion of the reservation.
+     *
+     * @param id    reservation id
+     * @param uriBuilder
+     * @param redirectAttributes
+     * @return view of all reservations
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
         ReservationDTO reservationDTO = reservationFacade.getReservationById(id);
@@ -99,12 +139,30 @@ public class ReservationController
         return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
     }
 
+    /**
+     * Controller method for editing the reservation.
+     *
+     * @param id    reservation id
+     * @param model MVC model
+     * @return  view containing form for editing of the reservation
+     */
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
     public String editReservation(@PathVariable("id") long id, Model model) {
         model.addAttribute("reservation",reservationFacade.getReservationById(id));
         return "reservation/edit";
     }
 
+    /**
+     * Method checks correctness of user provided data and then updates
+     * reservation information.
+     *
+     * @param id    reservation id
+     * @param startDate start date
+     * @param endDate   end date
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @return  view containing updated information of the reservation
+     */
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateReservation(@PathVariable("id") long id,
                                     @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
