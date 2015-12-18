@@ -11,7 +11,7 @@
 
     <artifactId>BookingManagerService-web-sample-data</artifactId>
     <packaging>jar</packaging>
-    <name>Sample Data for web</name>
+    <name>BookingManagerService-web-sample-data</name>
 
     <dependencies>
         <dependency>
