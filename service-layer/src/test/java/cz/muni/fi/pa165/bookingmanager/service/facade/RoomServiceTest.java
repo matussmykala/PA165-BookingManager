@@ -285,7 +285,6 @@ public class RoomServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         verify(reservationDao).findReservationsOfTime(any(Date.class),any(Date.class));
         assertTrue(reservedRooms.contains(room1));
         assertTrue(reservedRooms.contains(room2));
-
     }
 
     /**

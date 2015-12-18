@@ -16,7 +16,7 @@ public interface RoomFacade {
      * @param roomCreateDTO - room which will be created
      */
     public void createRoom(RoomDTO roomCreateDTO);
-    
+
     /**
      * Update Room
      *
@@ -77,11 +77,11 @@ public interface RoomFacade {
      * @return List<RoomDTO> - list of rooms with specific numberof beds
      */
     public List<RoomDTO> getRoomsByNumberOfBeds(int numberOfBeds);
-    
+
      /**
      * Find rooms by specific hotel
      *
-     * @param hotel
+     * @param id    hotel id
      * @return rooms of specific hotel
      */
     public List<RoomDTO> findByHotel(Long id);

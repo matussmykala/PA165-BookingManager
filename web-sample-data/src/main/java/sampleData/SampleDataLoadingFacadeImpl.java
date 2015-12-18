@@ -24,16 +24,14 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * 
  * Creates sample data for application testing
- * 
+ *
  * @author Martin Cuchran
  */
 @Component
 @Transactional
 public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
 {
-    
     @Autowired
     HotelService hotelService;
     Date date;
@@ -50,14 +48,12 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
     public void loadData() throws IOException {
         this.Add();
     }
-    
+
     /**
      * Adds sample data for WEB and REST layer
      */
     public void Add(){
-      
         // hotel example
-        
         this.createDate();
         Hotel voronez = hotel("Voronez","Brno","Luxusny hotel v Brne",date);
         Hotel park = hotel("Park Hotel","Praha","Pekny hotel v Prahe", date);
@@ -68,26 +64,21 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Hotel domSportu = hotel("Dom Sportu", "Bratislava", "Hotel sportovcov", date);
         Hotel ohlaHotel = hotel("Ohla Hotel", "Bratislava" , "Nejaky hotel", date);
         Hotel transylvania = hotel("Transylvania", "Brno", "Hotel priseriek", date);
-        
+
         // room example
-        
         Room room1 = room("Izba-1",1,new BigDecimal("25.1"), voronez );
         Room room2 = room("Izba-2",2,new BigDecimal("25.2"), park );
         Room room3 = room("Izba-3",3,new BigDecimal("25.3"), arkadia );
         Room room4 = room("Izba-4",4,new BigDecimal("25.4"), ira );
         Room room5 = room("Izba-5",5,new BigDecimal("25.5"), ira );
-        
+
         // customer example
-        
         Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", sha256Hash("pass1"), Boolean.FALSE);
         Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", sha256Hash("pass2"), Boolean.FALSE);
         Customer customer3 = customer("zuzka", "adamkova", "adamek", "adamkova@seznam.cz", sha256Hash("pass3"), Boolean.TRUE);
         Customer customer4 = customer("anicka", "kubova", "kuba", "kubova@seznam.cz", sha256Hash("pass4"), Boolean.TRUE);
-                   
-        
-        
+
         // reservation example, required specific date, start before end
-        
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, 11, 1);
         Date startDate1 = calendar.getTime();
@@ -97,26 +88,25 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Date startDate2 = calendar.getTime();
         calendar.set(2014, 12, 1);
         Date endDate2 = calendar.getTime();
-        
+
         ReservationCreateDTO reservationDTO1 = new ReservationCreateDTO();
         reservationDTO1.setCustomerId(customer1.getId());
         reservationDTO1.setStartOfReservation(startDate1);
         reservationDTO1.setEndOfReservation(endDate1);
-        reservationDTO1.setRoomId(room4.getId());        
+        reservationDTO1.setRoomId(room4.getId());
         reservationFacade.createReservation(reservationDTO1);
-        
+
         ReservationCreateDTO reservationDTO2 = new ReservationCreateDTO();
         reservationDTO2.setCustomerId(customer2.getId());
         reservationDTO2.setStartOfReservation(startDate2);
         reservationDTO2.setEndOfReservation(endDate2);
-        reservationDTO2.setRoomId(room3.getId());        
+        reservationDTO2.setRoomId(room3.getId());
         reservationFacade.createReservation(reservationDTO2);
-        
    }
-    
+
     /**
      * Generates random date
-     * 
+     *
      * @return Date
      */
     private Date createDate(){
@@ -128,12 +118,11 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         calendar.set(Calendar.DATE, d);
         this.date = calendar.getTime();
         return calendar.getTime();
-        
     }
-   
+
     /**
      * auxiliary constructor
-     * 
+     *
      * @return Hotel
      */
     private Hotel hotel(String name, String address, String description, Date date) {
@@ -145,10 +134,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         hotelService.createHotel(hotel);
         return hotel;
     }
-    
+
     /**
      * auxiliary constructor
-     * 
+     *
      * @return Room
      */
     private Room room(String name,int numberOfBeds, BigDecimal price, Hotel hotel){
@@ -156,14 +145,14 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         room.setName(name);
         room.setNumberOfBeds(numberOfBeds);
         room.setPrice(price);
-        room.setHotel(hotel); 
+        room.setHotel(hotel);
         roomService.createRoom(room);
         return room;
-    }    
-    
+    }
+
     /**
      * auxiliary constructor
-     * 
+     *
      * @return Customer
      */
     private Customer customer(String name, String Surname, String username, String email, String password, Boolean isAdmin){
@@ -178,10 +167,10 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         customerService.registerCustomer(customer, password);
         return  customer;
     }
-    
+
     /**
      * Generates Hash for password
-     * 
+     *
      * @return hash of password
      */
     private String sha256Hash(String password) {

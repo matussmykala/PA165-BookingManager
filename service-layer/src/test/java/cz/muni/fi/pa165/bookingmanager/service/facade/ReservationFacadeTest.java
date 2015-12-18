@@ -111,7 +111,6 @@ public class ReservationFacadeTest extends AbstractJUnit4SpringContextTests
         assertNotEquals(reservation1.getId(), new Long("1"));
 
         ReservationCreateDTO reservationDTO = new ReservationCreateDTO();
-        //reservationDTO.setId(reservation1.getId());
         reservationDTO.setStartOfReservation(reservation1.getStartOfReservation());
         reservationDTO.setEndOfReservation(reservation1.getEndOfReservation());
         reservationDTO.setCustomerId((long) 1);

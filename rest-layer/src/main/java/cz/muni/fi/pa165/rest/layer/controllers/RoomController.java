@@ -95,7 +95,6 @@ public class RoomController {
         } catch (Exception ex) {
             throw new ResourceAlreadyExistingException();
         }
-
     }
 }
 

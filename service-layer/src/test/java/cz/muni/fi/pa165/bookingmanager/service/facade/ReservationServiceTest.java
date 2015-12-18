@@ -1,4 +1,5 @@
 package cz.muni.fi.pa165.bookingmanager.service.facade;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,18 +68,6 @@ public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
         reservation2.setStartOfReservation(nextMonthFirstDay);
         reservation1.setEndOfReservation(nextMonthLastDay);
         reservation2.setEndOfReservation(nextMonthLastDay);
-    }
-
-    @Test
-    public void createReservationTest(){
-        /*
-        doNothing().when(roomDao).create(any(Room.class));
-        doNothing().when(customerDao).create(any(Customer.class));
-        doNothing().when(reservationDao).create(any(Reservation.class));
-
-        reservationService.createReservation(reservation1);
-        verify(reservationDao).create(reservation1);
-        */
     }
 
     @Test

@@ -88,11 +88,11 @@ public interface RoomService {
     /**
      * Find rooms by specific hotel
      *
-     * @param hotel
+     * @param id
      * @return rooms of specific hotel
      */
     public List<Room> findByHotel(Long id) throws DataAccessException;
-    
+
     /**
      * Find rooms with reservation in specific time window
      *

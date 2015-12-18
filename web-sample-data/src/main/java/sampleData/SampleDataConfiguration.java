@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
 
 /**
  * Configuration and sample data loading
- * 
+ *
  * @author Martin Cuchran
  */
 @Configuration
@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(basePackageClasses = {SampleDataLoadingFacadeImpl.class})
 public class SampleDataConfiguration
 {
-
     final static Logger log = LoggerFactory.getLogger(SampleDataConfiguration.class);
 
     @Autowired

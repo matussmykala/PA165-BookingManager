@@ -64,9 +64,9 @@ public class ReservationServiceImpl implements ReservationService
     public List<Reservation> getReservationsOfTime(Date from, Date to)
     {
         List<Reservation> reservations = new ArrayList<>();
-        
+
         reservations = reservationDao.findReservationsOfTime(from, to);
-        
+
         return reservations;
     }
 
@@ -123,8 +123,6 @@ public class ReservationServiceImpl implements ReservationService
         }
         return retList;
     }
-
-
 
     @Override
     public List<Reservation> getNextMonthReservations()

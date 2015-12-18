@@ -15,7 +15,7 @@
         <module>dao-layer</module>
         <module>api-layer</module>
         <module>service-layer</module>
-    <module>user-layer</module>
+    <module>web</module>
     <module>rest-layer</module>
         <module>web-sample-data</module>
     </modules>

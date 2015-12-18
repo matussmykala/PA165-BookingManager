@@ -79,7 +79,6 @@ public class ReservationFacadeImpl implements ReservationFacade
     @Override
     public boolean createReservation(ReservationCreateDTO reservation)
     {
-        //Reservation r = beanMappingService.mapTo(reservation, Reservation.class);
         Reservation r = new Reservation();
         r.setStartOfReservation(reservation.getStartOfReservation());
         r.setEndOfReservation(reservation.getEndOfReservation());

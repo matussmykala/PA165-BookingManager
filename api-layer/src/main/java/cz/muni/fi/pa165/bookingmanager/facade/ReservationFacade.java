@@ -75,11 +75,11 @@ public interface ReservationFacade
      * @return list of reservation which starts next month
      */
     public List<ReservationDTO> getNextMonthReservations();
-    
+
      /**
-     * Returns all reservations of room 
+     * Returns all reservations of room
      *
-     * @param room    room
+     * @param id    room id
      * @return  list of all of room
      */
     List<ReservationDTO> getAllReservationsOfRoom(Long id);
