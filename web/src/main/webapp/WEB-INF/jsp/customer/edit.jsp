@@ -12,7 +12,7 @@
                modelAttribute="customer" cssClass="form-horizontal">
 
         <div class="form-group ${name_error?'has-error':''}">
-            <form:label path="name" cssClass="col-sm-2 control-label">Name</form:label>
+            <form:label path="name" cssClass="col-sm-2 control-label"><fmt:message key="customer.name"/></form:label>
             <div class="col-sm-10">
                 <form:input path="name" cssClass="form-control"/>
                 <form:errors path="name" cssClass="help-block"/>
@@ -20,7 +20,8 @@
         </div>
 
         <div class="form-group ${surname_error?'has-error':''}">
-            <form:label path="surname" cssClass="col-sm-2 control-label">Surname</form:label>
+            <form:label path="surname" cssClass="col-sm-2 control-label"><fmt:message
+                    key="customer.surname"/></form:label>
             <div class="col-sm-10">
                 <div class="col-sm-10">
                     <form:input path="surname" cssClass="form-control"/>
@@ -30,7 +31,7 @@
         </div>
 
         <div class="form-group ${email_error?'has-error':''}">
-            <form:label path="email" cssClass="col-sm-2 control-label">Email</form:label>
+            <form:label path="email" cssClass="col-sm-2 control-label"><fmt:message key="customer.email"/></form:label>
             <div class="col-sm-10">
                 <form:input path="email" cssClass="form-control"/>
                 <form:errors path="email" cssClass="help-block"/>
@@ -38,7 +39,8 @@
         </div>
 
         <div class="form-group ${username_error?'has-error':''}">
-            <form:label path="username" cssClass="col-sm-2 control-label">Username</form:label>
+            <form:label path="username" cssClass="col-sm-2 control-label"><fmt:message
+                    key="customer.username"/></form:label>
             <div class="col-sm-10">
                 <form:input path="username" cssClass="form-control"/>
                 <form:errors path="username" cssClass="help-block"/>
@@ -46,19 +48,19 @@
         </div>
 
         <div class="form-group ${admin_error?'has-error':''}">
-            <form:label path="admin" cssClass="col-sm-2 control-label">Admin role</form:label>
+            <form:label path="admin" cssClass="col-sm-2 control-label"><fmt:message key="customer.admin"/></form:label>
             <div class="col-sm-4">
                 <form:checkbox path="admin" cssClass="form-control"/>
                 <form:errors path="admin" cssClass="help-block"/>
             </div>
         </div>
 
-        <button class="btn btn-primary" type="submit">Confirm</button>
+        <button class="btn btn-primary" type="submit"><fmt:message key="button.confirm"/></button>
     </form:form>
 
     <form method="get" action="${pageContext.request.contextPath}/customer/list/">
         <p align="left">
-            <button type="submit" class="btn btn-default">Back</button>
+            <button type="submit" class="btn btn-default"><fmt:message key="button.back"/></button>
         </p>
     </form>
 
