@@ -26,12 +26,10 @@ public class HotelDTO {
      */
     private String description;
 
-    
     /**
      * Date of creating or last updating hotel
      */
     private Date lastUpdateDay;
-
 
     public Long getId() {
         return id;
@@ -73,9 +71,9 @@ public class HotelDTO {
         this.lastUpdateDay = lastUpdateDay;
     }
 
-
     /**
      * HashCode use parameters name and address
+     *
      * @return hash
      */
     @Override
@@ -88,8 +86,10 @@ public class HotelDTO {
 
     /**
      * Two hotels are equal if they have same name and address
+     *
      * @param obj to compare
-     * @return true if two hotels are same or false if not or if there is some mistake
+     * @return true if two hotels are same or false if not or if there is some
+     * mistake
      */
     @Override
     public boolean equals(Object obj) {
