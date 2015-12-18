@@ -9,15 +9,15 @@
 <jsp:attribute name="body">
 
     <table class="table">
-        <caption>Customers</caption>
+        <caption><fmt:message key="customer.caption"/></caption>
         <thead>
         <tr>
             <th>id</th>
-            <th>given name</th>
-            <th>surname</th>
-            <th>email</th>
-            <th>username</th>
-            <th>admin role</th>
+            <th><fmt:message key="customer.name"/></th>
+            <th><fmt:message key="customer.surname"/></th>
+            <th><fmt:message key="customer.email"/></th>
+            <th><fmt:message key="customer.username"/></th>
+            <th><fmt:message key="customer.admin"/></th>
         </tr>
         </thead>
         <tbody>

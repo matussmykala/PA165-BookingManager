@@ -10,15 +10,15 @@
 
 
         <table class="table">
-            <caption>Customer</caption>
+            <caption><fmt:message key="customer.caption"/></caption>
             <thead>
             <tr>
                 <th>id</th>
-                <th>given name</th>
-                <th>surname</th>
-                <th>email</th>
-                <th>username</th>
-                <th>admin role</th>
+                <th><fmt:message key="customer.name"/></th>
+                <th><fmt:message key="customer.surname"/></th>
+                <th><fmt:message key="customer.email"/></th>
+                <th><fmt:message key="customer.username"/></th>
+                <th><fmt:message key="customer.admin"/></th>
             </tr>
             </thead>
             <tbody>
@@ -51,12 +51,12 @@
         </table>
 
     <table class="table">
-        <caption>Reservations</caption>
+        <caption><fmt:message key="reservation.caption"/></caption>
         <thead>
         <tr>
             <th>id</th>
-            <th>start date</th>
-            <th>end date</th>
+            <th><fmt:message key="reservation.list.from"/></th>
+            <th><fmt:message key="reservation.list.to"/></th>
         </tr>
         </thead>
         <tbody>
@@ -65,6 +65,10 @@
                 <td>${reservation.id}</td>
                 <td><c:out value="${reservation.startOfReservation}"/>x</td>
                 <td><c:out value="${reservation.endOfReservation}"/></td>
+                <td>
+                    <my:a href="/reservation/view/${reservation.id}" class="btn btn-primary"><span
+                            class="glyphicon glyphicon-eye-open" style="height:20px;" aria-hidden="true"></span></my:a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -72,7 +76,7 @@
 
     <form method="get" action="${pageContext.request.contextPath}/customer/list/">
         <p align="left">
-            <button type="submit" class="btn btn-primary">Back</button>
+            <button type="submit" class="btn btn-primary"><fmt:message key="button.back"/></button>
         </p>
     </form>
 

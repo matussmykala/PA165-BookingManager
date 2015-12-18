@@ -23,6 +23,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * Spring MVC Controller for management of hotel customers.
+ *
  * Created on 09.12.2015.
  *
  * @author Vladimir Caniga
@@ -39,12 +41,25 @@ public class CustomerController {
     @Autowired
     private ReservationFacade reservationFacade;
 
+    /**
+     * Lists all hotel customers.
+     *
+     * @param model MVC model
+     * @return view of all customers
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("customers", customerFacade.getAllCustomers());
         return "customer/list";
     }
 
+    /**
+     * Displays details of one customer as well as his reservations.
+     *
+     * @param id    id of the customer
+     * @param model MVC model
+     * @return view containing details of the customer
+     */
     @RequestMapping(value = "/view/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable long id, Model model) {
         model.addAttribute("customer", customerFacade.findCustomerById(id));
@@ -52,12 +67,31 @@ public class CustomerController {
         return "customer/view";
     }
 
+    /**
+     * Sends a form for editing information of a customer
+     *
+     * @param id id of the customer
+     * @param model MVC model
+     * @return view containing form for editing of a customer
+     */
     @RequestMapping(value = "edit/{id}", method = RequestMethod.GET)
     public String edit(@PathVariable long id, Model model) {
         model.addAttribute("customer", customerFacade.findCustomerById(id));
         return "customer/edit";
     }
 
+    /**
+     * Method checks correctness of user provided data and then updates
+     * customer information.
+     *
+     * @param id id of the customer
+     * @param updatedCustomerDTO updated customer information
+     * @param bindingResult
+     * @param model MVC model
+     * @param redirectAttributes
+     * @param uriBuilder
+     * @return view containing updated information of a customer
+     */
     @RequestMapping(value = "update/{id}", method = RequestMethod.POST)
     public String update(@PathVariable long id, @Valid @ModelAttribute("customer") CustomerDTO updatedCustomerDTO,
                          BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
@@ -84,6 +118,14 @@ public class CustomerController {
         return "redirect:" + uriBuilder.path("/customer/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 
+    /**
+     * Deletes a customer from the system
+     *
+     * @param id id of the customer
+     * @param uriBuilder
+     * @param redirectAttributes
+     * @return view containing list of all customers
+     */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         CustomerDTO customerDTO = customerFacade.findCustomerById(id);
