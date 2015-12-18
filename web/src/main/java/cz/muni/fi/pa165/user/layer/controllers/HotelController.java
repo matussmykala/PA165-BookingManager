@@ -101,7 +101,7 @@ public class HotelController {
     }
 
     /**
-     * Find hotel according to name or address with free rooms in specific range
+     * Find free room according to name or address of hotel in specific range
      * of time
      *
      * @param goal name or address of hotel
@@ -118,12 +118,12 @@ public class HotelController {
             model.addAttribute("alert_info", "Name/Destination is empty");
             return "hotel/find";
         }
-        if (startDate.compareTo(endDate)>0){
-            model.addAttribute("alert_info", "Wrong data format");
-            return "hotel/find";
-        }
         if (startDate == null || endDate == null) {
             model.addAttribute("alert_info", "Date is empty");
+            return "hotel/find";
+        }
+        if (startDate.compareTo(endDate)>0){
+            model.addAttribute("alert_info", "Wrong data format");
             return "hotel/find";
         } else {
 

@@ -17,30 +17,27 @@
     </c:if>
 
     <c:if test="${not fn:containsIgnoreCase(pageContext.request.getQueryString(),'goal')}">
-    <div class="form-horizontal" style="margin-top:20px;">
-        <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
-            <div class="form-group">
-                <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.filterBy"/></label>
-                <div class="col-md-2">
-                    <select class="form-control" id="filterBy" name="filterType">
-                        <option value="numberOfBeds"><f:message key="room.list.numberOfBeds"/></option>
-                        <option value="price"><f:message key="room.list.price"/></option>
-                        <option value="hotelName"><f:message key="room.list.hotel"/></option>
-                    </select>
+        <div class="form-horizontal" style="margin-top:20px;">
+           <form:form method="get" action="${pageContext.request.contextPath}/room/filter" modelAttribute="rooms" cssClass="form-horizontal">
+                <div class="form-group">
+                    <label for="filterBy" style="width:90px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.filterBy"/></label>
+                    <div class="col-md-2">
+                        <select class="form-control" id="filterBy" name="filterType">
+                            <option value="numberOfBeds"><f:message key="room.list.numberOfBeds"/></option>
+                            <option value="price"><f:message key="room.list.price"/></option>
+                            <option value="hotelName"><f:message key="room.list.hotel"/></option>
+                        </select>
+                    </div>
+                    <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.valueOfFilter"/></label>
+                    <div class="col-md-2">
+                        <input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary" type="submit" ><f:message key="room.list.filterRooms"/></button>
+                    </div>
                 </div>
-
-                <label for="valueOffilter" style="width:130px;text-align:left" class="col-md-2 control-label"><f:message key="room.list.valueOfFilter"/></label>
-                <div class="col-md-2">
-                    <input class="form-control" name="filter" id="valueOffilter" value="<c:out value='${filter}'/>"/>
-
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-primary" type="submit" ><f:message key="room.list.filterRooms"/></button>
-                </div>
-            </div>
-
-        </form:form>
-    </div>
+            </form:form>
+      </div>
     </c:if>
 
     <table class="table">
