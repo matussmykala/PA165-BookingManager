@@ -1,7 +1,8 @@
 - Uvodna stranka vyhodi chybu HTTP Status 500
-- Prihlasovanie nefunguje, je dostupne len z uvodnej nefungujucej stranky. Podla zdrojoveho kodu to posobi tak, ze sa kontroluje len pri mapovani na “/“ . V inych castiach webu, ktore su chranene vyhadzuje Basic auth login. Je implementovany filter a metoda doFilter, avsak tieto pouzivaju kontrolu cez Basic Auth.
+- Prihlasovanie nefunguje, je dostupne len z uvodnej nefungujucej stranky. Podla zdrojoveho kodu to posobi tak, ze sa kontroluje len pri mapovani na “/“ . V inych castiach webu, ktore su chranene vyhadzuje Basic auth login form. Je implementovany filter a metoda doFilter, avsak tieto pouzivaju kontrolu na baze Basic Auth.
 - Nevidim implemetaciu rozlisenia uzivatelskych roli, na urovni controllerov ani na urovni jsp stranok
 - v casti airplane chyba moznost editacie zaznamov.
 
 - V ostatnych castiach je zadanie splnene, kod je napisany velmi pekne.
 - Validator v casti Airplane/new je plne implementovany a funkcny. 
+- Web je pekne spracovany aj po grafickej stranke
