@@ -6,3 +6,4 @@
 - V ostatnych castiach je zadanie splnene, kod je napisany velmi pekne.
 - Validator v casti Airplane/new je plne implementovany a funkcny. 
 - Web je pekne spracovany aj po grafickej stranke
+- Potesi kontrola na tlacidlach delete, ktora overuje ci lietadlo nieje priradene k nejakemu letu. V tomto pripade nedovoli odstranit lietadlo a tlacidlo delete je farebne odlisene.
