@@ -1,0 +1,24 @@
+- projekt bol odovzdany 21 minut po deadline -1 bod
+- projekt nieje mozno spustit prikazom mvn tomcat7:run -1 bod
+- autorizacia nefunguje spravne -1 bod
+- The REST nieje dostupne z http://localhost:8080/pa165/rest ale http://localhost:8080/AirportREST/ -1 bod
+ 
+-v tabe Flights funkcionalita +New flight nieje implementovana spravne, nepodarilo sa mi vytvorit let
+- chyba moznost update
+- avsak pekne uzivatelske rozhranie
+
+kod je citatelne napisany, komentovany, da sa v nom lahko zorientovat - avsak aplikacia zdaleka nieje dokoncena a pouzitelna pre bezneho uzivatela
+
+celkovy pocet bodov 6
+
+
+
+
+
+
+
+
+
+
+
+
