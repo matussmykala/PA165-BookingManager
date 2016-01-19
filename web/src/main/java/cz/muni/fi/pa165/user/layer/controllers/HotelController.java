@@ -10,6 +10,8 @@ import cz.muni.fi.pa165.bookingmanager.dto.HotelDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.RoomDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.HotelFacade;
 import cz.muni.fi.pa165.bookingmanager.facade.RoomFacade;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -154,7 +156,10 @@ public class HotelController {
                     model.addAttribute("alert_info", "No available rooms in this date range");
                     return "room/list";
                 } else {
+                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     model.addAttribute("rooms", rooms);
+                    model.addAttribute("startDate", df.format(startDate));
+                    model.addAttribute("endDate", df.format(endDate));
                     return "room/list";
                 }
 

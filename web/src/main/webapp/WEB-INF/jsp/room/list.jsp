@@ -74,7 +74,7 @@
                 </c:if>
 
                 <td>
-                    <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
+                    <my:a href="/reservation/pickdate/${room.id}/${startDate}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
                 </td>
             </tr>
         </c:forEach>

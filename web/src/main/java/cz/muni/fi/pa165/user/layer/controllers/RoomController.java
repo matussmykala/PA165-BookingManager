@@ -132,7 +132,35 @@ public class RoomController {
             }
             return "room/new";
         }
-
+        
+        if ((room.getName()).equals("")){
+            model.addAttribute("alert_info", "Name of room is empty");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+   
+            return "room/new";
+        }
+        
+        if (room.getPrice() == null){
+            model.addAttribute("alert_info", "Price of room is empty");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "room/new";
+        }
+        
+        if (room.getHotel() == null){
+            model.addAttribute("alert_info", "Hotel not chose");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "room/new";
+        }
+        
+        if (room.getNumberOfBeds() <= 0){
+            model.addAttribute("alert_info", "Number of beds must be greater than 0");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "room/new";
+        }
+        
         HotelDTO hotel = hotelFacade.getHotelById(hotelId);
         room.setHotel(hotel);
         roomFacade.createRoom(room);
