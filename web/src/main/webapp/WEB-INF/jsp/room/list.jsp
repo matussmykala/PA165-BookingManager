@@ -10,7 +10,7 @@
 <my:pagetemplate title="Rooms">
 <jsp:attribute name="body">
     <c:if test="${authenticatedUser.admin == true}">
-        <my:a href="/room/new" class="btn btn-primary">
+        <my:a href="/room/new?filterType=${filterType}&filter=${filter}" class="btn btn-primary">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             <f:message key="room.list.newRoom"/>
         </my:a>

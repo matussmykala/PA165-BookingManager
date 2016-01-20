@@ -291,6 +291,8 @@ public class RoomController {
             model.addAttribute("alert_info", "No data found");
         }
         model.addAttribute("rooms", rooms);
+        model.addAttribute("filter", filter);
+        model.addAttribute("filterType", filterType);
         return "room/list";
     }
 }

@@ -23,9 +23,17 @@
         <div class="form-group ${hotel_error?'has-error':''}">
             <form:label path="hotel" cssClass="col-sm-2 control-label"><f:message key="room.list.hotel"/></form:label>
             <div class="col-sm-10">
+                
             <select class="form-control" id="hotelid" name="hotelId">
             <c:forEach items="${hotels}" var="hotel">
-                <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                <c:choose>
+                    <c:when test="${param.filter eq hotel.name}">
+                    <option selected value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                </c:when>
+                <c:otherwise>
+                    <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                </c:otherwise>
+                </c:choose>
             </c:forEach>
             </select>
             </div>

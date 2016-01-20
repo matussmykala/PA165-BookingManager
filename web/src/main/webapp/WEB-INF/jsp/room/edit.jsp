@@ -25,10 +25,14 @@
             <div class="col-sm-10">
             <select class="form-control" id="hotelid" name="hotelId">
             <c:forEach items="${hotels}" var="hotel">
-                <c:if test="${hotel.id == room.hotel.id}">
+                <c:choose>
+                <c:when test="${hotel.id == room.hotel.id}">
                     <option selected value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
-                </c:if>
-                <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                </c:when>
+                <c:otherwise>
+                    <option value="<c:out value="${hotel.id}"/>"><c:out value="${hotel.name}"/></option>
+                </c:otherwise>
+                </c:choose>
             </c:forEach>
             </select>
             </div>
