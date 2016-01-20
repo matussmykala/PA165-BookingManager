@@ -158,8 +158,10 @@ public class HotelController {
                 } else {
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                     model.addAttribute("rooms", rooms);
-                    model.addAttribute("startDate", df.format(startDate));
-                    model.addAttribute("endDate", df.format(endDate));
+                    String sD = df.format(startDate);
+                    model.addAttribute("startDate", sD);
+                    String eD = df.format(endDate);
+                    model.addAttribute("endDate", eD );
                     return "room/list";
                 }
 
