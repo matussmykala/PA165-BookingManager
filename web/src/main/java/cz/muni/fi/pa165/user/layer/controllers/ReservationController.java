@@ -106,14 +106,16 @@ public class ReservationController
         reservationCreateDTO.setCustomerId(auth.getId());
         reservationCreateDTO.setStartOfReservation(startDate);
         reservationCreateDTO.setEndOfReservation(endDate);
+       
+        
         boolean success = false;
         try{
             success = reservationFacade.createReservation(reservationCreateDTO);
         }
-        catch (IllegalArgumentException e){
+        catch (Exception e){
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. Wrong dates were picked.");
-            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
+            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(roomId).encode().toUriString();
         }
         if (success) {
             redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
@@ -123,7 +125,7 @@ public class ReservationController
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. The room is not free " +
                     "in picked time range.");
-            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
+            return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(roomId).encode().toUriString();
         }
     }
 
