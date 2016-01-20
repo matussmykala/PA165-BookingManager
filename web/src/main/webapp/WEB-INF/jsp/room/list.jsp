@@ -73,8 +73,17 @@
                     </td>
                 </c:if>
 
+                
+                
                 <td>
-                    <my:a href="/reservation/pickdate/${room.id}/${startDate}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
+                <c:choose>    
+                    <c:when test="${startDate != null}">
+                        <my:a href="/reservation/new/${room.id}?startDate=${startDate}&endDate=${endDate}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
+                    </c:when>
+                    <c:otherwise>
+                        <my:a href="/reservation/pickdate/${room.id}" class="btn btn-primary"><f:message key="room.list.book"/></my:a>
+                    </c:otherwise>    
+                </c:choose>
                 </td>
             </tr>
         </c:forEach>
