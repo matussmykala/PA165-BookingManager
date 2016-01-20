@@ -228,15 +228,17 @@ public class HotelController {
     public String updateHotel(@PathVariable("id") long id, @Valid @ModelAttribute("hotel") HotelDTO updatedHotel, BindingResult bindingResult,
             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
 
-        if (bindingResult.hasErrors()) {
-            for (ObjectError ge : bindingResult.getGlobalErrors()) {
+        if ((updatedHotel.getName()).equals("")){
+            redirectAttributes.addFlashAttribute("alert_info", "Name of hotel is empty");
+            return "redirect:" + uriBuilder.path("/hotel/edit/{id}").buildAndExpand(id).encode().toUriString();
             }
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }
-            return "hotel/edit/{id}";
-        }
-
+         
+         if ((updatedHotel.getAddress()).equals("")){
+            redirectAttributes.addFlashAttribute("alert_info", "Address of hotel is empty");
+            return "redirect:" + uriBuilder.path("/hotel/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+         }
+        
         HotelDTO hotel = hotelFacade.getHotelById(id);
         hotel.setName(updatedHotel.getName());
         hotel.setAddress(updatedHotel.getAddress());
