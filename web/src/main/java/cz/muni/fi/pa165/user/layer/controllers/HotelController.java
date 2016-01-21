@@ -45,6 +45,8 @@ public class HotelController {
 
     @Autowired
     private RoomFacade roomFacade;
+    
+    Date date;
 
     /**
      * Show a list of hotels
@@ -116,6 +118,8 @@ public class HotelController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder) {
 
+        date = new Date();
+        
         if (goal.equals("")) {
             model.addAttribute("alert_info", "Name/Destination is empty");
             return "hotel/find";
@@ -126,6 +130,10 @@ public class HotelController {
         }
         if (startDate.compareTo(endDate)>0){
             model.addAttribute("alert_info", "Wrong data format");
+            return "hotel/find";
+        }
+        if(startDate.compareTo(date)<0){
+            model.addAttribute("alert_info", "Not possible to reserve room in the past");
             return "hotel/find";
         } else {
 
@@ -168,6 +176,8 @@ public class HotelController {
             }
         }
     }
+
+
 
     /**
      * Display form for new hotel
@@ -228,16 +238,14 @@ public class HotelController {
     public String updateHotel(@PathVariable("id") long id, @Valid @ModelAttribute("hotel") HotelDTO updatedHotel, BindingResult bindingResult,
             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
 
-        if ((updatedHotel.getName()).equals("")){
-            redirectAttributes.addFlashAttribute("alert_info", "Name of hotel is empty");
-            return "redirect:" + uriBuilder.path("/hotel/edit/{id}").buildAndExpand(id).encode().toUriString();
+         if (bindingResult.hasErrors()) {
+            for (ObjectError ge : bindingResult.getGlobalErrors()) {
             }
-         
-         if ((updatedHotel.getAddress()).equals("")){
-            redirectAttributes.addFlashAttribute("alert_info", "Address of hotel is empty");
-            return "redirect:" + uriBuilder.path("/hotel/edit/{id}").buildAndExpand(id).encode().toUriString();
-   
-         }
+            for (FieldError fe : bindingResult.getFieldErrors()) {
+                model.addAttribute(fe.getField() + "_error", true);
+            }
+            return "hotel/edit";
+        }
         
         HotelDTO hotel = hotelFacade.getHotelById(id);
         hotel.setName(updatedHotel.getName());
