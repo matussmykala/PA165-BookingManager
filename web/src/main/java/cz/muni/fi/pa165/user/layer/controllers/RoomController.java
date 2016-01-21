@@ -125,14 +125,16 @@ public class RoomController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
      public String create(@Valid @ModelAttribute("roomCreate") RoomDTO room,@RequestParam long hotelId, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-
+/*
         if (bindingResult.hasErrors()) {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
+            model.addAttribute("alert_info", "Fill all data");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
             return "room/new";
         }
-        
+       */ 
         if ((room.getName()).equals("")){
             model.addAttribute("alert_info", "Name of room is empty");
             model.addAttribute("hotels", hotelFacade.getAllHotels());
@@ -191,13 +193,49 @@ public class RoomController {
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public String updateRoom(@PathVariable("id") long id, @RequestParam long hotelId, @Valid @ModelAttribute("room") RoomDTO updatedRoom, BindingResult bindingResult,
                          Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
-         if (bindingResult.hasErrors()) {
+         /*if (bindingResult.hasErrors()) {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
-            return "room/edit/{id}";
+            redirectAttributes.addFlashAttribute("alert_info", "Fill all data");
+            
+            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+        }*/
+         
+         
+        if ((updatedRoom.getName()).equals("")){
+            redirectAttributes.addFlashAttribute("alert_info", "Name of room is empty");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+            //return "room/edit/{id}";
         }
-
+        
+        if (updatedRoom.getPrice() == null){
+            redirectAttributes.addFlashAttribute("alert_info", "Price of room is empty");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+        }
+        
+        if (updatedRoom.getHotel() == null){
+            redirectAttributes.addFlashAttribute("alert_info", "Hotel not chose");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+        }
+        
+        if (updatedRoom.getNumberOfBeds() <= 0){
+            redirectAttributes.addFlashAttribute("alert_info", "Number of beds must be greater than 0");
+            model.addAttribute("hotels", hotelFacade.getAllHotels());
+        
+            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
+   
+        } 
+         
         RoomDTO room = roomFacade.getRoomById(id);
         HotelDTO hotel = hotelFacade.getHotelById(hotelId);
         room.setName(updatedRoom.getName());
@@ -253,6 +291,8 @@ public class RoomController {
             model.addAttribute("alert_info", "No data found");
         }
         model.addAttribute("rooms", rooms);
+        model.addAttribute("filter", filter);
+        model.addAttribute("filterType", filterType);
         return "room/list";
     }
 }
