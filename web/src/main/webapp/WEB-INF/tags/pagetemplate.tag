@@ -38,9 +38,12 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="navigation.admin"/><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><my:a href="/room/list"><f:message key="navigation.admin.rooms"/></my:a></li>
-                        <li><my:a href="/customer/list"><f:message key="navigation.admin.customers"/></my:a></li>
                         <li><my:a href="/hotel/list"><f:message key="navigation.admin.hotels"/></my:a></li>
-                        <li><my:a href="/reservation/list"><f:message key="navigation.admin.reservations"/></my:a></li>
+                        <c:if test="${authenticatedUser.admin}">
+                            <li><my:a href="/customer/list"><f:message key="navigation.admin.customers"/></my:a></li>
+                            <li><my:a href="/reservation/list"><f:message
+                                    key="navigation.admin.reservations"/></my:a></li>
+                        </c:if>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -108,7 +111,10 @@
     String ua = request.getHeader("user-agent");
     boolean isChrome = (ua != null && ua.indexOf("Chrome/") != -1);
     if (!isChrome) {
-      out.println("<div class=\"alert alert-info\" role=\"alert\">Your browser is not supported<br/>Please use last version of Google Chrome browser<br/></div>");
+//      out.println("<div class=\"alert alert-info\" role=\"alert\">Your browser is not supported<br/>Please use last version of Google Chrome browser<br/></div>");
+    %>
+    <div class="alert alert-info" role="alert"><f:message key="unsupported_browser"/></div>
+    <%
     }
     %>
     

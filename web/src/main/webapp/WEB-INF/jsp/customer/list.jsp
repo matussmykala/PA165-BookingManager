@@ -5,7 +5,12 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Customers">
+<c:set var="title">
+    <fmt:message key="customer.caption"/>
+</c:set>
+
+<%--<my:pagetemplate title="Customers">--%>
+<my:pagetemplate title="${title}">
 <jsp:attribute name="body">
 
     <table class="table">

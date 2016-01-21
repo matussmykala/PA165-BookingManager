@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Spring MVC Controller for management of hotel customers.
@@ -103,7 +104,7 @@ public class CustomerController {
             for (FieldError fe : bindingResult.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
             }
-            return "hotel/edit/{id}";
+            return "customer/edit";
         }
 
         CustomerDTO customer = customerFacade.findCustomerById(id);
@@ -130,10 +131,14 @@ public class CustomerController {
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
         CustomerDTO customerDTO = customerFacade.findCustomerById(id);
 
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Texts");
+
         List<ReservationDTO> reservations = reservationFacade.getReservationsByCustomer(customerDTO.getId());
         if (!reservations.isEmpty()) {
-            redirectAttributes.addFlashAttribute("alert_info", "Customer " + customerDTO.getName() + " " + customerDTO.getSurname()
-                    + " cannot be deleted because there are still some reservations associated with him.");
+//            redirectAttributes.addFlashAttribute("alert_info", "Customer " + customerDTO.getName() + " " + customerDTO.getSurname()
+//                    + " cannot be deleted because there are still some reservations associated with him.");
+            redirectAttributes.addFlashAttribute(resourceBundle.getString("customer.customer") + " "
+                    + customerDTO.getName() + " " + customerDTO.getSurname() + resourceBundle.getString("customer.cannot_delete"));
             return "redirect:" + uriBuilder.path("/customer/list").toUriString();
         }
 

@@ -1,8 +1,5 @@
 package cz.muni.fi.pa165.user.layer.controllers;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,6 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ResourceBundle;
 
 /**
  * Controller which manage authentication redirects and login form
@@ -21,6 +23,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AuthController {
 
     final static Logger log = LoggerFactory.getLogger(AuthController.class);
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("Texts");
 
     /**
      * Show empty login form
@@ -39,8 +42,8 @@ public class AuthController {
      */
     @RequestMapping(value = "/login-success", method = RequestMethod.GET)
     public String loginSuccess(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        
-        redirectAttributes.addFlashAttribute("alert_info", "Login successful");
+
+        redirectAttributes.addFlashAttribute("alert_info", resourceBundle.getString("login_successful"));
         
         return "redirect:"+ uriBuilder.path("").toUriString();
     }
@@ -52,7 +55,7 @@ public class AuthController {
      */
     @RequestMapping(value = "/login-required", method = RequestMethod.GET)
     public String loadLoginFailed(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("alert_info", "This page is authorized, please log in");
+        redirectAttributes.addFlashAttribute("alert_info", resourceBundle.getString("authorized_page"));
         return "redirect:" + uriBuilder.path("/auth/login").toUriString();
     }
 

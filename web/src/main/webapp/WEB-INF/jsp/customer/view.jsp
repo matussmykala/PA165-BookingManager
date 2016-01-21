@@ -5,7 +5,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Customer ${customer.name} ${customer.surname} detail">
+<c:set var="title">
+    <fmt:message key="customer.customer"/>
+</c:set>
+
+<my:pagetemplate title="${title} ${customer.name} ${customer.surname}">
 <jsp:attribute name="body">
 
 
@@ -38,14 +42,18 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td>
-                    <my:a href="/customer/edit/${customer.id}" class="btn btn-primary"><span
-                            class="glyphicon glyphicon-pencil" style="height:20px;" aria-hidden="true"></span></my:a>
-                </td>
-                <td>
-                    <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
-                            class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
-                </td>
+
+                <c:if test="${authenticatedUser.admin}">
+                    <td>
+                        <my:a href="/customer/edit/${customer.id}" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-pencil" style="height:20px;"
+                                aria-hidden="true"></span></my:a>
+                    </td>
+                    <td>
+                        <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+                    </td>
+                </c:if>
             </tr>
             </tbody>
         </table>
