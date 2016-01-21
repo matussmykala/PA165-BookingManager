@@ -1,4 +1,5 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,6 +32,7 @@ public class ReservationDTO
     /**
      * Booked room.
      */
+    @JsonIgnore
     private RoomDTO room = new RoomDTO();
 
     public Long getId()

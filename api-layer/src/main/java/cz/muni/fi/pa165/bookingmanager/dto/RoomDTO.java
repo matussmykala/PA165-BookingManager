@@ -1,13 +1,12 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import java.math.BigDecimal;
-import java.util.Currency;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Room DTO implementation
@@ -47,7 +46,7 @@ public class RoomDTO {
     public void setHotel(HotelDTO hotel) {
         this.hotel = hotel;
     }
-
+     
     public Set<ReservationDTO> getReservations() {
         return reservations;
     }
