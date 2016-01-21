@@ -5,7 +5,11 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<my:pagetemplate title="Edit customer">
+<c:set var="title">
+    <fmt:message key="customer.edit"/>
+</c:set>
+
+<my:pagetemplate title="${title}">
 <jsp:attribute name="body">
 
     <form:form method="post" action="${pageContext.request.contextPath}/customer/update/${customer.id}"

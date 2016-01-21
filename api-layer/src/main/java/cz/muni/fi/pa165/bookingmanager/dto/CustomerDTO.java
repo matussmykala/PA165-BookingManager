@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Data Transfer Object of a Customer entity.
  *
@@ -17,26 +20,36 @@ public class CustomerDTO {
     /**
      * First name of the customer
      */
+    @NotNull
+    @Size(min = 1, max = 30)
     private String name;
 
     /**
      * Surname of the customer
      */
+    @NotNull
+    @Size(min = 1, max = 30)
     private String surname;
 
     /**
      * Email of the customer
      */
+    @NotNull
+    @Size(min = 3, max = 30)
     private String email;
 
     /**
      * Username of the customer
      */
+    @NotNull
+    @Size(min = 3, max = 30)
     private String username;
 
     /**
      * Password of the customer
      */
+    @NotNull
+    @Size(min = 6, max = 30)
     private String password;
 
     /**
