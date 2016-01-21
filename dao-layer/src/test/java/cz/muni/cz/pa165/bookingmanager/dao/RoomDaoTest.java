@@ -85,11 +85,11 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
         reservation1 = new Reservation();
 
         Calendar cal1 = Calendar.getInstance();
-        cal1.set(2015, 10, 26);
+        cal1.set(2016, 10, 26);
         date1 = cal1.getTime();
 
         Calendar cal2 = Calendar.getInstance();
-        cal2.set(2015, 11, 29);
+        cal2.set(2016, 11, 29);
         date2 = cal2.getTime();
 
         reservation1.setCustomer(customer1);
@@ -302,7 +302,8 @@ public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
             roomDao.findById(null);
             fail();
         } catch (IllegalArgumentException ex) {
-            //ok
+            //ok            throw new IllegalArgumentException("EndOfReservation cannot be before today.");
+
         }
     }
 

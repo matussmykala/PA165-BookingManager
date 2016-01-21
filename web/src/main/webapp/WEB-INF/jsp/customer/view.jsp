@@ -49,10 +49,12 @@
                                 class="glyphicon glyphicon-pencil" style="height:20px;"
                                 aria-hidden="true"></span></my:a>
                     </td>
-                    <td>
-                        <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
-                                class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
-                    </td>
+                    <c:if test="${not (customer.id == authenticatedUser.id)}">
+                        <td>
+                            <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
+                                    class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+                        </td>
+                    </c:if>
                 </c:if>
             </tr>
             </tbody>

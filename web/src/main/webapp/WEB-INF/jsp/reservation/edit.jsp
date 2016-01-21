@@ -35,11 +35,11 @@
         </div>
         <div style="margin-top:10px;">
             <label for="startDate"><f:message key="reservation.list.from"/></label>
-            <input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/>
+            <input class="form-control" name="startDate" type="date" id="startDate" value="<fmt:formatDate value="${reservation.startOfReservation}" pattern="yyyy-MM-dd"/>"/>
         </div>
         <div style="margin-top:10px;">
-            <label for="endDate"><f:message key="reservation.list.to"/></label>
-            <input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/>
+            <label for="endOfReservation"><f:message key="reservation.list.from"/></label>
+            <input class="form-control" name="endOfReservation"  type="date" id="endOfReservation" value="<fmt:formatDate value="${reservation.endOfReservation}" pattern="yyyy-MM-dd"/>"/>
         </div>
 
         <button class="btn btn-primary" type="submit"><f:message key="room.edit"/></button>

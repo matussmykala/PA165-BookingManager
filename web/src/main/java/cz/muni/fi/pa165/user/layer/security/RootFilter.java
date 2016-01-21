@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package cz.muni.fi.pa165.user.layer.security;
 
-import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,17 +16,21 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import javax.servlet.http.HttpSession;
 
 /**
- * Protects part of application where user login is required
  *
- * @author Martin Cuchran
+ * @author Martin Cuchran <cuchy92@gmail.com>
  */
-@WebFilter(urlPatterns = {"/room/*", "/customer/*", "/reservation/*", "/hotel/*"})
-public class ProtectFilter implements Filter {
+   
+@WebFilter(urlPatterns = {"/*"})
+public class RootFilter implements Filter {
 
     final static Logger log = LoggerFactory.getLogger(ProtectFilter.class);
 
@@ -43,38 +52,7 @@ public class ProtectFilter implements Filter {
             }catch (NullPointerException e){
                 tmp = null;
             }
-
-            if(tmp==null){
-                if(logname==null){
-                    response.sendRedirect(request.getContextPath()+"/auth/login-required");
-                return;
-                }
-
-                CustomerDTO matchingUser = new CustomerDTO();
-
-                try{
-                    matchingUser = userFacade.findCustomerByEmail(logname);
-                }catch (IllegalArgumentException e){
-                        matchingUser = null;
-                    }
-
-                if(matchingUser==null) {
-                    log.info("no user with id {}", logname);
-                    response.sendRedirect(request.getContextPath()+"/auth/login-error");
-                    return;
-                }
-                UserAuthenticateDTO userAuthenticateDTO = new UserAuthenticateDTO();
-                userAuthenticateDTO.setUserId(matchingUser.getId());
-                userAuthenticateDTO.setPassword(password);
-
-                if (!userFacade.authenticateCustomer(userAuthenticateDTO)) {
-                    log.info("wrong credentials: user={} password={}", logname, password);
-                    response.sendRedirect(request.getContextPath()+"/auth/login-error");
-                    return;
-                }
-                auth = matchingUser;
-                response.sendRedirect(request.getContextPath()+"/auth/login-success");
-            }
+           
 
             session.setAttribute("authenticatedUser", auth);
             request.setAttribute("authenticatedUser", auth);
@@ -94,5 +72,23 @@ public class ProtectFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    /**
+    * Creates hash of password
+    *
+    * @param password plain text
+    * @return hash of password
+    */
+    private String sha256Hash(String password) {
+        MessageDigest digest = null;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        digest.update(password.getBytes(StandardCharsets.UTF_8));
+        String str = new BigInteger(1, digest.digest()).toString(16);
+        return str;
     }
 }

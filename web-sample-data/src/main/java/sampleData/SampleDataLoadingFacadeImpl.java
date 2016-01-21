@@ -15,10 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -73,20 +69,20 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         Room room5 = room("Izba-5",5,new BigDecimal("25.5"), ira );
 
         // customer example
-        Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", sha256Hash("pass1"), Boolean.FALSE);
-        Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", sha256Hash("pass2"), Boolean.FALSE);
-        Customer customer3 = customer("zuzka", "adamkova", "adamek", "adamkova@seznam.cz", sha256Hash("pass3"), Boolean.TRUE);
-        Customer customer4 = customer("anicka", "kubova", "kuba", "kubova@seznam.cz", sha256Hash("pass4"), Boolean.TRUE);
+        Customer customer1 = customer("janko", "hrasko", "hrasok", "hraska@seznam.cz", "pass1", Boolean.FALSE);
+        Customer customer2 = customer("fero", "hrasko", "fero", "hraska2@seznam.cz", "pass2", Boolean.FALSE);
+        Customer customer3 = customer("zuzka", "adamkova", "adamek", "adamkova@seznam.cz", "pass3", Boolean.TRUE);
+        Customer customer4 = customer("anicka", "kubova", "kuba", "kubova@seznam.cz", "pass4", Boolean.TRUE);
 
         // reservation example, required specific date, start before end
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, 11, 1);
+        calendar.set(2016, 11, 1);
         Date startDate1 = calendar.getTime();
-        calendar.set(2015, 12, 1);
+        calendar.set(2016, 12, 1);
         Date endDate1 = calendar.getTime();
-        calendar.set(2014, 11, 1);
+        calendar.set(2016, 11, 1);
         Date startDate2 = calendar.getTime();
-        calendar.set(2014, 12, 1);
+        calendar.set(2016, 12, 1);
         Date endDate2 = calendar.getTime();
 
         ReservationCreateDTO reservationDTO1 = new ReservationCreateDTO();
@@ -168,20 +164,4 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
         return  customer;
     }
 
-    /**
-     * Generates Hash for password
-     *
-     * @return hash of password
-     */
-    private String sha256Hash(String password) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        digest.update(password.getBytes(StandardCharsets.UTF_8));
-        String str = new BigInteger(1, digest.digest()).toString(16);
-        return str;
-    }
 }

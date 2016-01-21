@@ -75,13 +75,12 @@ public interface CustomerFacade {
      * @return customers with reservation
      */
     Collection<CustomerDTO> getCustomersWithReservation();
-    
+
     /**
-     * If user is authenticated returns true else false
+     * Returns a customer that has provided email address associated with him.
      *
-     * @return boolean
+     * @param email email address of a customer
+     * @return customer with provided email address
      */
-    boolean authenticate(UserAuthenticateDTO u);
-    
     CustomerDTO findCustomerByEmail(String email);
 }

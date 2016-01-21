@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.user.layer.controllers;
 
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ResourceBundle;
+import javax.inject.Inject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 
 /**
  * Controller which manage authentication redirects and login form
@@ -22,8 +26,10 @@ import java.util.ResourceBundle;
 @RequestMapping("/auth")
 public class AuthController {
 
+    @Inject
+    private MessageSource messageSource;
+    
     final static Logger log = LoggerFactory.getLogger(AuthController.class);
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("Texts");
 
     /**
      * Show empty login form
@@ -41,9 +47,9 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/login-success", method = RequestMethod.GET)
-    public String loginSuccess(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-
-        redirectAttributes.addFlashAttribute("alert_info", resourceBundle.getString("login_successful"));
+    public String loginSuccess(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
+        String message = messageSource.getMessage("login.successful", null, locale);
+        redirectAttributes.addFlashAttribute("alert_info", message);
         
         return "redirect:"+ uriBuilder.path("").toUriString();
     }
@@ -54,8 +60,9 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/login-required", method = RequestMethod.GET)
-    public String loadLoginFailed(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("alert_info", resourceBundle.getString("authorized_page"));
+    public String loadLoginFailed(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
+        String message = messageSource.getMessage("login.required", null, locale);
+        redirectAttributes.addFlashAttribute("alert_info", message);
         return "redirect:" + uriBuilder.path("/auth/login").toUriString();
     }
 
@@ -65,8 +72,9 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/login-error", method = RequestMethod.GET)
-    public String loginError(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("alert_danger", "Username or password incorrect");
+    public String loginError(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
+        String message = messageSource.getMessage("login.unsuccessful", null, locale);
+        redirectAttributes.addFlashAttribute("alert_danger", message);
         return "redirect:" + uriBuilder.path("/auth/login").toUriString();
     }
 
@@ -76,8 +84,9 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/login-nouser", method = RequestMethod.GET)
-    public String loginNoUser(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("alert_warning", "Username does not exist");
+    public String loginNoUser(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
+        String message = messageSource.getMessage("login.user.no.exist", null, locale);
+        redirectAttributes.addFlashAttribute("alert_warning", message);
         return "redirect:" + uriBuilder.path("/auth/login").toUriString();
     }
 
@@ -87,8 +96,9 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/login-noadmin", method = RequestMethod.GET)
-    public String loginNoAdmin(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
-        redirectAttributes.addFlashAttribute("alert_info", "You are not administrator");
+    public String loginNoAdmin(UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
+        String message = messageSource.getMessage("login.access-denied", null, locale);
+        redirectAttributes.addFlashAttribute("alert_info", message);
         return "access-denied";
     }
     
@@ -98,14 +108,15 @@ public class AuthController {
      * @return JSP page
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(ServletRequest r, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+    public String logout(ServletRequest r, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
         
         HttpServletRequest request = (HttpServletRequest) r;
         HttpSession session = request.getSession();
         
         session.setAttribute("authenticatedUser", null);
         request.setAttribute("authenticatedUser", null);
-        redirectAttributes.addFlashAttribute("alert_info", "You were logged out");
+        String message = messageSource.getMessage("logout.message", null, locale);
+        redirectAttributes.addFlashAttribute("alert_info", message);
         return "redirect:" + uriBuilder.path("").toUriString();
     }
 }

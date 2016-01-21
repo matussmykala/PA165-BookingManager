@@ -30,8 +30,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 /**
  * Created 26.10.2015
  *
@@ -80,7 +78,6 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         r2 = new Reservation();
         r3 = new Reservation();
 
-
         room = new Room();
         room.setName("Room1");
         room.setNumberOfBeds(3);
@@ -112,22 +109,21 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         customer2.setSurname("Cuchran");
         customer2.setUsername("cuchy");
 
-
         Calendar cal1 = Calendar.getInstance();
-	cal1.set(2015, 10, 26);
-	date1 = cal1.getTime();
+	    cal1.set(2016, 10, 26);
+	    date1 = cal1.getTime();
 
         Calendar cal2 = Calendar.getInstance();
-        cal2.set(2015, 11, 29);
-	date2 = cal2.getTime();
+        cal2.set(2016, 11, 29);
+	    date2 = cal2.getTime();
 
         Calendar cal3 = Calendar.getInstance();
-	cal3.set(2015, 10, 27);
-	date3 = cal3.getTime();
+	    cal3.set(2016, 10, 27);
+	    date3 = cal3.getTime();
 
         Calendar cal4 = Calendar.getInstance();
-        cal4.set(2015, 11, 28);
-	date4 = cal4.getTime();
+        cal4.set(2016, 11, 28);
+	    date4 = cal4.getTime();
 
         r1.setCustomer(customer);
         r1.setRoom(room);
@@ -151,7 +147,6 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         reservationDao.create(r1);
         reservationDao.create(r2);
         reservationDao.create(r3);
-
     }
 
     /**
@@ -182,7 +177,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         Assert.assertEquals(found.getStartOfReservation().getTime(),date1.getTime());
         Assert.assertEquals(found.getRoom(),room);
 
-}
+    }
 
     /**
      * Test if delete method removes reservation
@@ -212,8 +207,8 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         //Change data
         Date date;
         Calendar cal = Calendar.getInstance();
-	cal.set(2015, 9, 26);
-	date = cal.getTime();
+	    cal.set(2016, 9, 26);
+	    date = cal.getTime();
         r1.setStartOfReservation(date);
         r1.setCustomer(customer2);
         r1.setRoom(room2);

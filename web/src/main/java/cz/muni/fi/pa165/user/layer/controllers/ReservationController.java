@@ -74,8 +74,6 @@ public class ReservationController
      */
     @RequestMapping(value = "/pickdate/{roomId}")
     public String pickDate(@PathVariable long roomId, Model model){
-                           //@Valid @ModelAttribute("reservation") ReservationCreateDTO reservation){
-        //todo dorob parametre a validuj ich
         this.roomId = roomId;
         return "reservation/new";
     }
@@ -163,7 +161,7 @@ public class ReservationController
      *
      * @param id    reservation id
      * @param startDate start date
-     * @param endDate   end date
+     * @param endOfReservation   end date
      * @param redirectAttributes
      * @param uriBuilder
      * @return  view containing updated information of the reservation
@@ -171,7 +169,7 @@ public class ReservationController
     @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateReservation(@PathVariable("id") long id,
                                     @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+                                    @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endOfReservation,
                                     RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
 
         ReservationDTO reservation = reservationFacade.getReservationById(id);
@@ -179,9 +177,9 @@ public class ReservationController
         boolean success = false;
         try{
             success = reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
-                    startDate, endDate);
+                    startDate, endOfReservation);
         }
-        catch (IllegalArgumentException e){
+        catch (IllegalArgumentException | ValidationException e){
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Incorrect dates were picked.");
             return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
         }
