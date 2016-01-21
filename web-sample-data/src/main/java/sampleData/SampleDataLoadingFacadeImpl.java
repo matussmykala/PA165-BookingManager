@@ -80,13 +80,13 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade
 
         // reservation example, required specific date, start before end
         Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, 11, 1);
+        calendar.set(2016, 11, 1);
         Date startDate1 = calendar.getTime();
-        calendar.set(2015, 12, 1);
+        calendar.set(2016, 12, 1);
         Date endDate1 = calendar.getTime();
-        calendar.set(2014, 11, 1);
+        calendar.set(2016, 11, 1);
         Date startDate2 = calendar.getTime();
-        calendar.set(2014, 12, 1);
+        calendar.set(2016, 12, 1);
         Date endDate2 = calendar.getTime();
 
         ReservationCreateDTO reservationDTO1 = new ReservationCreateDTO();

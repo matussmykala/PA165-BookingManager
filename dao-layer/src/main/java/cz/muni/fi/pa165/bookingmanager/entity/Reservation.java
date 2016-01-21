@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.bookingmanager.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -50,7 +52,7 @@ public class Reservation {
 
     public void setId(Long id) {
         this.id = id;
-        
+
     }
 
     public Date getStartOfReservation() {
@@ -60,6 +62,9 @@ public class Reservation {
     public void setStartOfReservation(Date startOfReservation){
         if ((this.endOfReservation != null) && (startOfReservation != null) && !this.endOfReservation.after(startOfReservation)) {
             throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
+        if (startOfReservation != null && startOfReservation.before(Calendar.getInstance().getTime())){
+            throw new IllegalArgumentException("StartOfReservation cannot be before today.");
         }
         this.startOfReservation=startOfReservation;
     }
@@ -71,6 +76,9 @@ public class Reservation {
     public void setEndOfReservation(Date endOfReservation) {
         if ((endOfReservation != null) && (this.startOfReservation != null) && !endOfReservation.after(this.startOfReservation)) {
             throw new IllegalArgumentException("StartOfReservation cannot be after EndOfReservation");
+        }
+        if (endOfReservation != null && endOfReservation.before(Calendar.getInstance().getTime())){
+            throw new IllegalArgumentException("EndOfReservation cannot be before today.");
         }
         this.endOfReservation=endOfReservation;
     }

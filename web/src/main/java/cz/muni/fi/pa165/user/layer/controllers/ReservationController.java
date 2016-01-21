@@ -74,8 +74,6 @@ public class ReservationController
      */
     @RequestMapping(value = "/pickdate/{roomId}")
     public String pickDate(@PathVariable long roomId, Model model){
-                           //@Valid @ModelAttribute("reservation") ReservationCreateDTO reservation){
-        //todo dorob parametre a validuj ich
         this.roomId = roomId;
         return "reservation/new";
     }

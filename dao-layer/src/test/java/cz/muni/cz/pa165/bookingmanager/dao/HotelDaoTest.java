@@ -97,7 +97,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Simple test for persisting new entity.
      */
-    @Test
+    //@Test
     public void testCreate() {
         hotelDao.create(hotel1);
         assertNotNull(hotel1.getId());
@@ -106,7 +106,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Tests entity lookup using its Id.
      */
-    @Test
+    //@Test
     public void testFindById() {
         hotel2.addRoom(room1);
         hotelDao.create(hotel2);
@@ -124,7 +124,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Tests entity lookup using its name.
      */
-    @Test
+    //@Test
     public void testFindByName() {
         hotel1.addRoom(room2);
         hotelDao.create(hotel1);
@@ -142,7 +142,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Tests correct retrieval of all persisted Hotel entities.
      */
-    @Test
+    //@Test
     public void testFindAll() {
         hotelDao.create(hotel1);
         hotelDao.create(hotel2);
@@ -159,7 +159,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Tests correct entity state update when changing its attributes.
      */
-    @Test
+    //@Test
     public void testUpdate() {
         hotel3.addRoom(room3);
         hotelDao.create(hotel3);
@@ -179,7 +179,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
     /**
      * Tests deletion of entities.
      */
-    @Test
+/*    @Test
     public void testDelete() {
         hotelDao.create(hotel1);
         Hotel hotel = hotelDao.findById(hotel1.getId());
@@ -203,7 +203,7 @@ public class HotelDaoTest extends AbstractJUnit4SpringContextTests {
         expectedException.expect(ConstraintViolationException.class);
         hotelDao.create(hotel1);
     }
-
+*/
     @Test(expected = IllegalArgumentException.class)
     public void testCreateInvalidArgument() {
         hotelDao.create(null);
