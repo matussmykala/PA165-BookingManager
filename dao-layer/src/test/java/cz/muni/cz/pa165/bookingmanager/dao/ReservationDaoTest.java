@@ -30,8 +30,6 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 /**
  * Created 26.10.2015
  *
@@ -74,12 +72,11 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Create tested objects
      */
-    //@Before
+    @Before
     public void createTestData(){
         r1 = new Reservation();
         r2 = new Reservation();
         r3 = new Reservation();
-
 
         room = new Room();
         room.setName("Room1");
@@ -112,22 +109,21 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         customer2.setSurname("Cuchran");
         customer2.setUsername("cuchy");
 
-
         Calendar cal1 = Calendar.getInstance();
-	cal1.set(2015, 10, 26);
-	date1 = cal1.getTime();
+	    cal1.set(2016, 10, 26);
+	    date1 = cal1.getTime();
 
         Calendar cal2 = Calendar.getInstance();
-        cal2.set(2015, 11, 29);
-	date2 = cal2.getTime();
+        cal2.set(2016, 11, 29);
+	    date2 = cal2.getTime();
 
         Calendar cal3 = Calendar.getInstance();
-	cal3.set(2015, 10, 27);
-	date3 = cal3.getTime();
+	    cal3.set(2016, 10, 27);
+	    date3 = cal3.getTime();
 
         Calendar cal4 = Calendar.getInstance();
-        cal4.set(2015, 11, 28);
-	date4 = cal4.getTime();
+        cal4.set(2016, 11, 28);
+	    date4 = cal4.getTime();
 
         r1.setCustomer(customer);
         r1.setRoom(room);
@@ -151,13 +147,12 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         reservationDao.create(r1);
         reservationDao.create(r2);
         reservationDao.create(r3);
-
     }
 
     /**
      * Test reservation creation
      */
-    //@Test
+    @Test
     public void testCreate(){
         assertNotNull(r1.getId());
     }
@@ -165,7 +160,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if reservations contains created reservations
      */
-    //@Test
+    @Test
     public void testFindAll(){
         List<Reservation> found = reservationDao.findAll();
         Assert.assertEquals(found.size(), 3);
@@ -174,7 +169,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if findById method returns correct reservation
      */
-    //@Test
+    @Test
     public void testFindById(){
         Reservation found = reservationDao.findById(r1.getId());
         Assert.assertEquals(found.getCustomer(),customer);
@@ -182,12 +177,12 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         Assert.assertEquals(found.getStartOfReservation().getTime(),date1.getTime());
         Assert.assertEquals(found.getRoom(),room);
 
-}
+    }
 
     /**
      * Test if delete method removes reservation
      */
-    //@Test
+    @Test
     public void testDelete(){
 
         //Test if Data exist
@@ -201,7 +196,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test if update of reservation attributes is working
      */
-    //@Test
+    @Test
     public void testUpdate(){
 
         //Test data before change
@@ -212,8 +207,8 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
         //Change data
         Date date;
         Calendar cal = Calendar.getInstance();
-	cal.set(2015, 9, 26);
-	date = cal.getTime();
+	    cal.set(2016, 9, 26);
+	    date = cal.getTime();
         r1.setStartOfReservation(date);
         r1.setCustomer(customer2);
         r1.setRoom(room2);
@@ -260,7 +255,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test create reservation with StartOfReservation attribute greater than EndOfReservation attribute
      */
-    //@Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testWrongStartOfReservationAttribute(){
         r1.setStartOfReservation(date2);
         reservationDao.create(r1);
@@ -269,7 +264,7 @@ public class ReservationDaoTest extends AbstractJUnit4SpringContextTests{
     /**
      * Test create reservation with EndOfReservation attribute greater than StartOfReservation attribute
      */
-    //@Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testWrongEndOfReservationAttribute(){
         r1.setEndOfReservation(date1);
         reservationDao.create(r1);

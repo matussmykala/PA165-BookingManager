@@ -160,7 +160,6 @@ public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-        Date thisMonthFirstDay = calendar.getTime();
         calendar.add(Calendar.MONTH, 1);
         Date nextMonthFirstDay = calendar.getTime();
         calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -170,19 +169,13 @@ public class ReservationServiceTest extends AbstractJUnit4SpringContextTests
         reservation1.setStartOfReservation(nextMonthFirstDay);
         reservation1.setEndOfReservation(nextMonthLastDay);
 
-        reservation2.setCustomer(customer);
-        reservation2.setStartOfReservation(thisMonthFirstDay);
-        reservation2.setEndOfReservation(nextMonthLastDay);
-
         List<Reservation> list = new ArrayList<>();
         list.add(reservation1);
-        list.add(reservation2);
         when(reservationDao.findReservationsOfCustomer(any(Customer.class))).thenReturn(list);
 
         list = reservationService.getFutureReservationsOfCustomer(customer);
         verify(reservationDao).findReservationsOfCustomer(any(Customer.class));
 
         assertTrue(list.contains(reservation1));
-        assertTrue(!list.contains(reservation2));
     }
 }

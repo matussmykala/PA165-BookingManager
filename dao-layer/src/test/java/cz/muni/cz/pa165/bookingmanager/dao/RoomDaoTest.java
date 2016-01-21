@@ -38,10 +38,10 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Iveta Jurcikova
  */
-//@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
-//@TestExecutionListeners(TransactionalTestExecutionListener.class)
-//@Transactional
-public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
+@ContextConfiguration(classes = PersistenceSampleApplicationContext.class)
+@TestExecutionListeners(TransactionalTestExecutionListener.class)
+@Transactional
+public class RoomDaoTest extends AbstractJUnit4SpringContextTests {
 
     @Autowired
     private ReservationDao reservationDao;
@@ -67,7 +67,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     private Date date1;
     private Date date2;
 
-    //@Before
+    @Before
     public void setUpClass() {
 
         //create customer for reservation
@@ -85,11 +85,11 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
         reservation1 = new Reservation();
 
         Calendar cal1 = Calendar.getInstance();
-        cal1.set(2015, 10, 26);
+        cal1.set(2016, 10, 26);
         date1 = cal1.getTime();
 
         Calendar cal2 = Calendar.getInstance();
-        cal2.set(2015, 11, 29);
+        cal2.set(2016, 11, 29);
         date2 = cal2.getTime();
 
         reservation1.setCustomer(customer1);
@@ -126,7 +126,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of create method, of class RoomDaoImpl.
      */
-    //@Test
+    @Test
     public void testCreate() {
         Assert.assertNotNull(room1.getId());
     }
@@ -134,7 +134,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of findById method, of class RoomDaoImpl.
      */
-    //@Test
+    @Test
     public void testFindById() {
         Room found = roomDao.findById(room1.getId());
         Assert.assertEquals("57", found.getName());
@@ -146,7 +146,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of findAll method, of class RoomDaoImpl.
      */
-    //@Test
+    @Test
     public void testFindAll() {
         List<Room> found = roomDao.findAll();
         Assert.assertEquals(2, found.size());
@@ -155,7 +155,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of update method, of class RoomDaoImpl.
      */
-    //@Test
+    @Test
     public void testUpdate() {
         room1.setName("63");
         room1.setNumberOfBeds(2);
@@ -173,7 +173,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of delete method, of class RoomDaoImpl.
      */
-    //@Test
+    @Test
     public void testDelete() {
         roomDao.delete(roomDao.findById(room2.getId()));
         List<Room> found = roomDao.findAll();
@@ -184,7 +184,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of create method with wrong attributes of Room
      */
-    //@Test
+    @Test
     public void testCreateWithWrongAtributes() {
         //try to create room with value null
         try {
@@ -240,7 +240,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of update method with wrong attributes of Room
      */
-    //@Test
+    @Test
     public void testUpdateWithWrongAtributes() {
         //try to create room with value null
         try {
@@ -296,7 +296,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of findById method with wrong attributes of Room
      */
-    //@Test
+    @Test
     public void testFindByIdWithWrongAtributes() {
         try {
             roomDao.findById(null);
@@ -310,7 +310,7 @@ public class RoomDaoTest{//} extends AbstractJUnit4SpringContextTests {
     /**
      * Test of delete method with wrong attributes of Room
      */
-    //@Test
+    @Test
     public void testDeleteWithWrongAtributes() {
         try {
             roomDao.delete(null);
