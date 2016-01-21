@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 
+
 import java.util.Date;
 import java.util.Objects;
 import javax.validation.constraints.NotNull;
