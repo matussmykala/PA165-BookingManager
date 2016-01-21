@@ -5,12 +5,10 @@ import cz.muni.fi.pa165.bookingmanager.dao.ReservationDao;
 import cz.muni.fi.pa165.bookingmanager.entity.Customer;
 import cz.muni.fi.pa165.bookingmanager.entity.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -32,6 +30,14 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private ReservationDao reservationDao;
 
+    //    @Autowired
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
+
     /**
      * Registers a new customer.
      *
@@ -40,7 +46,8 @@ public class CustomerServiceImpl implements CustomerService {
      */
     @Override
     public void registerCustomer(Customer customer, String unencryptedPassword) {
-        customer.setPassword(unencryptedPassword);
+//        customer.setPassword(unencryptedPassword);
+        customer.setPassword(passwordEncoder.encode(unencryptedPassword));
         customerDao.create(customer);
     }
 
@@ -56,7 +63,8 @@ public class CustomerServiceImpl implements CustomerService {
         if (customer == null) {
             return false;
         }
-        return customer.getPassword().equals(sha256Hash(unencryptedPassword));
+//        return customer.getPassword().equals(sha256Hash(unencryptedPassword));
+        return passwordEncoder.matches(unencryptedPassword, customer.getPassword());
     }
 
     /**
@@ -138,30 +146,6 @@ public class CustomerServiceImpl implements CustomerService {
         return customers;
     }
 
-    private String sha256Hash(String password) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        digest.update(password.getBytes(StandardCharsets.UTF_8));
-        String str = new BigInteger(1, digest.digest()).toString(16);
-        return str;
-    }
-
-    @Override
-    public boolean authenticated(Customer customer, String password) {
-        return validatePassword(password, customer.getPassword());
-    }
-
-    public static boolean validatePassword(String pass, String customerPass){
-        if(pass.equals(customerPass)){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     @Override
     public Customer findCustomerByEmail(String email) {

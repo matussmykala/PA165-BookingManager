@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.user.layer.security;
 
-import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
+import cz.muni.fi.pa165.bookingmanager.dto.UserAuthenticateDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.CustomerFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,13 +11,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import javax.servlet.http.HttpSession;
 
 /**
  * Protects part of application where user login is required
@@ -98,23 +94,5 @@ public class ProtectFilter implements Filter {
     @Override
     public void destroy() {
 
-    }
-
-    /**
-    * Creates hash of password
-    *
-    * @param password plain text
-    * @return hash of password
-    */
-    private String sha256Hash(String password) {
-        MessageDigest digest = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        digest.update(password.getBytes(StandardCharsets.UTF_8));
-        String str = new BigInteger(1, digest.digest()).toString(16);
-        return str;
     }
 }
