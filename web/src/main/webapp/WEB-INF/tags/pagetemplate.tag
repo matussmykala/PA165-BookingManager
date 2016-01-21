@@ -70,7 +70,7 @@
                 </li>
                 <c:if test="${not empty authenticatedUser}">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" href="${pageContext.request.contextPath}/customer/view/${authenticatedUser.id}"><c:out value="${authenticatedUser.name} ${authenticatedUser.surname} "/></a>               
+                    <a class="dropdown-toggle" style="font-weight: bold;color:#fff;" href="${pageContext.request.contextPath}/customer/view/${authenticatedUser.id}"><c:out value=" ${authenticatedUser.name} ${authenticatedUser.surname} "/></a>               
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="${pageContext.request.contextPath}/auth/logout"><f:message key="logout"/></a>
@@ -96,12 +96,7 @@
     <div class="row">
         <div class="col-xs-6 col-sm-8 col-md-9 col-lg-10"></div>
         <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <c:out value="${authenticatedUser.name} ${authenticatedUser.surname} "/>
-                    <a href="${pageContext.request.contextPath}/auth/logout"><f:message key="logout"/></a>
-                </div>
-            </div>
+
         </div>
     </div>
     </c:if>
