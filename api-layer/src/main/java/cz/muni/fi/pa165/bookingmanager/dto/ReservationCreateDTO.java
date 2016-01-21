@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.bookingmanager.dto;
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author matus
  */
@@ -9,11 +11,13 @@ public class ReservationCreateDTO
     /**
      * Date and time when the reservation begins.
      */
+    @NotNull
     private Date startOfReservation = new Date();
 
     /**
      * Date and time, when the reservation ends.
      */
+    @NotNull
     private Date endOfReservation = new Date();
 
     /**

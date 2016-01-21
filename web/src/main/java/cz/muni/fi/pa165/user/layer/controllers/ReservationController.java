@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,6 +74,8 @@ public class ReservationController
      */
     @RequestMapping(value = "/pickdate/{roomId}")
     public String pickDate(@PathVariable long roomId, Model model){
+                           //@Valid @ModelAttribute("reservation") ReservationCreateDTO reservation){
+        //todo dorob parametre a validuj ich
         this.roomId = roomId;
         return "reservation/new";
     }
@@ -86,9 +90,9 @@ public class ReservationController
      * @param r
      * @return  view containing fields to pick reservation dates
      */
-    @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String newProduct(@Valid @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
-                             @Valid @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+    @RequestMapping(value = "/new/{reservationId}", method = RequestMethod.GET)
+    public String newProduct(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                             @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
                              UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, ServletRequest r) {
         ReservationCreateDTO reservationCreateDTO = new ReservationCreateDTO();
         reservationCreateDTO.setRoomId(this.roomId);
@@ -97,15 +101,15 @@ public class ReservationController
         HttpSession session = request.getSession();
 
         CustomerDTO auth = (CustomerDTO) session.getAttribute("authenticatedUser");
-
         reservationCreateDTO.setCustomerId(auth.getId());
+
         reservationCreateDTO.setStartOfReservation(startDate);
         reservationCreateDTO.setEndOfReservation(endDate);
         boolean success = false;
         try{
             success = reservationFacade.createReservation(reservationCreateDTO);
         }
-        catch (IllegalArgumentException e){
+        catch (IllegalArgumentException | ValidationException e){
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
                     "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. Wrong dates were picked.");
             return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
