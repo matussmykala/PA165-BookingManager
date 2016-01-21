@@ -37,7 +37,7 @@
                     <%--<td><form:checkbox path="${customer.admin}"/></td>--%>
                 <td>
                     <c:choose>
-                        <c:when test="${customer.admin==true}">
+                        <c:when test="${customer.admin}">
                             <input type="checkbox" name="admin" disabled checked/>
                         </c:when>
                         <c:otherwise>
@@ -53,10 +53,12 @@
                     <my:a href="/customer/edit/${customer.id}" class="btn btn-primary"><span
                             class="glyphicon glyphicon-pencil" style="height:20px;" aria-hidden="true"></span></my:a>
                 </td>
-                <td>
-                    <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
-                            class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
-                </td>
+                <c:if test="${not (customer.id == authenticatedUser.id)}">
+                    <td>
+                        <my:a href="/customer/delete/${customer.id}" class="btn btn-primary"><span
+                                class="glyphicon glyphicon-trash" aria-hidden="true"></span></my:a>
+                    </td>
+                </c:if>
             </tr>
         </c:forEach>
         </tbody>

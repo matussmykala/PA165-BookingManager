@@ -171,9 +171,4 @@ public class CustomerFacadeImpl implements CustomerFacade {
     public void setBeanMappingService(BeanMappingService beanMappingService) {
         this.beanMappingService = beanMappingService;
     }
-    
-    @Override
-    public boolean authenticate(UserAuthenticateDTO u) {
-        return customerService.authenticated(customerService.findCustomerById(u.getUserId()), u.getPassword());
-    }
 }
