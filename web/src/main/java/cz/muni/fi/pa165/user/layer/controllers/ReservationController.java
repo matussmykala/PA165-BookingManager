@@ -2,10 +2,13 @@ package cz.muni.fi.pa165.user.layer.controllers;
 
 import cz.muni.fi.pa165.bookingmanager.dto.CustomerDTO;
 import java.util.Date;
+import java.util.Locale;
 
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bookingmanager.dto.ReservationDTO;
 import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
+
+import javax.inject.Inject;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +18,7 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +39,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping("/reservation")
 public class ReservationController
 {
+    @Inject
+    private MessageSource messageSource;
+
     @Autowired
     private ReservationFacade reservationFacade;
 
@@ -91,7 +98,8 @@ public class ReservationController
     @RequestMapping(value = "/new/{reservationId}", method = RequestMethod.GET)
     public String newProduct(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
                              @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
-                             UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, ServletRequest r) {
+                             UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, ServletRequest r,
+                             Locale locale) {
         ReservationCreateDTO reservationCreateDTO = new ReservationCreateDTO();
         reservationCreateDTO.setRoomId(this.roomId);
 
@@ -108,18 +116,17 @@ public class ReservationController
             success = reservationFacade.createReservation(reservationCreateDTO);
         }
         catch (IllegalArgumentException | ValidationException e){
-            redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
-                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. Wrong dates were picked.");
+            String message = messageSource.getMessage("reservation.created.wrong_dates", null, locale);
+            redirectAttributes.addFlashAttribute("alert_danger", message);
             return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
         }
         if (success) {
-            redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
-                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" was created.");
+            String message = messageSource.getMessage("reservation.created.succesful", null, locale);
+            redirectAttributes.addFlashAttribute("alert_success", message);
             return "redirect:" + uriBuilder.path("/customer/view/{id}").buildAndExpand(auth.getId()).encode().toUriString();
         } else{
-            redirectAttributes.addFlashAttribute("alert_danger", "Reservation of room \"" + reservationCreateDTO.getRoomId() +
-                    "\" of customer \"" + reservationCreateDTO.getCustomerId() + "\" wasn't created. The room is not free " +
-                    "in picked time range.");
+            String message = messageSource.getMessage("reservation.created.not_free", null, locale);
+            redirectAttributes.addFlashAttribute("alert_danger", message);
             return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
         }
     }
@@ -133,12 +140,12 @@ public class ReservationController
      * @return view of all reservations
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes,
+                         Locale locale){
         ReservationDTO reservationDTO = reservationFacade.getReservationById(id);
         reservationFacade.cancelReservation(id);
-        redirectAttributes.addFlashAttribute("alert_success", "Reservation of room \"" + reservationDTO.getRoom().getName() +
-                "\" of customer \"" + reservationDTO.getCustomer().getName() + " " +
-                reservationDTO.getCustomer().getSurname() + "\" was deleted.");
+        String message = messageSource.getMessage("reservation.deleted", null, locale);
+        redirectAttributes.addFlashAttribute("alert_success", message);
         return "redirect:" + uriBuilder.path("/reservation/list").toUriString();
     }
 
@@ -170,7 +177,7 @@ public class ReservationController
     public String updateReservation(@PathVariable("id") long id,
                                     @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
                                     @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endOfReservation,
-                                    RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
+                                    RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale){
 
         ReservationDTO reservation = reservationFacade.getReservationById(id);
 
@@ -180,15 +187,18 @@ public class ReservationController
                     startDate, endOfReservation);
         }
         catch (IllegalArgumentException | ValidationException e){
-            redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Incorrect dates were picked.");
+            String message = messageSource.getMessage("reservation.updated.wrong_dates", null, locale);
+            redirectAttributes.addFlashAttribute("alert_danger", message);
             return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
         }
         if (success){
-            redirectAttributes.addFlashAttribute("alert_success", "Reservation " + id + " was updated.");
+            String message = messageSource.getMessage("reservation.updated.succesful", null, locale);
+            redirectAttributes.addFlashAttribute("alert_success", message);
             return "redirect:" + uriBuilder.path("/reservation/view/{id}").buildAndExpand(id).encode().toUriString();
         }
         else{
-            redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Room is not free in this time range.");
+            String message = messageSource.getMessage("reservation.updated.not_free", null, locale);
+            redirectAttributes.addFlashAttribute("alert_danger", message);
             return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
         }
     }
