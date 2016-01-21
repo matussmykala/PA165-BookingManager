@@ -77,8 +77,12 @@ public interface CustomerService {
      * @return customers with reservation
      */
     Collection<Customer> getCustomersWithReservation();
-    
-    boolean authenticated(Customer customer, String password);
-    
+
+    /**
+     * Returns a customer that has provided email address associated with him.
+     *
+     * @param email email address of a customer
+     * @return customer with provided email address
+     */
     Customer findCustomerByEmail(String email);
 }
