@@ -179,7 +179,7 @@ public class ReservationController
             success = reservationFacade.updateReservation(id, reservation.getCustomer().getId(), reservation.getRoom().getId(),
                     startDate, endDate);
         }
-        catch (IllegalArgumentException e){
+        catch (IllegalArgumentException | ValidationException e){
             redirectAttributes.addFlashAttribute("alert_danger", "Reservation " + id + " wasn't updated. Incorrect dates were picked.");
             return "redirect:" + uriBuilder.path("/reservation/edit/{id}").buildAndExpand(id).encode().toUriString();
         }
