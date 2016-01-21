@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -46,6 +48,10 @@ public class HotelController {
     @Autowired
     private RoomFacade roomFacade;
     
+    @Autowired
+    private MessageSource messageSource;
+    
+      
     Date date;
 
     /**
@@ -69,14 +75,14 @@ public class HotelController {
      * @return JSP page name
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale) {
         HotelDTO hotel = hotelFacade.getHotelById(id);
         if (!(hotelFacade.findRoomsWithReservation(id).isEmpty())) {
-            redirectAttributes.addFlashAttribute("alert_info", "Hotel \"" + hotel.getName() + "\" has rooms with reservations - it can not be deleted");
+            redirectAttributes.addFlashAttribute("alert_info", "Hotel " + hotel.getName() + " " + messageSource.getMessage("hotel.nameIsEmpty", null, locale));
             return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
         }
         hotelFacade.deleteHotel(id);
-        redirectAttributes.addFlashAttribute("alert_success", "Hotel \"" + hotel.getName() + "\" was deleted.");
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + hotel.getName() + " " + messageSource.getMessage("hotel.wasDeleted", null, locale));
         return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
     }
 
@@ -116,24 +122,24 @@ public class HotelController {
      * @return JSP page name
      */
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder) {
+    public String search(@RequestParam String goal, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, Model model, UriComponentsBuilder uriBuilder, Locale locale) {
 
         date = new Date();
         
         if (goal.equals("")) {
-            model.addAttribute("alert_info", "Name/Destination is empty");
+            model.addAttribute("alert_info", messageSource.getMessage("hotel.nameIsEmpty", null, locale));
             return "hotel/find";
         }
         if (startDate == null || endDate == null) {
-            model.addAttribute("alert_info", "Date is empty");
+            model.addAttribute("alert_info", messageSource.getMessage("hotel.dateIsEmpty", null, locale));
             return "hotel/find";
         }
         if (startDate.compareTo(endDate)>0){
-            model.addAttribute("alert_info", "Wrong data format");
+            model.addAttribute("alert_info", messageSource.getMessage("hotel.wrongDateFormat", null, locale));
             return "hotel/find";
         }
         if(startDate.compareTo(date)<0){
-            model.addAttribute("alert_info", "Not possible to reserve room in the past");
+            model.addAttribute("alert_info", messageSource.getMessage("hotel.dateInPast", null, locale));
             return "hotel/find";
         } else {
 
@@ -146,7 +152,7 @@ public class HotelController {
 
             List<HotelDTO> hotels = hotelFacade.findByAddress(goal);
             if (hotels.size() < 1 && hotelDTO == null) {
-                model.addAttribute("alert_info", "No data found");
+                model.addAttribute("alert_info", messageSource.getMessage("hotel.noData", null, locale));
                 return "room/list";
             } else {
 
@@ -161,7 +167,7 @@ public class HotelController {
 
                 if (rooms.size() < 1) {
                     model.addAttribute("rooms", rooms);
-                    model.addAttribute("alert_info", "No available rooms in this date range");
+                    model.addAttribute("alert_info", messageSource.getMessage("hotel.noAvailableRoomInRange", null, locale));
                     return "room/list";
                 } else {
                     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -203,7 +209,7 @@ public class HotelController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public String create(@Valid @ModelAttribute("hotelCreate") HotelCreateDTO hotel, BindingResult bindingResult,
-            Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+            Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
         //in case of validation error forward back to the the form
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -216,7 +222,7 @@ public class HotelController {
         //create hotel
         Long id = hotelFacade.createHotel(hotel);
         //report success
-        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was created");
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " " + messageSource.getMessage("hotel.wasCreated", null, locale));
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 
@@ -236,7 +242,7 @@ public class HotelController {
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     public String updateHotel(@PathVariable("id") long id, @Valid @ModelAttribute("hotel") HotelDTO updatedHotel, BindingResult bindingResult,
-            Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
+            Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
          if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -253,7 +259,7 @@ public class HotelController {
         hotel.setDescription(updatedHotel.getDescription());
         hotelFacade.updateHotel(hotel);
 
-        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " was updated");
+        redirectAttributes.addFlashAttribute("alert_success", "Hotel " + id + " " + messageSource.getMessage("hotel.wasUpdated", null, locale));
         return "redirect:" + uriBuilder.path("/hotel/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 
