@@ -7,7 +7,11 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<my:pagetemplate title="Rooms">
+<c:set var="title">
+    <fmt:message key="room.title.list"/>
+</c:set>
+<my:pagetemplate title="${title}">
+
 <jsp:attribute name="body">
     <c:if test="${authenticatedUser.admin == true}">
         <my:a href="/room/new?filterType=${filterType}&filter=${filter}" class="btn btn-primary">

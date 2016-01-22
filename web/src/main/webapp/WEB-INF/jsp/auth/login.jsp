@@ -6,7 +6,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<my:pagetemplate title="Login">
+<c:set var="title">
+    <fmt:message key="login.title"/>
+</c:set>
+<my:pagetemplate title="${title}">
+
 <jsp:attribute name="body">
     <div style="width:100%">
         <div style="min-width: 200px;max-width:300px;">

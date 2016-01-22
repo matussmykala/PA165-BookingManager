@@ -35,16 +35,27 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="navigation.admin"/><b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><my:a href="/room/list"><f:message key="navigation.admin.rooms"/></my:a></li>
-                        <li><my:a href="/hotel/list"><f:message key="navigation.admin.hotels"/></my:a></li>
-                        <c:if test="${authenticatedUser.admin}">
-                            <li><my:a href="/customer/list"><f:message key="navigation.admin.customers"/></my:a></li>
-                            <li><my:a href="/reservation/list"><f:message
-                                    key="navigation.admin.reservations"/></my:a></li>
-                        </c:if>
-                    </ul>
+                                    <c:choose>
+                                        <c:when test="${not empty authenticatedUser and not authenticatedUser.admin}">
+                                            <a href="${pageContext.request.contextPath}/customer/view/${authenticatedUser.id}" class="dropdown-toggle"><f:message key="navigation.admin"/></a>
+                                        </c:when>
+                                        
+                                        <c:when test="${authenticatedUser.admin}">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="navigation.admin"/><b class="caret"></b></a>
+                                            
+                                            <ul class="dropdown-menu">
+                                                <li><my:a href="/room/list"><f:message key="navigation.admin.rooms"/></my:a></li>
+                                                <li><my:a href="/hotel/list"><f:message key="navigation.admin.hotels"/></my:a></li>
+                                                <li><my:a href="/customer/list"><f:message key="navigation.admin.customers"/></my:a></li>
+                                                <li><my:a href="/reservation/list"><f:message key="navigation.admin.reservations"/></my:a></li>
+                                            </ul>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="dropdown-toggle" href="auth/login"><f:message key="login.title"/></a>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                    
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><f:message key="navigation.docs"/><b class="caret"></b></a>

@@ -6,10 +6,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<my:pagetemplate title="Edit room">
+<c:set var="title">
+    <fmt:message key="room.title.edit"/>
+</c:set>
+<my:pagetemplate title="${title}">
+
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/room/update/${room.id}"
+    <form:form method="get" action="${pageContext.request.contextPath}/room/update/${room.id}"
                modelAttribute="room" cssClass="form-horizontal">
 
         <div class="form-group ${name_error?'has-error':''}">
