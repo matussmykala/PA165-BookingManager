@@ -93,7 +93,7 @@ public class CustomerController {
      * @param uriBuilder
      * @return view containing updated information of a customer
      */
-    @RequestMapping(value = "update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable long id, @Valid @ModelAttribute("customer") CustomerDTO updatedCustomerDTO,
                          BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
                          UriComponentsBuilder uriBuilder) {

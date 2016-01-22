@@ -41,7 +41,7 @@
                         <my:a href="/hotel/edit/${hotel.id}" class="btn btn-primary"><f:message key="hotel.edit"/></my:a>
                     </td>
                     <td>
-                        <form method="post" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
+                        <form method="get" action="${pageContext.request.contextPath}/hotel/delete/${hotel.id}">
                             <button type="submit" class="btn btn-primary"><f:message key="hotel.delete"/></button>
                         </form>
                     </td>

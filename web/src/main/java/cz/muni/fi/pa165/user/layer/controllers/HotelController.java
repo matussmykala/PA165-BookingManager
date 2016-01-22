@@ -74,7 +74,7 @@ public class HotelController {
      * @param redirectAttributes
      * @return JSP page name
      */
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale) {
         HotelDTO hotel = hotelFacade.getHotelById(id);
         if (!(hotelFacade.findRoomsWithReservation(id).isEmpty())) {
@@ -207,7 +207,7 @@ public class HotelController {
      * @param uriBuilder
      * @return JSP page name
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
     public String create(@Valid @ModelAttribute("hotelCreate") HotelCreateDTO hotel, BindingResult bindingResult,
             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
         //in case of validation error forward back to the the form
@@ -240,7 +240,7 @@ public class HotelController {
         return "hotel/edit";
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateHotel(@PathVariable("id") long id, @Valid @ModelAttribute("hotel") HotelDTO updatedHotel, BindingResult bindingResult,
             Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
 
