@@ -7,7 +7,11 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<my:pagetemplate title="Find your room">
+<c:set var="title">
+    <fmt:message key="hotel.findYourRoom"/>
+</c:set>
+
+<my:pagetemplate title="${title}">
     <jsp:attribute name="body">
 
        <div class="row">
