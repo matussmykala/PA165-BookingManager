@@ -121,7 +121,7 @@ public class ReservationController
             return "redirect:" + uriBuilder.path("/reservation/pickdate/{id}").buildAndExpand(this.roomId).encode().toUriString();
         }
         if (success) {
-            String message = messageSource.getMessage("reservation.created.succesful", null, locale);
+            String message = messageSource.getMessage("reservation.created.successful", null, locale);
             redirectAttributes.addFlashAttribute("alert_success", message);
             return "redirect:" + uriBuilder.path("/customer/view/{id}").buildAndExpand(auth.getId()).encode().toUriString();
         } else{
