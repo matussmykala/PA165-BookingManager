@@ -19,8 +19,8 @@
                     <label for="goal"><f:message key="hotel.nameDestination"/></label>
                        <input class="form-control" name="goal" id="goal" placeholder="Search" type="text"/>
                </div>
-               <div style="margin-top:10px;"><label for="startDate"><f:message key="hotel.startDate"/></label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
-               <div style="margin-top:10px;"><label for="endDate"><f:message key="hotel.endDate"/></label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>
+               <div style="margin-top:10px;"><label for="startDate"><f:message key="hotel.startDate"/></label><input class="form-control" name="startDate" type="date" id="startDate" placeholder="yyyy-mm-dd" value="<c:out value='${startDate}'/>"/></div>
+               <div style="margin-top:10px;"><label for="endDate"><f:message key="hotel.endDate"/></label><input class="form-control" name="endDate" type="date" id="endDate" placeholder="yyyy-mm-dd" value="<c:out value='${endDate}'/>"/></div>
                <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" ><f:message key="hotel.find"/></button></div>
 
             </form:form>

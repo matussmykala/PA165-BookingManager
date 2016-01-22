@@ -12,13 +12,15 @@
 
 <my:pagetemplate title="${title}">
 <jsp:attribute name="body">
-
+    <div style="width: 100%;">
+        <div style="min-width: 200px;max-width: 300px;">
   <form:form method="get" action="${pageContext.request.contextPath}/reservation/new/${roomId}" cssClass="form-horizontal">
-      <div style="margin-top:10px;"><label for="startDate"><f:message key="reservation.list.from"/></label><input class="form-control" name="startDate" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
-      <div style="margin-top:10px;"><label for="endDate"><f:message key="reservation.list.to"/></label><input class="form-control" name="endDate" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>
+      <div style="margin-top:10px;"><label for="startDate"><f:message key="reservation.list.from"/></label><input class="form-control" name="startDate" placeholder="yyyy-mm-dd" type="date" id="startDate" value="<c:out value='${startDate}'/>"/></div>
+      <div style="margin-top:10px;"><label for="endDate"><f:message key="reservation.list.to"/></label><input class="form-control" name="endDate" placeholder="yyyy-mm-dd" type="date" id="endDate" value="<c:out value='${endDate}'/>"/></div>
       <div style="margin-top:10px;"><button class="btn btn-primary" type="submit" ><f:message key="room.list.book"/></button></div>
 
   </form:form>
-
+        </div>
+    </div>
 </jsp:attribute>
 </my:pagetemplate>
