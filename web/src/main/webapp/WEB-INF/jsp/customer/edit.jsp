@@ -12,7 +12,7 @@
 <my:pagetemplate title="${title}">
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/customer/update/${customer.id}"
+    <form:form method="get" action="${pageContext.request.contextPath}/customer/update/${customer.id}"
                modelAttribute="customer" cssClass="form-horizontal">
 
         <div class="form-group ${name_error?'has-error':''}">

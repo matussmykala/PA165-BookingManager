@@ -14,7 +14,7 @@
 <my:pagetemplate title="${title}">
 <jsp:attribute name="body">
 
-    <form:form method="post" action="${pageContext.request.contextPath}/hotel/update/${hotel.id}"
+    <form:form method="get" action="${pageContext.request.contextPath}/hotel/update/${hotel.id}"
                modelAttribute="hotel" cssClass="form-horizontal">
         
         <div class="form-group ${name_error?'has-error':''}">

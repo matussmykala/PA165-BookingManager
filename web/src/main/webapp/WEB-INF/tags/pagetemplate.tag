@@ -51,7 +51,7 @@
                                             </ul>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="dropdown-toggle" href="auth/login"><f:message key="login.title"/></a>
+                                            <a class="dropdown-toggle" href="${pageContext.request.contextPath}/auth/login"><f:message key="login.title"/></a>
                                         </c:otherwise>
                                     </c:choose>
 
