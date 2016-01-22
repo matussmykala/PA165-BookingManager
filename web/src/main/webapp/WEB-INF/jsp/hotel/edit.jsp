@@ -7,7 +7,11 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<my:pagetemplate title="Edit hotel">
+<c:set var="title">
+    <fmt:message key="hotel.editHotel"/>
+</c:set>
+
+<my:pagetemplate title="${title}">
 <jsp:attribute name="body">
 
     <form:form method="post" action="${pageContext.request.contextPath}/hotel/update/${hotel.id}"
