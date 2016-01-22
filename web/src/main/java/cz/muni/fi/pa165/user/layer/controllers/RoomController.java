@@ -23,6 +23,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import javax.inject.Inject;
+import org.springframework.context.MessageSource;
 
 /**
 * Spring MVC controller for administrating rooms
@@ -35,14 +38,17 @@ public class RoomController {
 
     final static Logger log = LoggerFactory.getLogger(RoomController.class);
 
-    @Autowired
+    @Inject
     private RoomFacade roomFacade;
 
-    @Autowired
+    @Inject
     private HotelFacade hotelFacade;
 
-    @Autowired
+    @Inject
     private ReservationFacade reservationFacade;
+    
+    @Inject
+    private MessageSource messageSource;
 
     /**
      * Shows a list of rooms with the ability to add, view, delete or edit.
@@ -77,16 +83,18 @@ public class RoomController {
      * @return redirect to JSP
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable long id, Model model, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale){
         RoomDTO room = roomFacade.getRoomById(id);
         List<ReservationDTO> reservations = new ArrayList<>();
         reservations = reservationFacade.getAllReservationsOfRoom(id);
         if(reservations.size()>0){
-             redirectAttributes.addFlashAttribute("alert_info", "Room \"" + room.getName() + "\" has reservations - it can not be deleted");
+             String message = messageSource.getMessage("room.message.delete.has.reservations", null, locale);
+             redirectAttributes.addFlashAttribute("alert_info", message);
              return "redirect:" + uriBuilder.path("/room/list").toUriString();
         }
         roomFacade.deleteRoom(id);
-        redirectAttributes.addFlashAttribute("alert_success", "Room \"" + room.getName() + "\" was deleted.");
+        String message = messageSource.getMessage("room.message.delete.successful", null, locale);
+        redirectAttributes.addFlashAttribute("alert_success", message);
         return "redirect:" + uriBuilder.path("/room/list").toUriString();
     }
 
@@ -122,42 +130,37 @@ public class RoomController {
      * @param hotelId, bindingResult, model, redirectAttributes, uriBuilder
      * @return JSP page
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
      public String create(@Valid @ModelAttribute("roomCreate") RoomDTO room,@RequestParam long hotelId, BindingResult bindingResult,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder) {
-/*
-        if (bindingResult.hasErrors()) {
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }
-            model.addAttribute("alert_info", "Fill all data");
-            model.addAttribute("hotels", hotelFacade.getAllHotels());
-            return "room/new";
-        }
-       */ 
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale) {
+
         if ((room.getName()).equals("")){
-            model.addAttribute("alert_info", "Name of room is empty");
+            String message = messageSource.getMessage("room.message.create.name.empty", null, locale);
+            model.addAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
    
             return "room/new";
         }
         
         if (room.getPrice() == null){
-            model.addAttribute("alert_info", "Price of room is empty");
+            String message = messageSource.getMessage("room.message.create.price.empty", null, locale);
+            model.addAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "room/new";
         }
         
         if (room.getHotel() == null){
-            model.addAttribute("alert_info", "Hotel not chose");
+            String message = messageSource.getMessage("room.message.create.hotel.not.chose", null, locale);
+            model.addAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "room/new";
         }
         
         if (room.getNumberOfBeds() <= 0){
-            model.addAttribute("alert_info", "Number of beds must be greater than 0");
+            String message = messageSource.getMessage("room.message.create.number.of.beds", null, locale);
+            model.addAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "room/new";
@@ -166,8 +169,8 @@ public class RoomController {
         HotelDTO hotel = hotelFacade.getHotelById(hotelId);
         room.setHotel(hotel);
         roomFacade.createRoom(room);
-
-        redirectAttributes.addFlashAttribute("alert_success", "room " + room.getName() + " was created");
+        String message = messageSource.getMessage("room.message.create.successful", null, locale);
+        redirectAttributes.addFlashAttribute("alert_success", message);
         return "redirect:" + uriBuilder.path("/room/list").toUriString();
     }
 
@@ -190,22 +193,14 @@ public class RoomController {
      * @param id, hotelId, modelAttribute, bindingResult, model, redirectAttributes, uriBuilder
      * @return JSP page
      */
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
     public String updateRoom(@PathVariable("id") long id, @RequestParam long hotelId, @Valid @ModelAttribute("room") RoomDTO updatedRoom, BindingResult bindingResult,
-                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder){
-         /*if (bindingResult.hasErrors()) {
-            for (FieldError fe : bindingResult.getFieldErrors()) {
-                model.addAttribute(fe.getField() + "_error", true);
-            }
-            redirectAttributes.addFlashAttribute("alert_info", "Fill all data");
-            
-            return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
-   
-        }*/
-         
+                         Model model, RedirectAttributes redirectAttributes, UriComponentsBuilder uriBuilder, Locale locale){
+       
          
         if ((updatedRoom.getName()).equals("")){
-            redirectAttributes.addFlashAttribute("alert_info", "Name of room is empty");
+            String message = messageSource.getMessage("room.message.update.name.empty", null, locale);
+            redirectAttributes.addFlashAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
             return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
    
@@ -213,7 +208,8 @@ public class RoomController {
         }
         
         if (updatedRoom.getPrice() == null){
-            redirectAttributes.addFlashAttribute("alert_info", "Price of room is empty");
+            String message = messageSource.getMessage("room.message.update.price.empty", null, locale);
+            redirectAttributes.addFlashAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
@@ -221,7 +217,8 @@ public class RoomController {
         }
         
         if (updatedRoom.getHotel() == null){
-            redirectAttributes.addFlashAttribute("alert_info", "Hotel not chose");
+            String message = messageSource.getMessage("room.message.update.hotel.not.chose", null, locale);
+            redirectAttributes.addFlashAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
@@ -229,7 +226,8 @@ public class RoomController {
         }
         
         if (updatedRoom.getNumberOfBeds() <= 0){
-            redirectAttributes.addFlashAttribute("alert_info", "Number of beds must be greater than 0");
+            String message = messageSource.getMessage("room.message.update.number.of.beds", null, locale);
+            redirectAttributes.addFlashAttribute("alert_info", message);
             model.addAttribute("hotels", hotelFacade.getAllHotels());
         
             return "redirect:" + uriBuilder.path("/room/edit/{id}").buildAndExpand(id).encode().toUriString();
@@ -244,7 +242,8 @@ public class RoomController {
         room.setPrice(updatedRoom.getPrice());
         roomFacade.updateRoom(room);
 
-        redirectAttributes.addFlashAttribute("alert_success", "Room " + id + " was updated");
+        String message = messageSource.getMessage("room.message.update.successful", null, locale);
+        redirectAttributes.addFlashAttribute("alert_success", message);
         return "redirect:" + uriBuilder.path("/room/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 
@@ -255,7 +254,7 @@ public class RoomController {
      * @return JSP page
      */
     @RequestMapping(value = "/filter", method = RequestMethod.GET)
-    public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model) {
+    public String numberOfBedsFilter(@RequestParam String filterType, @RequestParam String filter, Model model, Locale locale) {
         List<RoomDTO> rooms;
 
         switch (filterType) {
@@ -285,10 +284,12 @@ public class RoomController {
                 break;
             default:
                 rooms = new ArrayList<>();
-                model.addAttribute("alert_danger", "Unknown filter " + filterType);
+                String message = messageSource.getMessage("room.message.filter.unknown", null, locale);
+                model.addAttribute("alert_danger", message);
         }
         if(rooms==null || rooms.size()<1){
-            model.addAttribute("alert_info", "No data found");
+            String message = messageSource.getMessage("room.message.filter.nodata", null, locale);
+            model.addAttribute("alert_info", message);
         }
         model.addAttribute("rooms", rooms);
         model.addAttribute("filter", filter);

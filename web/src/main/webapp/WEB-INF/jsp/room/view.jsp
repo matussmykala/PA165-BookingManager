@@ -7,7 +7,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<my:pagetemplate title="Room overview">
+<c:set var="title">
+    <fmt:message key="room.title.view"/>
+</c:set>
+<my:pagetemplate title="${title}">
+
 <jsp:attribute name="body">
 
 
