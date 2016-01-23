@@ -95,11 +95,12 @@ public class ReservationController
      * @param r
      * @return  view containing fields to pick reservation dates
      */
-    @RequestMapping(value = "/new/{reservationId}", method = RequestMethod.GET)
-    public String newProduct(@RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+    @RequestMapping(value = "/new/{roomId}", method = RequestMethod.GET)
+    public String newProduct(@PathVariable long roomId, @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
                              @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
                              UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, ServletRequest r,
                              Locale locale) {
+        if(this.roomId != roomId){this.roomId = roomId;};
         ReservationCreateDTO reservationCreateDTO = new ReservationCreateDTO();
         reservationCreateDTO.setRoomId(this.roomId);
 
