@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bookingmanager.facade.ReservationFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,7 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.ResourceBundle;
+import java.util.Locale;
 
 /**
  * Spring MVC Controller for management of hotel customers.
@@ -41,6 +42,9 @@ public class CustomerController {
 
     @Autowired
     private ReservationFacade reservationFacade;
+
+    @Autowired
+    private MessageSource messageSource;
 
     /**
      * Lists all hotel customers.
@@ -96,7 +100,7 @@ public class CustomerController {
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable long id, @Valid @ModelAttribute("customer") CustomerDTO updatedCustomerDTO,
                          BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriBuilder) {
+                         UriComponentsBuilder uriBuilder, Locale locale) {
 
         if (bindingResult.hasErrors()) {
             for (ObjectError ge : bindingResult.getGlobalErrors()) {
@@ -115,7 +119,8 @@ public class CustomerController {
         customer.setAdmin(updatedCustomerDTO.isAdmin());
         customerFacade.updateCustomer(customer);
 
-        redirectAttributes.addFlashAttribute("alert_success", "Customer " + id + " was updated");
+        redirectAttributes.addFlashAttribute("alert_success", messageSource.getMessage("customer.customer", null, locale)
+                + " " + customer.getName() + " " + customer.getSurname() + " " + messageSource.getMessage("customer.updated", null, locale));
         return "redirect:" + uriBuilder.path("/customer/view/{id}").buildAndExpand(id).encode().toUriString();
     }
 
@@ -128,23 +133,19 @@ public class CustomerController {
      * @return view containing list of all customers
      */
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale) {
         CustomerDTO customerDTO = customerFacade.findCustomerById(id);
-
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Texts");
 
         List<ReservationDTO> reservations = reservationFacade.getReservationsByCustomer(customerDTO.getId());
         if (!reservations.isEmpty()) {
-//            redirectAttributes.addFlashAttribute("alert_info", "Customer " + customerDTO.getName() + " " + customerDTO.getSurname()
-//                    + " cannot be deleted because there are still some reservations associated with him.");
-            redirectAttributes.addFlashAttribute(resourceBundle.getString("customer.customer") + " "
-                    + customerDTO.getName() + " " + customerDTO.getSurname() + resourceBundle.getString("customer.cannot_delete"));
+            redirectAttributes.addFlashAttribute("alert_info", messageSource.getMessage("customer.customer", null, locale) + " "
+                    + customerDTO.getName() + " " + customerDTO.getSurname() + " " + messageSource.getMessage("customer.cannot_delete", null, locale));
             return "redirect:" + uriBuilder.path("/customer/list").toUriString();
         }
 
         customerFacade.deleteCustomer(id);
-        redirectAttributes.addFlashAttribute("alert_success", "Customer " + customerDTO.getName()
-                + " " + customerDTO.getSurname() + " was deleted from the system.");
+        redirectAttributes.addFlashAttribute("alert_success", messageSource.getMessage("customer.customer", null, locale) + " " + customerDTO.getName()
+                + " " + customerDTO.getSurname() + " " + messageSource.getMessage("customer.deleted", null, locale));
         return "redirect:" + uriBuilder.path("/customer/list").toUriString();
     }
 }

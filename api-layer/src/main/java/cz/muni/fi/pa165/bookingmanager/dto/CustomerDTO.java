@@ -48,8 +48,6 @@ public class CustomerDTO {
     /**
      * Password of the customer
      */
-    @NotNull
-    @Size(min = 6, max = 30)
     private String password;
 
     /**
