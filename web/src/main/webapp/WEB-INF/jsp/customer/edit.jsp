@@ -27,10 +27,8 @@
             <form:label path="surname" cssClass="col-sm-2 control-label"><fmt:message
                     key="customer.surname"/></form:label>
             <div class="col-sm-10">
-                <div class="col-sm-10">
-                    <form:input path="surname" cssClass="form-control"/>
-                    <form:errors path="surname" cssClass="help-block"/>
-                </div>
+                <form:input path="surname" cssClass="form-control"/>
+                <form:errors path="surname" cssClass="help-block"/>
             </div>
         </div>
 
