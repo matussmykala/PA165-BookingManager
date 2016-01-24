@@ -127,7 +127,7 @@ public class HotelController {
         date = new Date();
         
         if (goal.equals("")) {
-            model.addAttribute("alert_info", messageSource.getMessage("hotel.nameIsEmpty", null, locale));
+            model.addAttribute("alert_info", messageSource.getMessage("hotel.nameIsempty", null, locale));
             return "hotel/find";
         }
         if (startDate == null || endDate == null) {

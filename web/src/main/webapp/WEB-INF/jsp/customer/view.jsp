@@ -84,11 +84,15 @@
         </tbody>
     </table>
 
-    <form method="get" action="${pageContext.request.contextPath}/customer/list/">
+   <c:if test="${authenticatedUser.admin}">
+     <form method="get" action="${pageContext.request.contextPath}/customer/list/">
         <p align="left">
             <button type="submit" class="btn btn-primary"><fmt:message key="button.back"/></button>
         </p>
     </form>
+   </c:if>
+
+        
 
 </jsp:attribute>
 </my:pagetemplate>
