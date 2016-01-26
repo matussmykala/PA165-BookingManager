@@ -78,7 +78,7 @@ public class HotelController {
     public String delete(@PathVariable long id, UriComponentsBuilder uriBuilder, RedirectAttributes redirectAttributes, Locale locale) {
         HotelDTO hotel = hotelFacade.getHotelById(id);
         if (!(hotelFacade.findRoomsWithReservation(id).isEmpty())) {
-            redirectAttributes.addFlashAttribute("alert_info", "Hotel " + hotel.getName() + " " + messageSource.getMessage("hotel.nameIsEmpty", null, locale));
+            redirectAttributes.addFlashAttribute("alert_info", "Hotel " + hotel.getName() + " " + messageSource.getMessage("hotel.canNotBeDeleted", null, locale));
             return "redirect:" + uriBuilder.path("/hotel/list").toUriString();
         }
         hotelFacade.deleteHotel(id);
