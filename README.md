@@ -78,7 +78,7 @@ For testing the REST interface use commands from command line
 
 	4. To create room(name, numberOfBeds, price, hotel, reservations)
 	   (in out example name = TEST, numberOfBeds = 2, price = 25.20, hotel = getHotel(id=2), reservations = [])
-		curl -X POST -i -H "Content-Type: application/json" --data'{"name":"TEST","numberOfBeds":2,"price":25.20,"hotel":{"id":2,"name":"Park Hotel","address":"Praha","description":"Pekny hotel v Prahe","lastUpdateDay":"2016-07-27 00:00"},"reservations":[]}' http://localhost:8080/pa165/rest/room/create
+		curl -X POST -i -H "Content-Type: application/json" --data '{"name":"TEST","numberOfBeds":2,"price":25.20,"hotel":{"id":2,"name":"Park Hotel","address":"Praha","description":"Pekny hotel v Prahe","lastUpdateDay":"2016-07-27 00:00"},"reservations":[]}' http://localhost:8080/pa165/rest/room/create
 	    -> you can check that room was really created by using command
 		curl -i -X GET http://localhost:8080/pa165/rest/room/6
 
