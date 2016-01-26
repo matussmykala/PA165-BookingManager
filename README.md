@@ -19,12 +19,12 @@ Project for pa165.
 - dao-layer	- Data layer
 - service-layer - Service layer
 - rest-layer - REST service
-- user-layer - User web interface
+- web - User web interface
 - web-sample-data - Sample Data 
 
 ## Installation and run
 
-Use maven and startup-web.sh script for web interface and startup-rest.sh script for REST interface
+Use maven and startup-web.sh script for web interface and startup-rest.sh script for REST interface or
 
 mvn clean install
 
