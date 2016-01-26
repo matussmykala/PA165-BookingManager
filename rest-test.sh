@@ -35,13 +35,15 @@ printf "${ORANGE}\ncurl -i -X GET http://localhost:8080/pa165/rest/room/1\n\n${N
 pause
 
 printf "${GREEN}To create room(name, numberOfBeds, price, hotel, reservations) (in out example name = TEST, numberOfBeds = 2, price = 25.20, hotel = getHotel(id=2), reservations = [])${NC}\n"
-printf "${ORANGE}\ncurl -X POST -i -H "Content-Type: application/json" --data '{"name":"TEST","numberOfBeds":2,"price":25.20,"hotel":{"id":2,"name":"Park Hotel","address":"Praha","description":"Pekny hotel v Prahe","lastUpdateDay":"2016-07-27 00:00"},"reservations":[]}' http://localhost:8080/pa165/rest/room/create
-\n\n${NC}"
+printf "${ORANGE}"
+printf '\ncurl -X POST -i -H "Content-Type: application/json" --data '{"name":"TEST","numberOfBeds":2,"price":25.20,"hotel":{"id":2,"name":"Park Hotel","address":"Praha","description":"Pekny hotel v Prahe","lastUpdateDay":"2016-07-27 00:00"},"reservations":[]}' http://localhost:8080/pa165/rest/room/create
+\n\n'
+printf "${NC}"
     curl -X POST -i -H "Content-Type: application/json" --data '{"name":"TEST","numberOfBeds":2,"price":25.20,"hotel":{"id":2,"name":"Park Hotel","address":"Praha","description":"Pekny hotel v Prahe","lastUpdateDay":"2016-07-27 00:00"},"reservations":[]}' http://localhost:8080/pa165/rest/room/create
 
 pause
 
 printf "${GREEN}Check that room was really created${NC}\n"
-printf "${ORANGE}\ncurl -i -X GET http://localhost:8080/pa165/rest/room/6\n${NC}" 
+printf "${ORANGE}\ncurl -i -X GET http://localhost:8080/pa165/rest/room/6\n\n${NC}" 
     curl -i -X GET http://localhost:8080/pa165/rest/room/6
 pause
