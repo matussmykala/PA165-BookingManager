@@ -1,4 +1,3 @@
-cd pa165-bookingmanager
 mvn clean install
-cd user-layer
+cd web
 mvn tomcat7:run
